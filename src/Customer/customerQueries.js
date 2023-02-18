@@ -1,4 +1,4 @@
-import { addressFragment, customerFragment, orderFragment, pageInfoFragment, variantFragment } from "./fragment.js";
+import { addressFragment, customerFragment, orderFragment, pageInfoFragment, variantFragment } from "../fragment.js";
 
 // {
 //  "input": {
@@ -234,14 +234,6 @@ query customer ($customerAccessToken: String!) {
   }
 }`;
 
-const queryDelegateAccessToken = `
-mutation delegateAccessTokenCreate($input: DelegateAccessTokenInput!) {
-  delegateAccessTokenCreate(input: $input) {
-    delegateAccessToken { accessToken createdAt }
-    userErrors { field message }
-  }
-}`;
-
 const queryOrderById = `
 query ($id: ID!) {
   node(id: $id) {
@@ -322,7 +314,6 @@ const customerQueries = {
   customerDefaultAddressUpdate,
   customerAddressDelete,
   queryCustomer,
-  queryDelegateAccessToken,
   queryCustomerOrders,
   queryOrderById,
   queryCustomerAddresses,

@@ -1,4 +1,4 @@
-import { collectionFragment, filterFragment, pageInfoFragment, productFragment } from "./fragment.js";
+import { collectionFragment, filterFragment, pageInfoFragment, productFragment } from "../fragment.js";
 
 const filterCollectionForward = `
 query Search($handle: String!, $first: Int!, $filters: [ProductFilter!], $sort: ProductCollectionSortKeys, $after: String) {

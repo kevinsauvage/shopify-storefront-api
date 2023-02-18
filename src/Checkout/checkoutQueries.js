@@ -1,4 +1,4 @@
-import { checkoutFragment } from "./fragment.js";
+import { checkoutFragment } from "../fragment.js";
 
 const queryCreateCheckout = `
 mutation checkoutCreate($input: CheckoutCreateInput!) {

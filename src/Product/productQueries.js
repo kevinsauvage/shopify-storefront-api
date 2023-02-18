@@ -1,4 +1,4 @@
-import { productFragment } from "./fragment.js";
+import { productFragment } from "../fragment.js";
 
 const queryProductRecommendations = `
 query productRecommendations($productId: ID!) {
