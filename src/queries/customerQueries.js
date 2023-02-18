@@ -1,11 +1,4 @@
-import {
-  addressFragment,
-  customerFragment,
-  customerOrdersFragment,
-  orderFragment,
-  pageInfoFragment,
-  variantFragment,
-} from "./fragment.js";
+import { addressFragment, customerFragment, orderFragment, pageInfoFragment, variantFragment } from "./fragment.js";
 
 // {
 //  "input": {
@@ -17,14 +10,13 @@ import {
 //   "phone": ""
 //  }
 // }
-const queryRegister = `
+const customerCreate = `
 mutation ($input: CustomerCreateInput!) {
   customerCreate(input: $input) {
     userErrors { field message }
   }
 }`;
 
-// customerAccessTokenCreate varables
 // {
 //  "input": {
 //    "email": "",
@@ -35,11 +27,21 @@ const customerAccessTokenCreate = `
 mutation customerAccessTokenCreate($input: CustomerAccessTokenCreateInput!) {
   customerAccessTokenCreate(input: $input) {
     customerAccessToken { accessToken expiresAt }
-    customerUserErrors { message }
+    customerUserErrors { field message }
   }
 }`;
 
-// customerAccessTokenRenew variables
+// {
+//  "multipassToken": ""
+// }
+const customerAccessTokenCreateWithMultipass = `
+mutation customerAccessTokenCreateWithMultipass($multipassToken: String!) {
+  customerAccessTokenCreateWithMultipass(multipassToken: $multipassToken) {
+    customerAccessToken { accessToken expiresAt }
+    customerUserErrors { field message }
+  }
+}`;
+
 // {
 // "customerAccessToken": ""
 // }
@@ -51,7 +53,6 @@ mutation ($token: String!) {
   }
 }`;
 
-// customerAccessTokenDelete variables
 // {
 // "customerAccessToken": ""
 // }
@@ -64,7 +65,6 @@ mutation customerAccessTokenDelete($customerAccessToken: String!) {
   }
 }`;
 
-// customerActivate variables:
 // {
 //   "id": "",
 //   "input": {
@@ -81,6 +81,20 @@ mutation customerActivate($id: ID!, $input: CustomerActivateInput!) {
   }
 }`;
 
+//  {
+//   "activationUrl": "",
+//   "password": ""
+//  }
+const customerActivateByUrl = `
+mutation customerActivateByUrl($activationUrl: URL!, $password: String!) {
+  customerActivateByUrl(activationUrl: $activationUrl, password: $password) {
+    customer { ${customerFragment} }
+    customerAccessToken { accessToken expiresAt }
+    customerUserErrors { filed message }
+  }
+}
+`;
+
 const queryCustomer = `
 query customer ($token: String!) {
   customer(customerAccessToken: $token) {
@@ -88,14 +102,35 @@ query customer ($token: String!) {
   }
 }`;
 
-const querySendRecoverEmail = `
+const customerRecover = `
 mutation customerRecover($email: String!) {
   customerRecover(email: $email) {
     customerUserErrors { field message }
   }
 }`;
 
-const queryResetPassword = `
+/* {
+  "id": "",
+  "input": {
+    "password": "",
+    "resetToken": ""
+  }
+} */
+const customerReset = `
+mutation customerReset($id: ID!, $input: CustomerResetInput!) {
+  customerReset(id: $id, input: $input) {
+    customer { ${customerFragment} }
+    customerAccessToken { accessToken expiresAt }
+    customerUserErrors { code field message}
+  }
+}
+`;
+
+/* {
+  "password": "",
+  "resetUrl": ""
+} */
+const customerResetByUrl = `
 mutation customerResetByUrl($password: String!, $resetUrl: URL!) {
   customerResetByUrl(password: $password, resetUrl: $resetUrl) {
       customerAccessToken { accessToken expiresAt }
@@ -103,6 +138,11 @@ mutation customerResetByUrl($password: String!, $resetUrl: URL!) {
   }
 }`;
 
+/* {
+  "token": "",
+  "first":"",
+  "after": ""
+} */
 const queryCustomerOrders = `
 query customer ($token: String!, $first: Int, $after: String) {
   customer(customerAccessToken: $token) {
@@ -119,36 +159,22 @@ query customer ($token: String!, $first: Int, $after: String) {
   }
 }`;
 
-const queryDelegateAccessToken = `
-mutation delegateAccessTokenCreate($input: DelegateAccessTokenInput!) {
-  delegateAccessTokenCreate(input: $input) {
-    delegateAccessToken { accessToken createdAt }
-    userErrors { field message }
-  }
-}`;
-
-const getOrderById = `
-query ($id: ID!) {
-  node(id: $id) {
-    ... on Order {
-        ${orderFragment}
-        lineItems(first: 250) {
-            edges {
-                node {
-                  quantity
-                  title
-                  quantity
-                  variant {
-                      ${variantFragment}
-                  }
-                }
-            }
-        }
-    }
-  }
-}`;
-
-const createAddress = `
+/* {
+  "address": {
+    "address1": "",
+    "address2": "",
+    "city": "",
+    "company": "",
+    "country": "",
+    "firstName": "",
+    "lastName": "",
+    "phone": "",
+    "province": "",
+    "zip": ""
+  },
+  "customerAccessToken": ""
+} */
+const customerAddressCreate = `
 mutation customerAddressCreate($address: MailingAddressInput!, $customerAccessToken: String!) {
   customerAddressCreate(address: $address, customerAccessToken: $customerAccessToken) {
     customerAddress {
@@ -160,11 +186,56 @@ mutation customerAddressCreate($address: MailingAddressInput!, $customerAccessTo
   }
 }`;
 
-const updateAddress = `
+/* 
+{
+  "customerAccessToken": "",
+  "id": ""
+} */
+const customerAddressDelete = `
+mutation customerAddressDelete($customerAccessToken: String!, $id: ID!) {
+  customerAddressDelete(customerAccessToken: $customerAccessToken, id: $id) {
+    customerUserErrors { message }
+    deletedCustomerAddressId
+  }
+}`;
+
+/* {
+  "address": {
+    "address1": "",
+    "address2": "",
+    "city": "",
+    "company": "",
+    "country": "",
+    "firstName": "",
+    "lastName": "",
+    "phone": "",
+    "province": "",
+    "zip": ""
+  },
+  "customerAccessToken": "",
+  "id": ""
+} */
+const customerAddressUpdate = `
 mutation customerAddressUpdate($address: MailingAddressInput!, $customerAccessToken: String!, $id: ID!) {
   customerAddressUpdate(address: $address, customerAccessToken: $customerAccessToken, id: $id) {
     customerAddress {
       ${addressFragment}
+    }
+    customerUserErrors {
+      message
+    }
+  }
+}`;
+
+/* {
+  "addressId": "",
+  "customerAccessToken": ""
+} */
+const customerDefaultAddressUpdate = `
+mutation customerDefaultAddressUpdate($addressId: ID!, $customerAccessToken: String!) {
+  customerDefaultAddressUpdate(addressId: $addressId, customerAccessToken: $customerAccessToken) {
+    customer {
+      ${customerFragment}
     }
     customerUserErrors {
       message
@@ -186,19 +257,7 @@ query customer ($token: String!) {
 }
 `;
 
-const updateDefaultAddress = `
-mutation customerDefaultAddressUpdate($addressId: ID!, $customerAccessToken: String!) {
-  customerDefaultAddressUpdate(addressId: $addressId, customerAccessToken: $customerAccessToken) {
-    customer {
-      ${customerFragment}
-    }
-    customerUserErrors {
-      message
-    }
-  }
-}`;
-
-const updateCustomer = `
+const customerUpdate = `
 mutation customerUpdate($customer: CustomerUpdateInput!, $customerAccessToken: String!) {
   customerUpdate(customer: $customer, customerAccessToken: $customerAccessToken) {
     customer { ${customerFragment} }
@@ -207,7 +266,7 @@ mutation customerUpdate($customer: CustomerUpdateInput!, $customerAccessToken: S
   }
 }`;
 
-const getCustomerAddressById = `
+const queryCustomerAddressById = `
 query ($id: ID!) {
   node(id: $id) {
     ... on MailingAddress {
@@ -216,33 +275,57 @@ query ($id: ID!) {
   }
 }`;
 
-const deleteAddressById = `
-mutation customerAddressDelete($customerAccessToken: String!, $id: ID!) {
-  customerAddressDelete(customerAccessToken: $customerAccessToken, id: $id) {
-    customerUserErrors { message }
-    deletedCustomerAddressId
+const queryDelegateAccessToken = `
+mutation delegateAccessTokenCreate($input: DelegateAccessTokenInput!) {
+  delegateAccessTokenCreate(input: $input) {
+    delegateAccessToken { accessToken createdAt }
+    userErrors { field message }
+  }
+}`;
+
+const queryOrderById = `
+query ($id: ID!) {
+  node(id: $id) {
+    ... on Order {
+        ${orderFragment}
+        lineItems(first: 250) {
+            edges {
+                node {
+                  quantity
+                  title
+                  quantity
+                  variant {
+                      ${variantFragment}
+                  }
+                }
+            }
+        }
+    }
   }
 }`;
 
 const customerQueries = {
+  customerCreate,
   customerAccessTokenCreate,
-  queryRegister,
-  querySendRecoverEmail,
-  queryResetPassword,
-  queryCustomer,
+  customerAccessTokenCreateWithMultipass,
   customerAccessTokenRenew,
-  queryDelegateAccessToken,
   customerAccessTokenDelete,
-  queryCustomerOrders,
-  getOrderById,
-  updateAddress,
-  queryCustomerAddresses,
-  createAddress,
-  updateDefaultAddress,
-  getCustomerAddressById,
-  updateCustomer,
-  deleteAddressById,
   customerActivate,
+  customerActivateByUrl,
+  customerRecover,
+  customerResetByUrl,
+  customerReset,
+  customerUpdate,
+  customerAddressCreate,
+  customerAddressUpdate,
+  customerDefaultAddressUpdate,
+  customerAddressDelete,
+  queryCustomer,
+  queryDelegateAccessToken,
+  queryCustomerOrders,
+  queryOrderById,
+  queryCustomerAddresses,
+  queryCustomerAddressById,
 };
 
 export default customerQueries;
