@@ -175,6 +175,7 @@ const shopQueries = {
   queryMetaObjects,
   getMetaObject,
   getSuscriptionPolicy,
+  getBlogByHandle,
 };
 
 export default shopQueries;

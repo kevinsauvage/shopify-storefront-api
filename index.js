@@ -84,8 +84,8 @@ class ShopifyClient {
         return res?.data?.customerAccessTokenCreateWithMultipass;
       },
 
-      customerAccessTokenRenew: async (token) => {
-        const res = await this.storefrontCall(customerQueries.customerAccessTokenRenew, { token });
+      customerAccessTokenRenew: async (customerAccessToken) => {
+        const res = await this.storefrontCall(customerQueries.customerAccessTokenRenew, { customerAccessToken });
         if (res?.errors) return res;
         return res?.data?.customerAccessTokenRenew;
       },
@@ -103,7 +103,7 @@ class ShopifyClient {
         return cleanGraphQLResponse(res?.data?.customerActivate);
       },
 
-      customerActivateByUrl: async (token, customer) => {
+      customerActivateByUrl: async (activationUrl, password) => {
         const res = await this.storefrontCall(customerQueries.customerActivateByUrl, { activationUrl, password });
         if (res?.errors) return res;
         return cleanGraphQLResponse(res?.data?.customerActivateByUrl);
@@ -164,8 +164,8 @@ class ShopifyClient {
         return cleanGraphQLResponse(res?.data?.customerDefaultAddressUpdate);
       },
 
-      queryCustomer: async (token) => {
-        const res = await this.storefrontCall(customerQueries.queryCustomer, { token });
+      queryCustomer: async (customerAccessToken) => {
+        const res = await this.storefrontCall(customerQueries.queryCustomer, { customerAccessToken });
         if (res?.errors) return res;
         const response = { response: cleanGraphQLResponse(res?.data), errors: res?.errors };
         return response;
@@ -177,9 +177,9 @@ class ShopifyClient {
         return cleanGraphQLResponse(res?.data?.node);
       },
 
-      queryCustomerOrders: async (token, first = 5, after = null) => {
+      queryCustomerOrders: async (customerAccessToken, first = 5, after = null) => {
         const res = await this.storefrontCall(customerQueries.queryCustomerOrders, {
-          token,
+          customerAccessToken,
           after: after || null,
           first: Number(first),
         });
@@ -189,14 +189,14 @@ class ShopifyClient {
         return { orders: cleanGraphQLResponse(res?.data?.customer?.orders), pageInfo };
       },
 
-      queryCustomerAddresses: async (token) => {
-        const res = await this.storefrontCall(customerQueries.queryCustomerAddresses, { token });
+      queryCustomerAddresses: async (customerAccessToken) => {
+        const res = await this.storefrontCall(customerQueries.queryCustomerAddresses, { customerAccessToken });
         if (res?.errors) return res;
         return cleanGraphQLResponse(res?.data?.customer?.addresses);
       },
 
-      queryCustomerAddressById: async (token, id) => {
-        const res = await this.storefrontCall(customerQueries.queryCustomerAddressById, { token, id });
+      queryCustomerAddressById: async (customerAccessToken, id) => {
+        const res = await this.storefrontCall(customerQueries.queryCustomerAddressById, { customerAccessToken, id });
         if (res?.errors) return res;
         const response = cleanGraphQLResponse(res?.data);
         return response.node;
@@ -275,7 +275,12 @@ class ShopifyClient {
         return cleanGraphQLResponse(res?.data?.cart);
       },
       updateCartLines: async (cartId, lines, first = 250, after = null) => {
-        const res = await this.storefrontCall(cartQueries.updateCartLines, { cartId, lines, first, after });
+        const res = await this.storefrontCall(cartQueries.updateCartLines, {
+          cartId,
+          lines,
+          first,
+          after,
+        });
         if (res?.errors) return res;
         return cleanGraphQLResponse(res?.data?.cartLinesUpdate);
       },
@@ -305,7 +310,12 @@ class ShopifyClient {
         return cleanGraphQLResponse(res?.data?.cartDiscountCodesUpdate);
       },
       updateCartNote: async (cartId, note, first = 250, after = null) => {
-        const res = await this.storefrontCall(cartQueries.updateCartNote, { cartId, note, first, after });
+        const res = await this.storefrontCall(cartQueries.updateCartNote, {
+          cartId,
+          note,
+          first,
+          after,
+        });
         if (res?.errors) return res;
         return cleanGraphQLResponse(res?.data?.cartNoteUpdate);
       },
@@ -321,13 +331,23 @@ class ShopifyClient {
       },
 
       removeCartLines: async (cartId, lineIds, first = 250, after = null) => {
-        const res = await this.storefrontCall(cartQueries.removeCartLines, { cartId, lineIds, first, after });
+        const res = await this.storefrontCall(cartQueries.removeCartLines, {
+          cartId,
+          lineIds,
+          first,
+          after,
+        });
         if (res?.errors) return res;
         return cleanGraphQLResponse(res?.data?.cartLinesRemove);
       },
 
       addCartLines: async (cartId, lines, first = 250, after = null) => {
-        const res = await this.storefrontCall(cartQueries.addCartLines, { cartId, lines, first, after });
+        const res = await this.storefrontCall(cartQueries.addCartLines, {
+          cartId,
+          lines,
+          first,
+          after,
+        });
         if (res?.errors) return res;
         return cleanGraphQLResponse(res?.data?.cartLinesAdd);
       },
