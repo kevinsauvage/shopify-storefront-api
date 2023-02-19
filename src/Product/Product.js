@@ -6,28 +6,22 @@ class Product {
     this.parent = parent;
   }
 
-  getProductRecommendation = async (productId) => {
-    const res = await this.parent.storefrontCall(productQueries.queryProductRecommendations, { productId });
-    if (res?.errors) return res;
-    return cleanGraphQLResponse(res.data.productRecommendations);
-  };
-  getProduct = async (handle) => {
-    const res = await this.parent.storefrontCall(productQueries.queryProduct, { handle });
+  getProductByHandle = async ({ handle }) => {
+    const res = await this.parent.storefrontCall(productQueries.getProductByHandle, { handle });
     if (res?.errors) return res;
     return cleanGraphQLResponse(res.data.product);
   };
-  getProducts = async (sortKey, first) => {
-    const res = await this.parent.storefrontCall(productQueries.queryProducts, { first, sortKey });
+
+  productRecommendations = async ({ productId }) => {
+    const res = await this.parent.storefrontCall(productQueries.productRecommendations, { productId });
     if (res?.errors) return res;
-    return { products: cleanGraphQLResponse(res?.data?.products) };
+    return cleanGraphQLResponse(res.data.productRecommendations);
   };
-  searchProducts = async (query = "", first = 250) => {
-    const res = await this.parent.storefrontCall(productQueries.searchProducts, {
-      query: `title:${query}* OR description:${query}* OR product_type:${query}* OR tag=${query}*`,
-      first,
-    });
+
+  getProducts = async ({ sortKey, first = 100, after = null, query = "" }) => {
+    const res = await this.parent.storefrontCall(productQueries.queryProducts, { first, sortKey, after, query });
     if (res?.errors) return res;
-    return cleanGraphQLResponse(res?.data?.products);
+    return { products: cleanGraphQLResponse(res?.data?.products), pageInfo: res?.data?.products?.pageInfo };
   };
 }
 

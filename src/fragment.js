@@ -95,7 +95,7 @@ shippingAddress {
   ${addressFragment}
 }
 
-lineItems(first: 100) {
+lineItems(first: $first, after: $after) {
   edges {
     node {
       id
@@ -178,20 +178,37 @@ financialStatus
 orderNumber
 phone
 processedAt
-totalRefunded {
+subtotalPriceV2 {
   amount
   currencyCode
 }
-totalShippingPrice {
+totalPriceV2 {
   amount
   currencyCode
 }
-totalPrice {
+totalRefundedV2 {
+  currencyCode
+  amount
+}
+totalShippingPriceV2 {
   amount
   currencyCode
 }
-cancelReason
-canceledAt
+totalTaxV2 {
+  amount
+  currencyCode
+}
+successfulFulfillments(first: 10) {
+  trackingCompany
+  trackingInfo(first: 10) {
+    number
+    url
+  }
+}
+customAttributes {
+  key
+  value
+}
 shippingAddress {
   id
   address1
@@ -240,3 +257,33 @@ hasNextPage
 hasPreviousPage
 endCursor
 startCursor`;
+
+export const lineItemFragment = `
+currentQuantity
+quantity
+title
+discountedTotalPrice {
+  amount
+  currencyCode
+}
+originalTotalPrice {
+  amount
+  currencyCode
+}
+customAttributes {
+  key
+  value
+}
+discountAllocations {
+  allocatedAmount {
+    amount
+    currencyCode
+  }
+}
+variant {
+  image {
+    ${imageFragment}
+  }
+  title
+}
+`;

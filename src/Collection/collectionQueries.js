@@ -1,47 +1,33 @@
 import { collectionFragment, filterFragment, pageInfoFragment, productFragment } from "../fragment.js";
 
-const filterCollectionForward = `
-query Search($handle: String!, $first: Int!, $filters: [ProductFilter!], $sort: ProductCollectionSortKeys, $after: String) {
+const collection = `
+query collection($handle: String!, $first: Int!, $filters: [ProductFilter!], $sort: ProductCollectionSortKeys, $after: String) {
   collection(handle: $handle) {
     ${collectionFragment}
     products(first: $first,  filters: $filters, sortKey: $sort, after: $after) {
-      filters {
-        ${filterFragment}
-      }
-      pageInfo {
-        ${pageInfoFragment}
-      }
+      filters { ${filterFragment} }
+      pageInfo { ${pageInfoFragment} }
       edges {
-        node {
-          ${productFragment}
-        }
+        node { ${productFragment} }
       }
     }
   }
 }`;
 
-const getCollections = `
-query ($first: Int) {
-  collections(first: $first, sortKey: RELEVANCE) {
+const collections = `
+query collections($first: Int, $after: String, $sortKey: CollectionSortKeys, $firstProducts: Int, $afterProducts: String, $productsSortKey: ProductCollectionSortKeys)  {
+  collections(first: $first, after: $after, sortKey: $sortKey) {
+    pageInfo {
+      ${pageInfoFragment}
+    }
     edges {
       node {
         ${collectionFragment}
-      }
-    }
-  }
-}`;
-
-const getSitemap = `
-query ($first: Int) {
-  collections(first: $first, sortKey: RELEVANCE) {
-    edges {
-      node {
-        handle
-        products(first: 200, sortKey: BEST_SELLING) {
+        products(first: $firstProducts, after: $afterProducts, sortKey: $productsSortKey) {
+          filters { ${filterFragment} }
+          pageInfo { ${pageInfoFragment} }
           edges {
-            node {
-              handle
-            }
+            node { ${productFragment} }
           }
         }
       }
@@ -49,6 +35,6 @@ query ($first: Int) {
   }
 }`;
 
-const queriesCollection = { filterCollectionForward, getCollections, getSitemap };
+const queriesCollection = { collection, collections };
 
 export default queriesCollection;

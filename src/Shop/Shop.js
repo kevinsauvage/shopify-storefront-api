@@ -35,18 +35,18 @@ class Shop {
     if (res?.errors) return res;
     return res?.data?.shop;
   };
-  getMenu = async (handle) => {
+  getMenu = async ({ handle }) => {
     const res = await this.parent.storefrontCall(shopQueries.getMenu, { handle });
     if (res?.errors) return res;
     return res?.data?.menu?.items;
   };
-  getPage = async (handle) => {
+  getPage = async ({ handle }) => {
     const res = await this.parent.storefrontCall(shopQueries.getPage, { handle });
     if (res?.errors) return res;
     const value = res?.data?.page?.data?.value;
     return value ? JSON.parse(value) : undefined;
   };
-  getMetaObject = async (handle) => {
+  getMetaObject = async ({ handle }) => {
     const res = await this.parent.storefrontCall(shopQueries.getMetaObject, { handle });
     if (res?.errors) return res;
     const value = res?.data?.metaobject?.fields?.[0].value;

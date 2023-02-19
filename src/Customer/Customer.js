@@ -5,19 +5,13 @@ class Customer {
   constructor(parent) {
     this.parent = parent;
   }
-  customerCreate = async (input) => {
-    const res = await this.parent.storefrontCall(customerQueries.customerCreate, { input });
-    if (res?.errors) return res;
-    return res?.data?.customerCreate;
-  };
-
-  customerAccessTokenCreate = async (input) => {
+  customerAccessTokenCreate = async ({ input }) => {
     const res = await this.parent.storefrontCall(customerQueries.customerAccessTokenCreate, { input });
     if (res?.errors) return res;
     return res?.data?.customerAccessTokenCreate;
   };
 
-  customerAccessTokenCreateWithMultipass = async (multipassToken) => {
+  customerAccessTokenCreateWithMultipass = async ({ multipassToken }) => {
     const res = await this.parent.storefrontCall(customerQueries.customerAccessTokenCreateWithMultipass, {
       multipassToken,
     });
@@ -25,56 +19,32 @@ class Customer {
     return res?.data?.customerAccessTokenCreateWithMultipass;
   };
 
-  customerAccessTokenRenew = async (customerAccessToken) => {
-    const res = await this.parent.storefrontCall(customerQueries.customerAccessTokenRenew, { customerAccessToken });
-    if (res?.errors) return res;
-    return res?.data?.customerAccessTokenRenew;
-  };
-
-  customerAccessTokenDelete = async (customerAccessToken) => {
+  customerAccessTokenDelete = async ({ customerAccessToken }) => {
     const res = await this.parent.storefrontCall(customerQueries.customerAccessTokenDelete, { customerAccessToken });
     if (res?.errors) return res;
     const response = res?.data?.customerAccessTokenDelete;
     return response;
   };
 
-  customerActivate = async (id, input) => {
+  customerAccessTokenRenew = async ({ customerAccessToken }) => {
+    const res = await this.parent.storefrontCall(customerQueries.customerAccessTokenRenew, { customerAccessToken });
+    if (res?.errors) return res;
+    return res?.data?.customerAccessTokenRenew;
+  };
+
+  customerActivate = async ({ id, input }) => {
     const res = await this.parent.storefrontCall(customerQueries.customerActivate, { id, input });
     if (res?.errors) return res;
-    return cleanGraphQLResponse(res?.data?.customerActivate);
+    return res?.data?.customerActivate;
   };
 
-  customerActivateByUrl = async (activationUrl, password) => {
+  customerActivateByUrl = async ({ activationUrl, password }) => {
     const res = await this.parent.storefrontCall(customerQueries.customerActivateByUrl, { activationUrl, password });
     if (res?.errors) return res;
-    return cleanGraphQLResponse(res?.data?.customerActivateByUrl);
+    return res?.data?.customerActivateByUrl;
   };
 
-  customerRecover = async (email) => {
-    const res = await this.parent.storefrontCall(customerQueries.customerRecover, { email });
-    if (res?.errors) return res;
-    return res?.data?.customerRecover;
-  };
-
-  customerResetByUrl = async (password, resetUrl) => {
-    const res = await this.parent.storefrontCall(customerQueries.customerResetByUrl, { password, resetUrl });
-    if (res?.errors) return res;
-    return res?.data?.customerResetByUrl;
-  };
-
-  customerReset = async (id, input) => {
-    const res = await this.parent.storefrontCall(customerQueries.customerReset, { id, input });
-    if (res?.errors) return res;
-    return res?.data?.customerReset;
-  };
-
-  customerUpdate = async (customerAccessToken, customer) => {
-    const res = await this.parent.storefrontCall(customerQueries.customerUpdate, { customerAccessToken, customer });
-    if (res?.errors) return res;
-    return cleanGraphQLResponse(res?.data?.customerUpdate);
-  };
-
-  customerAddressCreate = async (address, customerAccessToken) => {
+  customerAddressCreate = async ({ address, customerAccessToken }) => {
     const res = await this.parent.storefrontCall(customerQueries.customerAddressCreate, {
       address,
       customerAccessToken,
@@ -83,23 +53,32 @@ class Customer {
     return res?.data?.customerAddressCreate;
   };
 
-  customerAddressDelete = async (customerAccessToken, id) => {
-    const res = await this.parent.storefrontCall(customerQueries.customerAddressDelete, { customerAccessToken, id });
+  customerAddressDelete = async ({ customerAccessToken, addressId }) => {
+    const res = await this.parent.storefrontCall(customerQueries.customerAddressDelete, {
+      customerAccessToken,
+      addressId,
+    });
     if (res?.errors) return res;
     return cleanGraphQLResponse(res?.data?.customerAddressDelete);
   };
 
-  customerAddressUpdate = async (address, customerAccessToken, id) => {
+  customerAddressUpdate = async ({ address, customerAccessToken, addressId }) => {
     const res = await this.parent.storefrontCall(customerQueries.customerAddressUpdate, {
       address,
       customerAccessToken,
-      id,
+      addressId,
     });
     if (res?.errors) return res;
     return res?.data?.customerAddressUpdate;
   };
 
-  customerDefaultAddressUpdate = async (customerAccessToken, addressId) => {
+  customerCreate = async ({ input }) => {
+    const res = await this.parent.storefrontCall(customerQueries.customerCreate, { input });
+    if (res?.errors) return res;
+    return res?.data?.customerCreate;
+  };
+
+  customerDefaultAddressUpdate = async ({ customerAccessToken, addressId }) => {
     const res = await this.parent.storefrontCall(customerQueries.customerDefaultAddressUpdate, {
       customerAccessToken,
       addressId,
@@ -108,42 +87,76 @@ class Customer {
     return cleanGraphQLResponse(res?.data?.customerDefaultAddressUpdate);
   };
 
-  queryCustomer = async (customerAccessToken) => {
+  customerRecover = async ({ email }) => {
+    const res = await this.parent.storefrontCall(customerQueries.customerRecover, { email });
+    if (res?.errors) return res;
+    return res?.data?.customerRecover;
+  };
+
+  customerReset = async ({ id, input }) => {
+    const res = await this.parent.storefrontCall(customerQueries.customerReset, { id, input });
+    if (res?.errors) return res;
+    return res?.data?.customerReset;
+  };
+
+  customerResetByUrl = async ({ password, resetUrl }) => {
+    const res = await this.parent.storefrontCall(customerQueries.customerResetByUrl, { password, resetUrl });
+    if (res?.errors) return res;
+    return res?.data?.customerResetByUrl;
+  };
+
+  customerUpdate = async ({ customerAccessToken, customer }) => {
+    const res = await this.parent.storefrontCall(customerQueries.customerUpdate, { customerAccessToken, customer });
+    if (res?.errors) return res;
+    return res?.data?.customerUpdate;
+  };
+
+  queryCustomer = async ({ customerAccessToken }) => {
     const res = await this.parent.storefrontCall(customerQueries.queryCustomer, { customerAccessToken });
     if (res?.errors) return res;
     const response = { response: cleanGraphQLResponse(res?.data), errors: res?.errors };
     return response;
   };
 
-  queryOrderById = async (id) => {
-    const res = await this.parent.storefrontCall(customerQueries.queryOrderById, { id });
+  queryCustomerAddresses = async ({ customerAccessToken, first = 100, after = null }) => {
+    const res = await this.parent.storefrontCall(customerQueries.queryCustomerAddresses, {
+      customerAccessToken,
+      first,
+      after,
+    });
     if (res?.errors) return res;
-    return cleanGraphQLResponse(res?.data?.node);
+    return cleanGraphQLResponse(res?.data?.customer?.addresses);
   };
 
-  queryCustomerOrders = async (customerAccessToken, first = 5, after = null) => {
+  queryCustomerAddressById = async ({ addressId }) => {
+    const res = await this.parent.storefrontCall(customerQueries.queryCustomerAddressById, {
+      addressId,
+    });
+    if (res?.errors) return res;
+    const response = cleanGraphQLResponse(res?.data);
+    return response.node;
+  };
+
+  queryCustomerOrders = async ({ customerAccessToken, first = 5, after = null }) => {
     const res = await this.parent.storefrontCall(customerQueries.queryCustomerOrders, {
       customerAccessToken,
       after: after || null,
       first: Number(first),
     });
+    const orders = res?.data?.customer?.orders;
 
     if (res?.errors) return res;
-    const pageInfo = res?.data?.customer?.orders?.pageInfo;
-    return { orders: cleanGraphQLResponse(res?.data?.customer?.orders), pageInfo };
+    if (!orders) throw new Error("Missing orders");
+
+    const pageInfo = orders?.pageInfo || null;
+    const totalCount = orders?.totalCount || null;
+    return { orders: cleanGraphQLResponse(orders), pageInfo, totalCount };
   };
 
-  queryCustomerAddresses = async (customerAccessToken) => {
-    const res = await this.parent.storefrontCall(customerQueries.queryCustomerAddresses, { customerAccessToken });
+  queryCustomerOrderById = async ({ orderId, first = 100, after = null }) => {
+    const res = await this.parent.storefrontCall(customerQueries.queryCustomerOrderById, { orderId, first, after });
     if (res?.errors) return res;
-    return cleanGraphQLResponse(res?.data?.customer?.addresses);
-  };
-
-  queryCustomerAddressById = async (customerAccessToken, id) => {
-    const res = await this.parent.storefrontCall(customerQueries.queryCustomerAddressById, { customerAccessToken, id });
-    if (res?.errors) return res;
-    const response = cleanGraphQLResponse(res?.data);
-    return response.node;
+    return cleanGraphQLResponse(res?.data?.node);
   };
 }
 

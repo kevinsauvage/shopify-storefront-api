@@ -5,8 +5,9 @@ class Collection {
   constructor(parent) {
     this.parent = parent;
   }
-  filterCollectionForward = async (handle, first = null, filters, sort = "RELEVANCE", after = null) => {
-    const res = await this.parent.storefrontCall(collectionQueries.filterCollectionForward, {
+
+  collection = async ({ handle, filters, first = 100, after = null, sort = "RELEVANCE" }) => {
+    const res = await this.parent.storefrontCall(collectionQueries.collection, {
       handle,
       first,
       filters,
@@ -26,15 +27,26 @@ class Collection {
     }
     return null;
   };
-  getCollections = async (first) => {
-    const res = await this.parent.storefrontCall(collectionQueries.getCollections, { first });
+
+  collections = async ({
+    first = 250,
+    after = null,
+    sortKey = "RELEVANCE",
+    firstProducts = 250,
+    afterProducts = null,
+    productsSortKey = "BEST_SELLING",
+  }) => {
+    const res = await this.parent.storefrontCall(collectionQueries.collections, {
+      first,
+      after,
+      sortKey,
+      firstProducts,
+      afterProducts,
+      productsSortKey,
+    });
+
     if (res?.errors) return res;
-    return cleanGraphQLResponse(res?.data?.collections);
-  };
-  getSitemap = async (first) => {
-    const res = await this.parent.storefrontCall(collectionQueries.getSitemap, { first });
-    if (res?.errors) return res;
-    return cleanGraphQLResponse(res?.data?.collections);
+    return { collections: cleanGraphQLResponse(res?.data?.collections), pageInfo: res?.data?.collections?.pageInfo };
   };
 }
 

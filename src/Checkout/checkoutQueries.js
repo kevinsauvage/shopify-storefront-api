@@ -1,45 +1,97 @@
-import { checkoutFragment } from "../fragment.js";
+import { addressFragment, checkoutFragment } from "../fragment.js";
 
-const queryCreateCheckout = `
-mutation checkoutCreate($input: CheckoutCreateInput!) {
+const returnFragment = `
+checkout { ${checkoutFragment} }
+checkoutUserErrors { field message }
+`;
+
+const checkoutAttributesUpdateV2 = `
+mutation checkoutAttributesUpdateV2($checkoutId: ID!, $input: CheckoutAttributesUpdateV2Input!, $first: Int, $after: String) {
+  checkoutAttributesUpdateV2(checkoutId: $checkoutId, input: $input) {
+   ${returnFragment}
+  }
+}`;
+
+const checkoutCompleteWithCreditCardV2 = `
+mutation checkoutCompleteWithCreditCardV2($checkoutId: ID!, $payment: CreditCardPaymentInputV2!, $first: Int, $after: String) {
+  checkoutCompleteWithCreditCardV2(checkoutId: $checkoutId, payment: $payment) {
+    ${returnFragment}
+    payment {
+      billingAddress {
+        ${addressFragment}
+      }
+      errorMessage
+      nextActionUrl
+    }
+  }
+}`;
+
+const checkoutCreate = `
+mutation checkoutCreate($input: CheckoutCreateInput!, $first: Int, $after: String) {
   checkoutCreate(input: $input) {
-    checkout {
-      ${checkoutFragment}
-    }
-    checkoutUserErrors {
-      message
-    }
+     ${returnFragment}
   }
 }`;
 
-const queryAddLinesItem = `
-mutation checkoutLineItemsAdd($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]!) {
-  checkoutLineItemsAdd(checkoutId: $checkoutId, lineItems: $lineItems) {
-    checkout {
-      ${checkoutFragment}
-    }
-    checkoutUserErrors {
-      message
-      code
-    }
-  }
-}`;
-
-const queryAddCustomerToCheckout = `
-mutation checkoutCustomerAssociateV2($checkoutId: ID!, $customerAccessToken: String!) {
+const checkoutCustomerAssociateV2 = `
+mutation checkoutCustomerAssociateV2($checkoutId: ID!, $customerAccessToken: String!, $first: Int, $after: String) {
   checkoutCustomerAssociateV2(checkoutId: $checkoutId, customerAccessToken: $customerAccessToken) {
-    checkout {
-      ${checkoutFragment}
-    }
-    checkoutUserErrors {
-      message
-    }
+    ${returnFragment}
+  }
+}`;
+
+const checkoutCustomerDisassociateV2 = `
+mutation checkoutCustomerDisassociateV2($checkoutId: ID!, $first: Int, $after: String) {
+  checkoutCustomerDisassociateV2(checkoutId: $checkoutId) {
+    ${returnFragment}
+  }
+}`;
+
+const checkoutDiscountCodeApplyV2 = `
+mutation checkoutDiscountCodeApplyV2($checkoutId: ID!, $discountCode: String!, $first: Int, $after: String) {
+  checkoutDiscountCodeApplyV2(checkoutId: $checkoutId, discountCode: $discountCode) {
+    ${returnFragment}
+  }
+}`;
+
+const checkoutDiscountCodeRemove = `
+mutation checkoutDiscountCodeRemove($checkoutId: ID!,  $first: Int, $after: String) {
+  checkoutDiscountCodeRemove(checkoutId: $checkoutId) {
+    ${returnFragment}
+  }
+}`;
+
+const checkoutLineItemsAdd = `
+mutation checkoutLineItemsAdd($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]!, $first: Int, $after: String) {
+  checkoutLineItemsAdd(checkoutId: $checkoutId, lineItems: $lineItems) {
+    ${returnFragment}
+  }
+}`;
+
+const checkoutLineItemsRemove = `
+mutation checkoutLineItemsRemove($checkoutId: ID!, $lineItemIds: [ID!]!, $first: Int, $after: String) {
+  checkoutLineItemsRemove(checkoutId: $checkoutId, lineItemIds: $lineItemIds) {
+    ${returnFragment}
+  }
+}`;
+
+const checkoutLineItemsUpdate = `
+mutation checkoutLineItemsUpdate($checkoutId: ID!, $lineItems: [CheckoutLineItemUpdateInput!]!, $first: Int, $after: String) {
+  checkoutLineItemsUpdate(checkoutId: $checkoutId, lineItems: $lineItems) {
+    ${returnFragment}
+  }
+}`;
+
+const checkoutShippingAddressUpdateV2 = `
+mutation checkoutShippingAddressUpdateV2($checkoutId: ID!, $shippingAddress: MailingAddressInput!, $first: Int, $after: String) {
+  checkoutShippingAddressUpdateV2(checkoutId: $checkoutId, shippingAddress: $shippingAddress) {
+    ${returnFragment}
   }
 }`;
 
 const queryCheckoutById = `
-query($id: ID!) {
-  node(id:$id) {
+query($checkoutId: ID!, $first: Int, $after: String) {
+  node(id: $checkoutId) {
     id
     ... on Checkout {
       ${checkoutFragment}
@@ -47,50 +99,19 @@ query($id: ID!) {
   }
 }`;
 
-const queryRemoveFromCheckout = `
-mutation checkoutLineItemsRemove($checkoutId: ID!, $lineItemIds: [ID!]!) {
-  checkoutLineItemsRemove(checkoutId: $checkoutId, lineItemIds: $lineItemIds) {
-    checkout {
-      ${checkoutFragment}
-    }
-    checkoutUserErrors {
-      message
-    }
-  }
-}`;
-
-const queryUpdateLine = `
-mutation checkoutLineItemsUpdate($checkoutId: ID!, $lineItems: [CheckoutLineItemUpdateInput!]!) {
-  checkoutLineItemsUpdate(checkoutId: $checkoutId, lineItems: $lineItems) {
-    checkout {
-      ${checkoutFragment}
-    }
-    checkoutUserErrors {
-      message
-    }
-  }
-}`;
-
-const updateCheckoutShippingAddress = `
-mutation checkoutShippingAddressUpdateV2($checkoutId: ID!, $shippingAddress: MailingAddressInput!) {
-  checkoutShippingAddressUpdateV2(checkoutId: $checkoutId, shippingAddress: $shippingAddress) {
-    checkout {
-      ${checkoutFragment}
-    }
-    checkoutUserErrors {
-      message
-    }
-  }
-}`;
-
 const checkoutQueries = {
-  queryCreateCheckout,
-  queryAddLinesItem,
+  checkoutAttributesUpdateV2,
+  checkoutCreate,
+  checkoutCompleteWithCreditCardV2,
+  checkoutCustomerAssociateV2,
+  checkoutCustomerDisassociateV2,
+  checkoutDiscountCodeApplyV2,
+  checkoutDiscountCodeRemove,
+  checkoutLineItemsAdd,
+  checkoutLineItemsRemove,
+  checkoutLineItemsUpdate,
+  checkoutShippingAddressUpdateV2,
   queryCheckoutById,
-  queryAddCustomerToCheckout,
-  queryRemoveFromCheckout,
-  queryUpdateLine,
-  updateCheckoutShippingAddress,
 };
 
 export default checkoutQueries;
