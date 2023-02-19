@@ -46,8 +46,8 @@ class Shop {
     const value = res?.data?.page?.data?.value;
     return value ? JSON.parse(value) : undefined;
   };
-  getMetaObject = async (handle, delegateToken, ip) => {
-    const res = await this.parent.storefrontCall(shopQueries.getMetaObject, { handle }, delegateToken, ip);
+  getMetaObject = async (handle) => {
+    const res = await this.parent.storefrontCall(shopQueries.getMetaObject, { handle });
     if (res?.errors) return res;
     const value = res?.data?.metaobject?.fields?.[0].value;
     return value && JSON.parse(value);
