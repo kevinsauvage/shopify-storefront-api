@@ -13,7 +13,10 @@ class Cart {
       first,
       after,
     });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return cleanGraphQLResponse(res?.data?.cartAttributesUpdate);
   };
 
@@ -24,13 +27,19 @@ class Cart {
       first,
       after,
     });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return cleanGraphQLResponse(res?.data?.cartBuyerIdentityUpdate);
   };
 
   cartCreate = async ({ input, first = 250, after = null }) => {
     const res = await this.parent.storefrontCall(cartQueries.cartCreate, { input, first, after });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return cleanGraphQLResponse(res?.data?.cartCreate);
   };
 
@@ -41,7 +50,10 @@ class Cart {
       first,
       after,
     });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return cleanGraphQLResponse(res?.data?.cartDiscountCodesUpdate);
   };
 
@@ -52,7 +64,10 @@ class Cart {
       first,
       after,
     });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return cleanGraphQLResponse(res?.data?.cartLinesAdd);
   };
 
@@ -63,7 +78,10 @@ class Cart {
       first,
       after,
     });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return cleanGraphQLResponse(res?.data?.cartLinesRemove);
   };
 
@@ -74,7 +92,10 @@ class Cart {
       first,
       after,
     });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return cleanGraphQLResponse(res?.data?.cartLinesUpdate);
   };
 
@@ -85,19 +106,29 @@ class Cart {
       first,
       after,
     });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return cleanGraphQLResponse(res?.data?.cartNoteUpdate);
   };
 
   cartQuery = async ({ cartId, first = 250, after = null }) => {
     const res = await this.parent.storefrontCall(cartQueries.cartQuery, { cartId, first, after });
-    if (res?.errors) return res;
+
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return cleanGraphQLResponse(res?.data?.cart);
   };
 
   checkoutURL = async ({ cartId }) => {
     const res = await this.parent.storefrontCall(cartQueries.checkoutURL, { cartId });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return cleanGraphQLResponse(res?.data?.cart);
   };
 }

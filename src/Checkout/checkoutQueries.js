@@ -69,8 +69,8 @@ mutation checkoutLineItemsAdd($checkoutId: ID!, $lineItems: [CheckoutLineItemInp
 }`;
 
 const checkoutLineItemsRemove = `
-mutation checkoutLineItemsRemove($checkoutId: ID!, $lineItemIds: [ID!]!, $first: Int, $after: String) {
-  checkoutLineItemsRemove(checkoutId: $checkoutId, lineItemIds: $lineItemIds) {
+mutation checkoutLineItemsRemove($checkoutId: ID!, $lineItems: [ID!]!, $first: Int, $after: String) {
+  checkoutLineItemsRemove(checkoutId: $checkoutId, lineItemIds: $lineItems) {
     ${returnFragment}
   }
 }`;

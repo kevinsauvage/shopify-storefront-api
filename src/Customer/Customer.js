@@ -7,7 +7,10 @@ class Customer {
   }
   customerAccessTokenCreate = async ({ input }) => {
     const res = await this.parent.storefrontCall(customerQueries.customerAccessTokenCreate, { input });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return res?.data?.customerAccessTokenCreate;
   };
 
@@ -15,32 +18,47 @@ class Customer {
     const res = await this.parent.storefrontCall(customerQueries.customerAccessTokenCreateWithMultipass, {
       multipassToken,
     });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return res?.data?.customerAccessTokenCreateWithMultipass;
   };
 
   customerAccessTokenDelete = async ({ customerAccessToken }) => {
     const res = await this.parent.storefrontCall(customerQueries.customerAccessTokenDelete, { customerAccessToken });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     const response = res?.data?.customerAccessTokenDelete;
     return response;
   };
 
   customerAccessTokenRenew = async ({ customerAccessToken }) => {
     const res = await this.parent.storefrontCall(customerQueries.customerAccessTokenRenew, { customerAccessToken });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return res?.data?.customerAccessTokenRenew;
   };
 
   customerActivate = async ({ id, input }) => {
     const res = await this.parent.storefrontCall(customerQueries.customerActivate, { id, input });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return res?.data?.customerActivate;
   };
 
   customerActivateByUrl = async ({ activationUrl, password }) => {
     const res = await this.parent.storefrontCall(customerQueries.customerActivateByUrl, { activationUrl, password });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return res?.data?.customerActivateByUrl;
   };
 
@@ -49,7 +67,10 @@ class Customer {
       address,
       customerAccessToken,
     });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return res?.data?.customerAddressCreate;
   };
 
@@ -58,7 +79,10 @@ class Customer {
       customerAccessToken,
       addressId,
     });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return cleanGraphQLResponse(res?.data?.customerAddressDelete);
   };
 
@@ -68,13 +92,19 @@ class Customer {
       customerAccessToken,
       addressId,
     });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return res?.data?.customerAddressUpdate;
   };
 
   customerCreate = async ({ input }) => {
     const res = await this.parent.storefrontCall(customerQueries.customerCreate, { input });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return res?.data?.customerCreate;
   };
 
@@ -83,37 +113,55 @@ class Customer {
       customerAccessToken,
       addressId,
     });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return cleanGraphQLResponse(res?.data?.customerDefaultAddressUpdate);
   };
 
   customerRecover = async ({ email }) => {
     const res = await this.parent.storefrontCall(customerQueries.customerRecover, { email });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return res?.data?.customerRecover;
   };
 
   customerReset = async ({ id, input }) => {
     const res = await this.parent.storefrontCall(customerQueries.customerReset, { id, input });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return res?.data?.customerReset;
   };
 
   customerResetByUrl = async ({ password, resetUrl }) => {
     const res = await this.parent.storefrontCall(customerQueries.customerResetByUrl, { password, resetUrl });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return res?.data?.customerResetByUrl;
   };
 
   customerUpdate = async ({ customerAccessToken, customer }) => {
     const res = await this.parent.storefrontCall(customerQueries.customerUpdate, { customerAccessToken, customer });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return res?.data?.customerUpdate;
   };
 
   queryCustomer = async ({ customerAccessToken }) => {
     const res = await this.parent.storefrontCall(customerQueries.queryCustomer, { customerAccessToken });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     const response = { response: cleanGraphQLResponse(res?.data), errors: res?.errors };
     return response;
   };
@@ -124,7 +172,10 @@ class Customer {
       first,
       after,
     });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return cleanGraphQLResponse(res?.data?.customer?.addresses);
   };
 
@@ -132,7 +183,10 @@ class Customer {
     const res = await this.parent.storefrontCall(customerQueries.queryCustomerAddressById, {
       addressId,
     });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     const response = cleanGraphQLResponse(res?.data);
     return response.node;
   };
@@ -145,7 +199,10 @@ class Customer {
     });
     const orders = res?.data?.customer?.orders;
 
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     if (!orders) throw new Error("Missing orders");
 
     const pageInfo = orders?.pageInfo || null;
@@ -155,7 +212,10 @@ class Customer {
 
   queryCustomerOrderById = async ({ orderId, first = 100, after = null }) => {
     const res = await this.parent.storefrontCall(customerQueries.queryCustomerOrderById, { orderId, first, after });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return cleanGraphQLResponse(res?.data?.node);
   };
 }

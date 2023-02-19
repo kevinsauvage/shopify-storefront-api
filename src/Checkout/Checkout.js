@@ -13,7 +13,10 @@ class Checkout {
       after,
       first,
     });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return cleanGraphQLResponse(res?.data?.checkoutAttributesUpdateV2);
   };
 
@@ -25,13 +28,19 @@ class Checkout {
       after,
       first,
     });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return cleanGraphQLResponse(res?.data?.checkoutCompleteWithCreditCardV2);
   };
 
   checkoutCreate = async ({ input, after = null, first = 100 }) => {
     const res = await this.parent.storefrontCall(checkoutQueries.checkoutCreate, { input, after, first });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return cleanGraphQLResponse(res?.data?.checkoutCreate);
   };
 
@@ -42,7 +51,10 @@ class Checkout {
       after,
       first,
     });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return cleanGraphQLResponse(res?.data?.checkoutCustomerAssociateV2);
   };
 
@@ -52,7 +64,10 @@ class Checkout {
       after,
       first,
     });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return cleanGraphQLResponse(res?.data?.checkoutCustomerDisassociateV2);
   };
 
@@ -63,7 +78,10 @@ class Checkout {
       after,
       first,
     });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return cleanGraphQLResponse(res?.data?.checkoutDiscountCodeApplyV2);
   };
 
@@ -73,7 +91,10 @@ class Checkout {
       after,
       first,
     });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return cleanGraphQLResponse(res?.data?.checkoutDiscountCodeRemove);
   };
 
@@ -84,18 +105,24 @@ class Checkout {
       after,
       first,
     });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return cleanGraphQLResponse(res?.data?.checkoutLineItemsAdd);
   };
 
-  checkoutLineItemsRemove = async ({ checkoutId, lineItemIds, after = null, first = 100 }) => {
+  checkoutLineItemsRemove = async ({ checkoutId, lineItems, after = null, first = 100 }) => {
     const res = await this.parent.storefrontCall(checkoutQueries.checkoutLineItemsRemove, {
       checkoutId,
-      lineItemIds,
+      lineItems,
       after,
       first,
     });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return cleanGraphQLResponse(res?.data?.checkoutLineItemsRemove);
   };
 
@@ -106,7 +133,10 @@ class Checkout {
       after,
       first,
     });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return cleanGraphQLResponse(res?.data?.checkoutLineItemsUpdate);
   };
 
@@ -117,13 +147,19 @@ class Checkout {
       after,
       first,
     });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return cleanGraphQLResponse(res?.data?.checkoutShippingAddressUpdateV2);
   };
 
   queryCheckoutById = async ({ checkoutId, after = null, first = 100 }) => {
     const res = await this.parent.storefrontCall(checkoutQueries.queryCheckoutById, { checkoutId, after, first });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return cleanGraphQLResponse(res?.data?.node);
   };
 }

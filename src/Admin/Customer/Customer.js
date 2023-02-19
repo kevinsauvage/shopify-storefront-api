@@ -5,9 +5,12 @@ class CustomerAdmin {
     this.parent = parent;
   }
 
-  getDelegateToken = async (input) => {
+  getDelegateToken = async ({ input }) => {
     const res = await this.parent.adminCall(queryDelegateAccessToken, { input });
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return res?.data?.delegateAccessTokenCreate;
   };
 }

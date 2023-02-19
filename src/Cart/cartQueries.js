@@ -20,6 +20,7 @@ const cartFragment = `
   updatedAt
   checkoutUrl
   totalQuantity
+  note
   lines(first: $first, after: $after) {
     edges {
       node {
@@ -48,6 +49,10 @@ const cartFragment = `
       amount
       currencyCode
     }
+  }
+  discountCodes {
+    applicable
+    code
   }
   buyerIdentity {
     email

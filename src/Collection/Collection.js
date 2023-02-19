@@ -15,7 +15,10 @@ class Collection {
       after,
     });
 
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
 
     const collection = res?.data?.collection;
 
@@ -45,7 +48,10 @@ class Collection {
       productsSortKey,
     });
 
-    if (res?.errors) return res;
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
     return { collections: cleanGraphQLResponse(res?.data?.collections), pageInfo: res?.data?.collections?.pageInfo };
   };
 }
