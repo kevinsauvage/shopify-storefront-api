@@ -83,7 +83,7 @@ class Customer {
       console.error(res.errors);
       return res;
     }
-    return cleanGraphQLResponse(res?.data?.customerAddressDelete);
+    return res?.data?.customerAddressDelete;
   };
 
   customerAddressUpdate = async ({ address, customerAccessToken, addressId }) => {
@@ -117,7 +117,7 @@ class Customer {
       console.error(res.errors);
       return res;
     }
-    return cleanGraphQLResponse(res?.data?.customerDefaultAddressUpdate);
+    return res?.data?.customerDefaultAddressUpdate;
   };
 
   customerRecover = async ({ email }) => {
@@ -162,8 +162,7 @@ class Customer {
       console.error(res.errors);
       return res;
     }
-    const response = { response: cleanGraphQLResponse(res?.data), errors: res?.errors };
-    return response;
+    return res?.data?.customer;
   };
 
   queryCustomerAddresses = async ({ customerAccessToken, first = 100, after = null }) => {
@@ -187,8 +186,7 @@ class Customer {
       console.error(res.errors);
       return res;
     }
-    const response = cleanGraphQLResponse(res?.data);
-    return response.node;
+    return cleanGraphQLResponse(res?.data?.node);
   };
 
   queryCustomerOrders = async ({ customerAccessToken, first = 5, after = null }) => {
