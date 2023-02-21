@@ -1,13 +1,10 @@
-import { cleanGraphQLResponse } from "../helpers.js";
+import { cleanGraphQLResponse } from "../../helpers.js";
+import ShopifyStorefrontApi from "../ShopifyStorefrontApi.js";
 import cartQueries from "./cartQueries.js";
 
-class Cart {
-  constructor(parent) {
-    this.parent = parent;
-  }
-
+class Cart extends ShopifyStorefrontApi {
   cartAttributesUpdate = async ({ attributes, cartId, first = 100, after = null }) => {
-    const res = await this.parent.storefrontCall(cartQueries.cartAttributesUpdate, {
+    const res = await this.call(cartQueries.cartAttributesUpdate, {
       attributes,
       cartId,
       first,
@@ -21,7 +18,7 @@ class Cart {
   };
 
   cartBuyerIdentityUpdate = async ({ buyerIdentity, cartId, first = 250, after = null }) => {
-    const res = await this.parent.storefrontCall(cartQueries.cartBuyerIdentityUpdate, {
+    const res = await this.call(cartQueries.cartBuyerIdentityUpdate, {
       buyerIdentity,
       cartId,
       first,
@@ -35,7 +32,7 @@ class Cart {
   };
 
   cartCreate = async ({ input, first = 250, after = null }) => {
-    const res = await this.parent.storefrontCall(cartQueries.cartCreate, { input, first, after });
+    const res = await this.call(cartQueries.cartCreate, { input, first, after });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -44,7 +41,7 @@ class Cart {
   };
 
   cartDiscountCodesUpdate = async ({ cartId, discountCodes, first = 250, after = null }) => {
-    const res = await this.parent.storefrontCall(cartQueries.cartDiscountCodesUpdate, {
+    const res = await this.call(cartQueries.cartDiscountCodesUpdate, {
       cartId,
       discountCodes,
       first,
@@ -58,7 +55,7 @@ class Cart {
   };
 
   cartLinesAdd = async ({ cartId, lines, first = 250, after = null }) => {
-    const res = await this.parent.storefrontCall(cartQueries.cartLinesAdd, {
+    const res = await this.call(cartQueries.cartLinesAdd, {
       cartId,
       lines,
       first,
@@ -72,7 +69,7 @@ class Cart {
   };
 
   cartLinesRemove = async ({ cartId, lines, first = 250, after = null }) => {
-    const res = await this.parent.storefrontCall(cartQueries.cartLinesRemove, {
+    const res = await this.call(cartQueries.cartLinesRemove, {
       cartId,
       lines,
       first,
@@ -86,7 +83,7 @@ class Cart {
   };
 
   cartLinesUpdate = async ({ cartId, lines, first = 250, after = null }) => {
-    const res = await this.parent.storefrontCall(cartQueries.cartLinesUpdate, {
+    const res = await this.call(cartQueries.cartLinesUpdate, {
       cartId,
       lines,
       first,
@@ -100,7 +97,7 @@ class Cart {
   };
 
   cartNoteUpdate = async ({ cartId, note, first = 250, after = null }) => {
-    const res = await this.parent.storefrontCall(cartQueries.cartNoteUpdate, {
+    const res = await this.call(cartQueries.cartNoteUpdate, {
       cartId,
       note,
       first,
@@ -114,7 +111,7 @@ class Cart {
   };
 
   cartQuery = async ({ cartId, first = 250, after = null }) => {
-    const res = await this.parent.storefrontCall(cartQueries.cartQuery, { cartId, first, after });
+    const res = await this.call(cartQueries.cartQuery, { cartId, first, after });
 
     if (res?.errors) {
       console.error(res.errors);
@@ -124,7 +121,7 @@ class Cart {
   };
 
   checkoutURL = async ({ cartId }) => {
-    const res = await this.parent.storefrontCall(cartQueries.checkoutURL, { cartId });
+    const res = await this.call(cartQueries.checkoutURL, { cartId });
     if (res?.errors) {
       console.error(res.errors);
       return res;

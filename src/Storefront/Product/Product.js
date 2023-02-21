@@ -1,13 +1,10 @@
-import { cleanGraphQLResponse } from "../helpers.js";
+import { cleanGraphQLResponse } from "../../helpers.js";
+import ShopifyStorefrontApi from "../ShopifyStorefrontApi.js";
 import productQueries from "./productQueries.js";
 
-class Product {
-  constructor(parent) {
-    this.parent = parent;
-  }
-
+class Product extends ShopifyStorefrontApi {
   getProductByHandle = async ({ handle }) => {
-    const res = await this.parent.storefrontCall(productQueries.getProductByHandle, { handle });
+    const res = await this.call(productQueries.getProductByHandle, { handle });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -16,7 +13,7 @@ class Product {
   };
 
   productRecommendations = async ({ productId }) => {
-    const res = await this.parent.storefrontCall(productQueries.productRecommendations, { productId });
+    const res = await this.call(productQueries.productRecommendations, { productId });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -25,7 +22,7 @@ class Product {
   };
 
   getProducts = async ({ sortKey, first = 100, after = null, query = "" }) => {
-    const res = await this.parent.storefrontCall(productQueries.queryProducts, { first, sortKey, after, query });
+    const res = await this.call(productQueries.queryProducts, { first, sortKey, after, query });
     if (res?.errors) {
       console.error(res.errors);
       return res;

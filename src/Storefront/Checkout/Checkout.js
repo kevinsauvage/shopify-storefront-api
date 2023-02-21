@@ -1,13 +1,10 @@
-import { cleanGraphQLResponse } from "../helpers.js";
+import { cleanGraphQLResponse } from "../../helpers.js";
+import ShopifyStorefrontApi from "../ShopifyStorefrontApi.js";
 import checkoutQueries from "./checkoutQueries.js";
 
-class Checkout {
-  constructor(parent) {
-    this.parent = parent;
-  }
-
+class Checkout extends ShopifyStorefrontApi {
   checkoutAttributesUpdateV2 = async ({ checkoutId, input, after = null, first = 100 }) => {
-    const res = await this.parent.storefrontCall(checkoutQueries.checkoutAttributesUpdateV2, {
+    const res = await this.call(checkoutQueries.checkoutAttributesUpdateV2, {
       checkoutId,
       input,
       after,
@@ -21,7 +18,7 @@ class Checkout {
   };
 
   checkoutCompleteWithCreditCardV2 = async ({ checkoutId, payment, after = null, first = 100 }) => {
-    const res = await this.parent.storefrontCall(checkoutQueries.checkoutCompleteWithCreditCardV2, {
+    const res = await this.call(checkoutQueries.checkoutCompleteWithCreditCardV2, {
       checkoutId,
       payment,
       input,
@@ -36,7 +33,7 @@ class Checkout {
   };
 
   checkoutCreate = async ({ input, after = null, first = 100 }) => {
-    const res = await this.parent.storefrontCall(checkoutQueries.checkoutCreate, { input, after, first });
+    const res = await this.call(checkoutQueries.checkoutCreate, { input, after, first });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -45,7 +42,7 @@ class Checkout {
   };
 
   checkoutCustomerAssociateV2 = async ({ checkoutId, customerAccessToken, after = null, first = 100 }) => {
-    const res = await this.parent.storefrontCall(checkoutQueries.checkoutCustomerAssociateV2, {
+    const res = await this.call(checkoutQueries.checkoutCustomerAssociateV2, {
       checkoutId,
       customerAccessToken,
       after,
@@ -59,7 +56,7 @@ class Checkout {
   };
 
   checkoutCustomerDisassociateV2 = async ({ checkoutId, after = null, first = 100 }) => {
-    const res = await this.parent.storefrontCall(checkoutQueries.checkoutCustomerDisassociateV2, {
+    const res = await this.call(checkoutQueries.checkoutCustomerDisassociateV2, {
       checkoutId,
       after,
       first,
@@ -72,7 +69,7 @@ class Checkout {
   };
 
   checkoutDiscountCodeApplyV2 = async ({ checkoutId, discountCode, after = null, first = 100 }) => {
-    const res = await this.parent.storefrontCall(checkoutQueries.checkoutDiscountCodeApplyV2, {
+    const res = await this.call(checkoutQueries.checkoutDiscountCodeApplyV2, {
       checkoutId,
       discountCode,
       after,
@@ -86,7 +83,7 @@ class Checkout {
   };
 
   checkoutDiscountCodeRemove = async ({ checkoutId, after = null, first = 100 }) => {
-    const res = await this.parent.storefrontCall(checkoutQueries.checkoutDiscountCodeRemove, {
+    const res = await this.call(checkoutQueries.checkoutDiscountCodeRemove, {
       checkoutId,
       after,
       first,
@@ -99,7 +96,7 @@ class Checkout {
   };
 
   checkoutLineItemsAdd = async ({ checkoutId, lineItems, after = null, first = 100 }) => {
-    const res = await this.parent.storefrontCall(checkoutQueries.checkoutLineItemsAdd, {
+    const res = await this.call(checkoutQueries.checkoutLineItemsAdd, {
       checkoutId,
       lineItems,
       after,
@@ -113,7 +110,7 @@ class Checkout {
   };
 
   checkoutLineItemsRemove = async ({ checkoutId, lineItems, after = null, first = 100 }) => {
-    const res = await this.parent.storefrontCall(checkoutQueries.checkoutLineItemsRemove, {
+    const res = await this.call(checkoutQueries.checkoutLineItemsRemove, {
       checkoutId,
       lineItems,
       after,
@@ -127,7 +124,7 @@ class Checkout {
   };
 
   checkoutLineItemsUpdate = async ({ checkoutId, lineItems, after = null, first = 100 }) => {
-    const res = await this.parent.storefrontCall(checkoutQueries.checkoutLineItemsUpdate, {
+    const res = await this.call(checkoutQueries.checkoutLineItemsUpdate, {
       checkoutId,
       lineItems,
       after,
@@ -141,7 +138,7 @@ class Checkout {
   };
 
   checkoutShippingAddressUpdateV2 = async ({ shippingAddress, checkoutId, after = null, first = 100 }) => {
-    const res = await this.parent.storefrontCall(checkoutQueries.checkoutShippingAddressUpdateV2, {
+    const res = await this.call(checkoutQueries.checkoutShippingAddressUpdateV2, {
       shippingAddress,
       checkoutId,
       after,
@@ -155,7 +152,7 @@ class Checkout {
   };
 
   queryCheckoutById = async ({ checkoutId, after = null, first = 100 }) => {
-    const res = await this.parent.storefrontCall(checkoutQueries.queryCheckoutById, { checkoutId, after, first });
+    const res = await this.call(checkoutQueries.queryCheckoutById, { checkoutId, after, first });
     if (res?.errors) {
       console.error(res.errors);
       return res;

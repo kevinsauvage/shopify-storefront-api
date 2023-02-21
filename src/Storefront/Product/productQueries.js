@@ -1,4 +1,4 @@
-import { pageInfoFragment, productFragment } from "../fragment.js";
+import { pageInfoFragment, productFragment } from "../../fragment.js";
 
 const getProductByHandle = `
 query getProductByHandle($handle: String) {

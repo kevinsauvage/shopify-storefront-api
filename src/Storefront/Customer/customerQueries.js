@@ -1,4 +1,10 @@
-import { addressFragment, customerFragment, lineItemFragment, orderFragment, pageInfoFragment } from "../fragment.js";
+import {
+  addressFragment,
+  customerFragment,
+  lineItemFragment,
+  orderFragment,
+  pageInfoFragment,
+} from "../../fragment.js";
 
 // {
 //  "input": {

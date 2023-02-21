@@ -1,12 +1,10 @@
+import ShopifyAdminApi from "../ShopifyAdminApi.js";
 import { queryDelegateAccessToken } from "./customerQueries.js";
 
-class CustomerAdmin {
-  constructor(parent) {
-    this.parent = parent;
-  }
-
+class CustomerAdmin extends ShopifyAdminApi {
   getDelegateToken = async ({ input }) => {
-    const res = await this.parent.adminCall(queryDelegateAccessToken, { input });
+    const res = await this.call(queryDelegateAccessToken, { input });
+
     if (res?.errors) {
       console.error(res.errors);
       return res;

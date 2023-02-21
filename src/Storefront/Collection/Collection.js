@@ -1,13 +1,10 @@
-import { cleanGraphQLResponse } from "../helpers.js";
+import { cleanGraphQLResponse } from "../../helpers.js";
+import ShopifyStorefrontApi from "../ShopifyStorefrontApi.js";
 import collectionQueries from "./collectionQueries.js";
 
-class Collection {
-  constructor(parent) {
-    this.parent = parent;
-  }
-
+class Collection extends ShopifyStorefrontApi {
   collection = async ({ handle, filters, first = 100, after = null, sort = "RELEVANCE" }) => {
-    const res = await this.parent.storefrontCall(collectionQueries.collection, {
+    const res = await this.call(collectionQueries.collection, {
       handle,
       first,
       filters,
@@ -39,7 +36,7 @@ class Collection {
     afterProducts = null,
     productsSortKey = "BEST_SELLING",
   }) => {
-    const res = await this.parent.storefrontCall(collectionQueries.collections, {
+    const res = await this.call(collectionQueries.collections, {
       first,
       after,
       sortKey,

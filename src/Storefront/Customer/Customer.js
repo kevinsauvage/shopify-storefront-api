@@ -1,12 +1,10 @@
-import { cleanGraphQLResponse } from "../helpers.js";
+import { cleanGraphQLResponse } from "../../helpers.js";
+import ShopifyStorefrontApi from "../ShopifyStorefrontApi.js";
 import customerQueries from "./customerQueries.js";
 
-class Customer {
-  constructor(parent) {
-    this.parent = parent;
-  }
+class Customer extends ShopifyStorefrontApi {
   customerAccessTokenCreate = async ({ input }) => {
-    const res = await this.parent.storefrontCall(customerQueries.customerAccessTokenCreate, { input });
+    const res = await this.call(customerQueries.customerAccessTokenCreate, { input });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -15,7 +13,7 @@ class Customer {
   };
 
   customerAccessTokenCreateWithMultipass = async ({ multipassToken }) => {
-    const res = await this.parent.storefrontCall(customerQueries.customerAccessTokenCreateWithMultipass, {
+    const res = await this.call(customerQueries.customerAccessTokenCreateWithMultipass, {
       multipassToken,
     });
     if (res?.errors) {
@@ -26,7 +24,7 @@ class Customer {
   };
 
   customerAccessTokenDelete = async ({ customerAccessToken }) => {
-    const res = await this.parent.storefrontCall(customerQueries.customerAccessTokenDelete, { customerAccessToken });
+    const res = await this.call(customerQueries.customerAccessTokenDelete, { customerAccessToken });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -36,7 +34,7 @@ class Customer {
   };
 
   customerAccessTokenRenew = async ({ customerAccessToken }) => {
-    const res = await this.parent.storefrontCall(customerQueries.customerAccessTokenRenew, { customerAccessToken });
+    const res = await this.call(customerQueries.customerAccessTokenRenew, { customerAccessToken });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -45,7 +43,7 @@ class Customer {
   };
 
   customerActivate = async ({ id, input }) => {
-    const res = await this.parent.storefrontCall(customerQueries.customerActivate, { id, input });
+    const res = await this.call(customerQueries.customerActivate, { id, input });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -54,7 +52,7 @@ class Customer {
   };
 
   customerActivateByUrl = async ({ activationUrl, password }) => {
-    const res = await this.parent.storefrontCall(customerQueries.customerActivateByUrl, { activationUrl, password });
+    const res = await this.call(customerQueries.customerActivateByUrl, { activationUrl, password });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -63,7 +61,7 @@ class Customer {
   };
 
   customerAddressCreate = async ({ address, customerAccessToken }) => {
-    const res = await this.parent.storefrontCall(customerQueries.customerAddressCreate, {
+    const res = await this.call(customerQueries.customerAddressCreate, {
       address,
       customerAccessToken,
     });
@@ -75,7 +73,7 @@ class Customer {
   };
 
   customerAddressDelete = async ({ customerAccessToken, addressId }) => {
-    const res = await this.parent.storefrontCall(customerQueries.customerAddressDelete, {
+    const res = await this.call(customerQueries.customerAddressDelete, {
       customerAccessToken,
       addressId,
     });
@@ -87,7 +85,7 @@ class Customer {
   };
 
   customerAddressUpdate = async ({ address, customerAccessToken, addressId }) => {
-    const res = await this.parent.storefrontCall(customerQueries.customerAddressUpdate, {
+    const res = await this.call(customerQueries.customerAddressUpdate, {
       address,
       customerAccessToken,
       addressId,
@@ -100,7 +98,7 @@ class Customer {
   };
 
   customerCreate = async ({ input }) => {
-    const res = await this.parent.storefrontCall(customerQueries.customerCreate, { input });
+    const res = await this.call(customerQueries.customerCreate, { input });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -109,7 +107,7 @@ class Customer {
   };
 
   customerDefaultAddressUpdate = async ({ customerAccessToken, addressId }) => {
-    const res = await this.parent.storefrontCall(customerQueries.customerDefaultAddressUpdate, {
+    const res = await this.call(customerQueries.customerDefaultAddressUpdate, {
       customerAccessToken,
       addressId,
     });
@@ -121,7 +119,7 @@ class Customer {
   };
 
   customerRecover = async ({ email }) => {
-    const res = await this.parent.storefrontCall(customerQueries.customerRecover, { email });
+    const res = await this.call(customerQueries.customerRecover, { email });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -130,7 +128,7 @@ class Customer {
   };
 
   customerReset = async ({ id, input }) => {
-    const res = await this.parent.storefrontCall(customerQueries.customerReset, { id, input });
+    const res = await this.call(customerQueries.customerReset, { id, input });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -139,7 +137,7 @@ class Customer {
   };
 
   customerResetByUrl = async ({ password, resetUrl }) => {
-    const res = await this.parent.storefrontCall(customerQueries.customerResetByUrl, { password, resetUrl });
+    const res = await this.call(customerQueries.customerResetByUrl, { password, resetUrl });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -148,7 +146,7 @@ class Customer {
   };
 
   customerUpdate = async ({ customerAccessToken, customer }) => {
-    const res = await this.parent.storefrontCall(customerQueries.customerUpdate, { customerAccessToken, customer });
+    const res = await this.call(customerQueries.customerUpdate, { customerAccessToken, customer });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -157,7 +155,7 @@ class Customer {
   };
 
   queryCustomer = async ({ customerAccessToken }) => {
-    const res = await this.parent.storefrontCall(customerQueries.queryCustomer, { customerAccessToken });
+    const res = await this.call(customerQueries.queryCustomer, { customerAccessToken });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -166,7 +164,7 @@ class Customer {
   };
 
   queryCustomerAddresses = async ({ customerAccessToken, first = 100, after = null }) => {
-    const res = await this.parent.storefrontCall(customerQueries.queryCustomerAddresses, {
+    const res = await this.call(customerQueries.queryCustomerAddresses, {
       customerAccessToken,
       first,
       after,
@@ -179,7 +177,7 @@ class Customer {
   };
 
   queryCustomerAddressById = async ({ addressId }) => {
-    const res = await this.parent.storefrontCall(customerQueries.queryCustomerAddressById, {
+    const res = await this.call(customerQueries.queryCustomerAddressById, {
       addressId,
     });
     if (res?.errors) {
@@ -190,7 +188,7 @@ class Customer {
   };
 
   queryCustomerOrders = async ({ customerAccessToken, first = 5, after = null }) => {
-    const res = await this.parent.storefrontCall(customerQueries.queryCustomerOrders, {
+    const res = await this.call(customerQueries.queryCustomerOrders, {
       customerAccessToken,
       after: after || null,
       first: Number(first),
@@ -209,7 +207,7 @@ class Customer {
   };
 
   queryCustomerOrderById = async ({ orderId, first = 100, after = null }) => {
-    const res = await this.parent.storefrontCall(customerQueries.queryCustomerOrderById, { orderId, first, after });
+    const res = await this.call(customerQueries.queryCustomerOrderById, { orderId, first, after });
     if (res?.errors) {
       console.error(res.errors);
       return res;
