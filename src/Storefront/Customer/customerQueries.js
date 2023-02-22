@@ -242,6 +242,17 @@ query customer ($customerAccessToken: String!) {
   }
 }`;
 
+const queryCustomerMetafields = `
+query customer ($customerAccessToken: String!, $metafields: [HasMetafieldsIdentifier!]!) {
+  customer(customerAccessToken: $customerAccessToken) {
+    metafields(identifiers: $metafields) {
+      value
+      key
+      updatedAt
+    }
+  }
+}`;
+
 const queryCustomerAddresses = `
 query customer ($customerAccessToken: String!, $first: Int, $after: String) {
   customer(customerAccessToken: $customerAccessToken) {
@@ -319,6 +330,7 @@ const customerQueries = {
   customerAddressDelete,
 
   queryCustomer,
+  queryCustomerMetafields,
   queryCustomerAddresses,
   queryCustomerAddressById,
   queryCustomerOrders,

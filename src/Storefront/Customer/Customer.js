@@ -163,6 +163,15 @@ class Customer extends ShopifyStorefrontApi {
     return res?.data?.customer;
   };
 
+  queryCustomerMetafields = async ({ customerAccessToken, metafields = [] }) => {
+    const res = await this.call(customerQueries.queryCustomerMetafields, { customerAccessToken, metafields });
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
+    return res?.data?.customer?.metafields;
+  };
+
   queryCustomerAddresses = async ({ customerAccessToken, first = 100, after = null }) => {
     const res = await this.call(customerQueries.queryCustomerAddresses, {
       customerAccessToken,

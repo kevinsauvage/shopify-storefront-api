@@ -5,3 +5,21 @@ mutation delegateAccessTokenCreate($input: DelegateAccessTokenInput!) {
     userErrors { field message }
   }
 }`;
+
+export const metafieldsSet = `
+mutation MetafieldsSet($metafields: [MetafieldsSetInput!]!) {
+  metafieldsSet(metafields: $metafields) {
+    metafields {
+      key
+      namespace
+      value
+      createdAt
+      updatedAt
+    }
+    userErrors {
+      field
+      message
+      code
+    }
+  }
+}`;
