@@ -7,13 +7,12 @@ class ShopifyAdminApi extends ShopifyApi {
   }
 
   async call(query, variables) {
-    if (!this.domain) throw new Error("Missing Domain");
-    if (!this.adminToken) throw new Error("Missing admin token");
-    if (!this.apiVersion) throw new Error("Missing api version");
-
     if (typeof window !== "undefined") {
       return console.error("This function should only be called on server side.");
     }
+    if (!this.domain) throw new Error("Missing Domain");
+    if (!this.adminToken) throw new Error("Missing admin token");
+    if (!this.apiVersion) throw new Error("Missing api version");
 
     try {
       const response = await fetch(`https://${this.domain}/admin/api/${this.apiVersion}/graphql.json`, {
