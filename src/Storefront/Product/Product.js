@@ -3,8 +3,9 @@ import ShopifyStorefrontApi from "../ShopifyStorefrontApi.js";
 import productQueries from "./productQueries.js";
 
 class Product extends ShopifyStorefrontApi {
-  getProductByHandle = async ({ handle }) => {
-    const res = await this.call(productQueries.getProductByHandle, { handle });
+  getProductByHandle = async ({ handle, language = "EN" }) => {
+    const res = await this.call(productQueries.getProductByHandle, { handle, language });
+
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -12,8 +13,8 @@ class Product extends ShopifyStorefrontApi {
     return cleanGraphQLResponse(res.data.product);
   };
 
-  productRecommendations = async ({ productId }) => {
-    const res = await this.call(productQueries.productRecommendations, { productId });
+  productRecommendations = async ({ productId, language = "EN" }) => {
+    const res = await this.call(productQueries.productRecommendations, { productId, language });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -21,8 +22,8 @@ class Product extends ShopifyStorefrontApi {
     return cleanGraphQLResponse(res.data.productRecommendations);
   };
 
-  getProducts = async ({ sortKey, first = 100, after = null, query = "" }) => {
-    const res = await this.call(productQueries.queryProducts, { first, sortKey, after, query });
+  getProducts = async ({ sortKey, first = 100, after = null, query = "", language = "EN" }) => {
+    const res = await this.call(productQueries.queryProducts, { first, sortKey, after, query, language });
     if (res?.errors) {
       console.error(res.errors);
       return res;

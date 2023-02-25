@@ -13,7 +13,8 @@ import {
 //   }
 // }
 const customerAccessTokenCreate = `
-mutation customerAccessTokenCreate($input: CustomerAccessTokenCreateInput!) {
+mutation customerAccessTokenCreate($input: CustomerAccessTokenCreateInput!, $language: LanguageCode) 
+@inContext(language: $language)  {
   customerAccessTokenCreate(input: $input) {
     customerAccessToken { accessToken expiresAt }
     customerUserErrors { field message }
@@ -24,7 +25,8 @@ mutation customerAccessTokenCreate($input: CustomerAccessTokenCreateInput!) {
 //  "multipassToken": ""
 // }
 const customerAccessTokenCreateWithMultipass = `
-mutation customerAccessTokenCreateWithMultipass($multipassToken: String!) {
+mutation customerAccessTokenCreateWithMultipass($multipassToken: String!, $language: LanguageCode) 
+@inContext(language: $language)  {
   customerAccessTokenCreateWithMultipass(multipassToken: $multipassToken) {
     customerAccessToken { accessToken expiresAt }
     customerUserErrors { field message }
@@ -35,7 +37,8 @@ mutation customerAccessTokenCreateWithMultipass($multipassToken: String!) {
 // "customerAccessToken": ""
 // }
 const customerAccessTokenDelete = `
-mutation customerAccessTokenDelete($customerAccessToken: String!) {
+mutation customerAccessTokenDelete($customerAccessToken: String!, $language: LanguageCode) 
+@inContext(language: $language)  {
   customerAccessTokenDelete(customerAccessToken: $customerAccessToken) {
     deletedAccessToken
     deletedCustomerAccessTokenId
@@ -47,7 +50,8 @@ mutation customerAccessTokenDelete($customerAccessToken: String!) {
 // "customerAccessToken": ""
 // }
 const customerAccessTokenRenew = `
-mutation ($customerAccessToken: String!) {
+mutation ($customerAccessToken: String!, $language: LanguageCode) 
+@inContext(language: $language)  {
   customerAccessTokenRenew(customerAccessToken: $customerAccessToken) {
     customerAccessToken { accessToken expiresAt }
     userErrors { field message }
@@ -62,7 +66,8 @@ mutation ($customerAccessToken: String!) {
 //   }
 // }
 const customerActivate = `
-mutation customerActivate($id: ID!, $input: CustomerActivateInput!) {
+mutation customerActivate($id: ID!, $input: CustomerActivateInput!, $language: LanguageCode) 
+@inContext(language: $language)  {
   customerActivate(id: $id, input: $input) {
     customer { ${customerFragment} }
     customerAccessToken { accessToken expiresAt }
@@ -75,7 +80,8 @@ mutation customerActivate($id: ID!, $input: CustomerActivateInput!) {
 //   "password": ""
 //  }
 const customerActivateByUrl = `
-mutation customerActivateByUrl($activationUrl: URL!, $password: String!) {
+mutation customerActivateByUrl($activationUrl: URL!, $password: String!, $language: LanguageCode) 
+@inContext(language: $language)  {
   customerActivateByUrl(activationUrl: $activationUrl, password: $password) {
     customer { ${customerFragment} }
     customerAccessToken { accessToken expiresAt }
@@ -99,7 +105,8 @@ mutation customerActivateByUrl($activationUrl: URL!, $password: String!) {
   "customerAccessToken": ""
 } */
 const customerAddressCreate = `
-mutation customerAddressCreate($address: MailingAddressInput!, $customerAccessToken: String!) {
+mutation customerAddressCreate($address: MailingAddressInput!, $customerAccessToken: String!, $language: LanguageCode) 
+@inContext(language: $language)  {
   customerAddressCreate(address: $address, customerAccessToken: $customerAccessToken) {
     customerAddress { ${addressFragment} }
     customerUserErrors { message }
@@ -112,7 +119,8 @@ mutation customerAddressCreate($address: MailingAddressInput!, $customerAccessTo
   "id": ""
 } */
 const customerAddressDelete = `
-mutation customerAddressDelete($customerAccessToken: String!, $addressId: ID!) {
+mutation customerAddressDelete($customerAccessToken: String!, $addressId: ID!, $language: LanguageCode) 
+@inContext(language: $language)  {
   customerAddressDelete(customerAccessToken: $customerAccessToken, id: $addressId) {
     customerUserErrors { field message }
     deletedCustomerAddressId
@@ -136,7 +144,8 @@ mutation customerAddressDelete($customerAccessToken: String!, $addressId: ID!) {
   "id": ""
 } */
 const customerAddressUpdate = `
-mutation customerAddressUpdate($address: MailingAddressInput!, $customerAccessToken: String!, $addressId: ID!) {
+mutation customerAddressUpdate($address: MailingAddressInput!, $customerAccessToken: String!, $addressId: ID!, $language: LanguageCode) 
+@inContext(language: $language)  {
   customerAddressUpdate(address: $address, customerAccessToken: $customerAccessToken, id: $addressId) {
     customerAddress { ${addressFragment} }
     customerUserErrors { message }
@@ -166,7 +175,8 @@ mutation ($input: CustomerCreateInput!) {
   "customerAccessToken": ""
 } */
 const customerDefaultAddressUpdate = `
-mutation customerDefaultAddressUpdate($addressId: ID!, $customerAccessToken: String!) {
+mutation customerDefaultAddressUpdate($addressId: ID!, $customerAccessToken: String!, $language: LanguageCode) 
+@inContext(language: $language)  {
   customerDefaultAddressUpdate(addressId: $addressId, customerAccessToken: $customerAccessToken) {
     customer { ${customerFragment} }
     customerUserErrors { message }
@@ -177,7 +187,8 @@ mutation customerDefaultAddressUpdate($addressId: ID!, $customerAccessToken: Str
   "email": ""
 } */
 const customerRecover = `
-mutation customerRecover($email: String!) {
+mutation customerRecover($email: String!, $language: LanguageCode) 
+@inContext(language: $language)  {
   customerRecover(email: $email) {
     customerUserErrors { field message }
   }
@@ -191,7 +202,8 @@ mutation customerRecover($email: String!) {
   }
 } */
 const customerReset = `
-mutation customerReset($id: ID!, $input: CustomerResetInput!) {
+mutation customerReset($id: ID!, $input: CustomerResetInput!, $language: LanguageCode) 
+@inContext(language: $language)  {
   customerReset(id: $id, input: $input) {
     customer { ${customerFragment} }
     customerAccessToken { accessToken expiresAt }
@@ -204,7 +216,8 @@ mutation customerReset($id: ID!, $input: CustomerResetInput!) {
   "resetUrl": ""
 } */
 const customerResetByUrl = `
-mutation customerResetByUrl($password: String!, $resetUrl: URL!) {
+mutation customerResetByUrl($password: String!, $resetUrl: URL!, $language: LanguageCode) 
+@inContext(language: $language)  {
   customerResetByUrl(password: $password, resetUrl: $resetUrl) {
       customer { ${customerFragment} }
       customerAccessToken { accessToken expiresAt }
@@ -224,7 +237,8 @@ mutation customerResetByUrl($password: String!, $resetUrl: URL!) {
   "customerAccessToken": ""
 } */
 const customerUpdate = `
-mutation customerUpdate($customer: CustomerUpdateInput!, $customerAccessToken: String!) {
+mutation customerUpdate($customer: CustomerUpdateInput!, $customerAccessToken: String!, $language: LanguageCode) 
+@inContext(language: $language)  {
   customerUpdate(customer: $customer, customerAccessToken: $customerAccessToken) {
     customer { ${customerFragment} }
     customerAccessToken { accessToken expiresAt }
@@ -236,14 +250,16 @@ mutation customerUpdate($customer: CustomerUpdateInput!, $customerAccessToken: S
 // "customerAccessToken": ""
 // }
 const queryCustomer = `
-query customer ($customerAccessToken: String!) {
+query customer ($customerAccessToken: String!, $language: LanguageCode) 
+@inContext(language: $language)  {
   customer(customerAccessToken: $customerAccessToken) {
     ${customerFragment}
   }
 }`;
 
 const queryCustomerMetafields = `
-query customer ($customerAccessToken: String!, $metafields: [HasMetafieldsIdentifier!]!) {
+query customer ($customerAccessToken: String!, $metafields: [HasMetafieldsIdentifier!]!, $language: LanguageCode) 
+@inContext(language: $language)  {
   customer(customerAccessToken: $customerAccessToken) {
     metafields(identifiers: $metafields) {
       value
@@ -254,7 +270,8 @@ query customer ($customerAccessToken: String!, $metafields: [HasMetafieldsIdenti
 }`;
 
 const queryCustomerAddresses = `
-query customer ($customerAccessToken: String!, $first: Int, $after: String) {
+query customer ($customerAccessToken: String!, $first: Int, $after: String, $language: LanguageCode) 
+@inContext(language: $language)  {
   customer(customerAccessToken: $customerAccessToken) {
     addresses(first: $first, after: $after) {
       edges {
@@ -268,7 +285,8 @@ query customer ($customerAccessToken: String!, $first: Int, $after: String) {
 `;
 
 const queryCustomerAddressById = `
-query ($addressId: ID!) {
+query ($addressId: ID!, $language: LanguageCode) 
+@inContext(language: $language)  {
   node(id: $addressId) {
     ... on MailingAddress {
       ${addressFragment}
@@ -282,7 +300,8 @@ query ($addressId: ID!) {
   "after": ""
 } */
 const queryCustomerOrders = `
-query customer ($customerAccessToken: String!, $first: Int, $after: String) {
+query customer ($customerAccessToken: String!, $first: Int, $after: String, $language: LanguageCode) 
+@inContext(language: $language)  {
   customer(customerAccessToken: $customerAccessToken) {
     orders(first: $first, after: $after) {
       totalCount
@@ -297,7 +316,8 @@ query customer ($customerAccessToken: String!, $first: Int, $after: String) {
 }`;
 
 const queryCustomerOrderById = `
-query ($orderId: ID!, $first: Int, $after: String) {
+query ($orderId: ID!, $first: Int, $after: String, $language: LanguageCode) 
+@inContext(language: $language)  {
   node(id: $orderId) {
     ... on Order {
       ${orderFragment}

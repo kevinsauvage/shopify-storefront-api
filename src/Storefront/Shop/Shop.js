@@ -2,8 +2,9 @@ import ShopifyStorefrontApi from "../ShopifyStorefrontApi.js";
 import shopQueries from "./shopQueries.js";
 
 class Shop extends ShopifyStorefrontApi {
-  getShop = async () => {
-    const res = await this.call(shopQueries.getShop);
+  getShop = async ({ language = "EN" } = {}) => {
+    const res = await this.call(shopQueries.getShop, { language });
+
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -11,8 +12,8 @@ class Shop extends ShopifyStorefrontApi {
     return res?.data?.shop;
   };
 
-  getPrivacyPolicy = async () => {
-    const res = await this.call(shopQueries.getPrivacyPolicy);
+  getPrivacyPolicy = async ({ language = "EN" } = {}) => {
+    const res = await this.call(shopQueries.getPrivacyPolicy, { language });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -20,8 +21,8 @@ class Shop extends ShopifyStorefrontApi {
     return res?.data?.shop;
   };
 
-  getRefundPolicy = async () => {
-    const res = await this.call(shopQueries.getRefundPolicy);
+  getRefundPolicy = async ({ language = "EN" } = {}) => {
+    const res = await this.call(shopQueries.getRefundPolicy, { language });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -29,8 +30,8 @@ class Shop extends ShopifyStorefrontApi {
     return res?.data?.shop;
   };
 
-  getShippingPolicy = async () => {
-    const res = await this.call(shopQueries.getShippingPolicy);
+  getShippingPolicy = async ({ language = "EN" } = {}) => {
+    const res = await this.call(shopQueries.getShippingPolicy, { language });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -38,8 +39,8 @@ class Shop extends ShopifyStorefrontApi {
     return res?.data?.shop;
   };
 
-  getSuscriptionPolicy = async () => {
-    const res = await this.call(shopQueries.getSuscriptionPolicy);
+  getSuscriptionPolicy = async ({ language = "EN" } = {}) => {
+    const res = await this.call(shopQueries.getSuscriptionPolicy, { language });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -47,8 +48,8 @@ class Shop extends ShopifyStorefrontApi {
     return res?.data?.shop;
   };
 
-  getTermsOfService = async () => {
-    const res = await this.call(shopQueries.getTermsOfService);
+  getTermsOfService = async ({ language = "EN" } = {}) => {
+    const res = await this.call(shopQueries.getTermsOfService, { language });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -56,8 +57,8 @@ class Shop extends ShopifyStorefrontApi {
     return res?.data?.shop;
   };
 
-  getMenu = async ({ handle }) => {
-    const res = await this.call(shopQueries.getMenu, { handle });
+  getMenu = async ({ handle, language = "EN" }) => {
+    const res = await this.call(shopQueries.getMenu, { handle, language });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -65,8 +66,8 @@ class Shop extends ShopifyStorefrontApi {
     return res?.data?.menu?.items;
   };
 
-  getPage = async ({ handle }) => {
-    const res = await this.call(shopQueries.getPage, { handle });
+  getPage = async ({ handle, language = "EN" }) => {
+    const res = await this.call(shopQueries.getPage, { handle, language });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -75,14 +76,24 @@ class Shop extends ShopifyStorefrontApi {
     return value ? JSON.parse(value) : undefined;
   };
 
-  getMetaObject = async ({ handle }) => {
-    const res = await this.call(shopQueries.getMetaObject, { handle });
+  getMetaObject = async ({ handle, language = "EN" }) => {
+    const res = await this.call(shopQueries.getMetaObject, { handle, language });
     if (res?.errors) {
       console.error(res.errors);
       return res;
     }
     const value = res?.data?.metaobject?.fields?.[0].value;
     return value && JSON.parse(value);
+  };
+
+  localization = async ({ countryCode = "US" } = {}) => {
+    const res = await this.call(shopQueries.localization, { countryCode });
+
+    if (res?.errors) {
+      console.error(res.errors);
+      return res;
+    }
+    return res?.data?.localization;
   };
 }
 

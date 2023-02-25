@@ -1,7 +1,8 @@
 import { collectionFragment, filterFragment, pageInfoFragment, productFragment } from "../../fragment.js";
 
 const collection = `
-query collection($handle: String!, $first: Int!, $filters: [ProductFilter!], $sort: ProductCollectionSortKeys, $after: String) {
+query collection($handle: String!, $first: Int!, $filters: [ProductFilter!], $sort: ProductCollectionSortKeys, $after: String, $language: LanguageCode) 
+@inContext(language: $language) {
   collection(handle: $handle) {
     ${collectionFragment}
     products(first: $first,  filters: $filters, sortKey: $sort, after: $after) {
@@ -15,7 +16,8 @@ query collection($handle: String!, $first: Int!, $filters: [ProductFilter!], $so
 }`;
 
 const collections = `
-query collections($first: Int, $after: String, $sortKey: CollectionSortKeys, $firstProducts: Int, $afterProducts: String, $productsSortKey: ProductCollectionSortKeys)  {
+query collections($first: Int, $after: String, $sortKey: CollectionSortKeys, $firstProducts: Int, $afterProducts: String, $productsSortKey: ProductCollectionSortKeys, $language: LanguageCode) 
+@inContext(language: $language) {
   collections(first: $first, after: $after, sortKey: $sortKey) {
     pageInfo {
       ${pageInfoFragment}

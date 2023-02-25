@@ -3,8 +3,8 @@ import ShopifyStorefrontApi from "../ShopifyStorefrontApi.js";
 import customerQueries from "./customerQueries.js";
 
 class Customer extends ShopifyStorefrontApi {
-  customerAccessTokenCreate = async ({ input }) => {
-    const res = await this.call(customerQueries.customerAccessTokenCreate, { input });
+  customerAccessTokenCreate = async ({ input, language = "EN" }) => {
+    const res = await this.call(customerQueries.customerAccessTokenCreate, { input, language });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -12,8 +12,9 @@ class Customer extends ShopifyStorefrontApi {
     return res?.data?.customerAccessTokenCreate;
   };
 
-  customerAccessTokenCreateWithMultipass = async ({ multipassToken }) => {
+  customerAccessTokenCreateWithMultipass = async ({ multipassToken, language = "EN" }) => {
     const res = await this.call(customerQueries.customerAccessTokenCreateWithMultipass, {
+      language,
       multipassToken,
     });
     if (res?.errors) {
@@ -23,8 +24,8 @@ class Customer extends ShopifyStorefrontApi {
     return res?.data?.customerAccessTokenCreateWithMultipass;
   };
 
-  customerAccessTokenDelete = async ({ customerAccessToken }) => {
-    const res = await this.call(customerQueries.customerAccessTokenDelete, { customerAccessToken });
+  customerAccessTokenDelete = async ({ customerAccessToken, language = "EN" }) => {
+    const res = await this.call(customerQueries.customerAccessTokenDelete, { customerAccessToken, language });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -33,8 +34,8 @@ class Customer extends ShopifyStorefrontApi {
     return response;
   };
 
-  customerAccessTokenRenew = async ({ customerAccessToken }) => {
-    const res = await this.call(customerQueries.customerAccessTokenRenew, { customerAccessToken });
+  customerAccessTokenRenew = async ({ customerAccessToken, language = "EN" }) => {
+    const res = await this.call(customerQueries.customerAccessTokenRenew, { customerAccessToken, language });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -42,8 +43,8 @@ class Customer extends ShopifyStorefrontApi {
     return res?.data?.customerAccessTokenRenew;
   };
 
-  customerActivate = async ({ id, input }) => {
-    const res = await this.call(customerQueries.customerActivate, { id, input });
+  customerActivate = async ({ id, input, language = "EN" }) => {
+    const res = await this.call(customerQueries.customerActivate, { id, input, language });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -51,8 +52,8 @@ class Customer extends ShopifyStorefrontApi {
     return res?.data?.customerActivate;
   };
 
-  customerActivateByUrl = async ({ activationUrl, password }) => {
-    const res = await this.call(customerQueries.customerActivateByUrl, { activationUrl, password });
+  customerActivateByUrl = async ({ activationUrl, password, language = "EN" }) => {
+    const res = await this.call(customerQueries.customerActivateByUrl, { activationUrl, password, language });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -60,10 +61,11 @@ class Customer extends ShopifyStorefrontApi {
     return res?.data?.customerActivateByUrl;
   };
 
-  customerAddressCreate = async ({ address, customerAccessToken }) => {
+  customerAddressCreate = async ({ address, customerAccessToken, language = "EN" }) => {
     const res = await this.call(customerQueries.customerAddressCreate, {
       address,
       customerAccessToken,
+      language,
     });
     if (res?.errors) {
       console.error(res.errors);
@@ -72,10 +74,11 @@ class Customer extends ShopifyStorefrontApi {
     return res?.data?.customerAddressCreate;
   };
 
-  customerAddressDelete = async ({ customerAccessToken, addressId }) => {
+  customerAddressDelete = async ({ customerAccessToken, addressId, language = "EN" }) => {
     const res = await this.call(customerQueries.customerAddressDelete, {
       customerAccessToken,
       addressId,
+      language,
     });
     if (res?.errors) {
       console.error(res.errors);
@@ -84,11 +87,12 @@ class Customer extends ShopifyStorefrontApi {
     return res?.data?.customerAddressDelete;
   };
 
-  customerAddressUpdate = async ({ address, customerAccessToken, addressId }) => {
+  customerAddressUpdate = async ({ address, customerAccessToken, addressId, language = "EN" }) => {
     const res = await this.call(customerQueries.customerAddressUpdate, {
       address,
       customerAccessToken,
       addressId,
+      language,
     });
     if (res?.errors) {
       console.error(res.errors);
@@ -97,8 +101,8 @@ class Customer extends ShopifyStorefrontApi {
     return res?.data?.customerAddressUpdate;
   };
 
-  customerCreate = async ({ input }) => {
-    const res = await this.call(customerQueries.customerCreate, { input });
+  customerCreate = async ({ input, language = "EN" }) => {
+    const res = await this.call(customerQueries.customerCreate, { input, language });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -106,10 +110,11 @@ class Customer extends ShopifyStorefrontApi {
     return res?.data?.customerCreate;
   };
 
-  customerDefaultAddressUpdate = async ({ customerAccessToken, addressId }) => {
+  customerDefaultAddressUpdate = async ({ customerAccessToken, addressId, language = "EN" }) => {
     const res = await this.call(customerQueries.customerDefaultAddressUpdate, {
       customerAccessToken,
       addressId,
+      language,
     });
     if (res?.errors) {
       console.error(res.errors);
@@ -118,8 +123,8 @@ class Customer extends ShopifyStorefrontApi {
     return res?.data?.customerDefaultAddressUpdate;
   };
 
-  customerRecover = async ({ email }) => {
-    const res = await this.call(customerQueries.customerRecover, { email });
+  customerRecover = async ({ email, language = "EN" }) => {
+    const res = await this.call(customerQueries.customerRecover, { email, language });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -127,8 +132,8 @@ class Customer extends ShopifyStorefrontApi {
     return res?.data?.customerRecover;
   };
 
-  customerReset = async ({ id, input }) => {
-    const res = await this.call(customerQueries.customerReset, { id, input });
+  customerReset = async ({ id, input, language = "EN" }) => {
+    const res = await this.call(customerQueries.customerReset, { id, input, language });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -136,8 +141,8 @@ class Customer extends ShopifyStorefrontApi {
     return res?.data?.customerReset;
   };
 
-  customerResetByUrl = async ({ password, resetUrl }) => {
-    const res = await this.call(customerQueries.customerResetByUrl, { password, resetUrl });
+  customerResetByUrl = async ({ password, resetUrl, language = "EN" }) => {
+    const res = await this.call(customerQueries.customerResetByUrl, { password, resetUrl, language });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -145,8 +150,8 @@ class Customer extends ShopifyStorefrontApi {
     return res?.data?.customerResetByUrl;
   };
 
-  customerUpdate = async ({ customerAccessToken, customer }) => {
-    const res = await this.call(customerQueries.customerUpdate, { customerAccessToken, customer });
+  customerUpdate = async ({ customerAccessToken, customer, language = "EN" }) => {
+    const res = await this.call(customerQueries.customerUpdate, { customerAccessToken, customer, language });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -154,8 +159,8 @@ class Customer extends ShopifyStorefrontApi {
     return res?.data?.customerUpdate;
   };
 
-  queryCustomer = async ({ customerAccessToken }) => {
-    const res = await this.call(customerQueries.queryCustomer, { customerAccessToken });
+  queryCustomer = async ({ customerAccessToken, language = "EN" }) => {
+    const res = await this.call(customerQueries.queryCustomer, { customerAccessToken, language });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -163,8 +168,8 @@ class Customer extends ShopifyStorefrontApi {
     return res?.data?.customer;
   };
 
-  queryCustomerMetafields = async ({ customerAccessToken, metafields = [] }) => {
-    const res = await this.call(customerQueries.queryCustomerMetafields, { customerAccessToken, metafields });
+  queryCustomerMetafields = async ({ customerAccessToken, metafields = [], language = "EN" }) => {
+    const res = await this.call(customerQueries.queryCustomerMetafields, { customerAccessToken, metafields, language });
     if (res?.errors) {
       console.error(res.errors);
       return res;
@@ -172,11 +177,12 @@ class Customer extends ShopifyStorefrontApi {
     return res?.data?.customer?.metafields;
   };
 
-  queryCustomerAddresses = async ({ customerAccessToken, first = 100, after = null }) => {
+  queryCustomerAddresses = async ({ customerAccessToken, first = 100, after = null, language = "EN" }) => {
     const res = await this.call(customerQueries.queryCustomerAddresses, {
       customerAccessToken,
       first,
       after,
+      language,
     });
     if (res?.errors) {
       console.error(res.errors);
@@ -185,9 +191,10 @@ class Customer extends ShopifyStorefrontApi {
     return cleanGraphQLResponse(res?.data?.customer?.addresses);
   };
 
-  queryCustomerAddressById = async ({ addressId }) => {
+  queryCustomerAddressById = async ({ addressId, language = "EN" }) => {
     const res = await this.call(customerQueries.queryCustomerAddressById, {
       addressId,
+      language,
     });
     if (res?.errors) {
       console.error(res.errors);
@@ -196,11 +203,12 @@ class Customer extends ShopifyStorefrontApi {
     return cleanGraphQLResponse(res?.data?.node);
   };
 
-  queryCustomerOrders = async ({ customerAccessToken, first = 5, after = null }) => {
+  queryCustomerOrders = async ({ customerAccessToken, first = 5, after = null, language = "EN" }) => {
     const res = await this.call(customerQueries.queryCustomerOrders, {
       customerAccessToken,
       after: after || null,
       first: Number(first),
+      language,
     });
     const orders = res?.data?.customer?.orders;
 
@@ -215,8 +223,8 @@ class Customer extends ShopifyStorefrontApi {
     return { orders: cleanGraphQLResponse(orders), pageInfo, totalCount };
   };
 
-  queryCustomerOrderById = async ({ orderId, first = 100, after = null }) => {
-    const res = await this.call(customerQueries.queryCustomerOrderById, { orderId, first, after });
+  queryCustomerOrderById = async ({ orderId, first = 100, after = null, language = "EN" }) => {
+    const res = await this.call(customerQueries.queryCustomerOrderById, { orderId, first, after, language });
     if (res?.errors) {
       console.error(res.errors);
       return res;
