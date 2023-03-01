@@ -234,7 +234,14 @@ description
 title
 id
 image {
-  ${imageFragment}
+  src
+  altText
+  small:  url(transform: { maxHeight: 200, maxWidth: 400, crop: CENTER, preferredContentType: WEBP })
+  medium:  url(transform: { maxHeight: 300, maxWidth: 500, crop: CENTER, preferredContentType: WEBP })
+  large:  url(transform: { maxHeight: 400, maxWidth: 600, crop: CENTER, preferredContentType: WEBP })
+  blurDataURL: url(transform: {maxHeight: 2, maxWidth: 4, crop: CENTER,  preferredContentType: WEBP})
+  width
+  height
 }
 seo {
   description

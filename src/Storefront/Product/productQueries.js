@@ -5,6 +5,10 @@ query getProductByHandle($handle: String, $language: LanguageCode)
 @inContext(language: $language) {
   product(handle: $handle) {
     ${productFragment}
+    seo {
+      description
+      title
+    }
   }
 }`;
 
