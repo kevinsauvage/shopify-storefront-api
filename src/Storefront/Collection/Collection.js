@@ -3,7 +3,15 @@ import ShopifyStorefrontApi from "../ShopifyStorefrontApi.js";
 import collectionQueries from "./collectionQueries.js";
 
 class Collection extends ShopifyStorefrontApi {
-  collection = async ({ handle, filters, first = 100, after = null, sort = "RELEVANCE", language = "EN" }) => {
+  collection = async ({
+    handle,
+    filters,
+    first = 100,
+    after = null,
+    sort = "RELEVANCE",
+    identifiers = [],
+    language = "EN",
+  }) => {
     const res = await this.call(collectionQueries.collection, {
       handle,
       first,
@@ -11,6 +19,7 @@ class Collection extends ShopifyStorefrontApi {
       sort,
       after,
       language,
+      identifiers,
     });
 
     if (res?.errors) {
@@ -37,6 +46,7 @@ class Collection extends ShopifyStorefrontApi {
     afterProducts = null,
     productsSortKey = "BEST_SELLING",
     language = "EN",
+    identifiers = [],
   }) => {
     const res = await this.call(collectionQueries.collections, {
       first,
@@ -46,6 +56,7 @@ class Collection extends ShopifyStorefrontApi {
       afterProducts,
       productsSortKey,
       language,
+      identifiers,
     });
 
     if (res?.errors) {

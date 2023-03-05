@@ -1,7 +1,7 @@
 import { pageInfoFragment, productFragment } from "../../fragment.js";
 
 const getProductByHandle = `
-query getProductByHandle($handle: String, $language: LanguageCode) 
+query getProductByHandle($handle: String, $language: LanguageCode,  $identifiers: [HasMetafieldsIdentifier!]!) 
 @inContext(language: $language) {
   product(handle: $handle) {
     ${productFragment}
@@ -13,7 +13,7 @@ query getProductByHandle($handle: String, $language: LanguageCode)
 }`;
 
 const productRecommendations = `
-query productRecommendations($productId: ID!, $language: LanguageCode) 
+query productRecommendations($productId: ID!, $language: LanguageCode, $identifiers: [HasMetafieldsIdentifier!]!) 
 @inContext(language: $language) {
   productRecommendations(productId: $productId) {
     ${productFragment}
@@ -21,7 +21,7 @@ query productRecommendations($productId: ID!, $language: LanguageCode)
 }`;
 
 const queryProducts = `
-query products($first: Int, $after: String, $sortKey: ProductSortKeys, $query: String, $language: LanguageCode) 
+query products($first: Int, $after: String, $sortKey: ProductSortKeys, $query: String, $language: LanguageCode, $identifiers: [HasMetafieldsIdentifier!]!) 
 @inContext(language: $language) {
   products(first: $first, after: $after, sortKey: $sortKey , query: $query) {
     pageInfo {

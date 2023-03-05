@@ -154,7 +154,12 @@ variants(first: 8) {
       ${variantFragment}
     }
   }
-}`;
+}
+metafields(identifiers: $identifiers) {
+  key
+  value
+}
+`;
 
 export const customerFragment = `
 id
