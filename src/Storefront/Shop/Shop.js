@@ -1,99 +1,99 @@
-import ShopifyStorefrontApi from "../ShopifyStorefrontApi.js";
-import shopQueries from "./shopQueries.js";
+import ShopifyStorefrontApi from '../ShopifyStorefrontApi';
+import shopQueries from './shopQueries';
 
 class Shop extends ShopifyStorefrontApi {
-  getShop = async ({ language = "EN" } = {}) => {
-    const res = await this.call(shopQueries.getShop, { language });
+  getShop = async ({ language = 'EN' } = {}) => {
+    const response = await this.call(shopQueries.getShop, { language });
 
-    if (res?.errors) {
-      console.error(res.errors);
-      return res;
+    if (response?.errors) {
+      console.error(response.errors);
+      return response;
     }
-    return res?.data?.shop;
+    return response?.data?.shop;
   };
 
-  getPrivacyPolicy = async ({ language = "EN" } = {}) => {
-    const res = await this.call(shopQueries.getPrivacyPolicy, { language });
-    if (res?.errors) {
-      console.error(res.errors);
-      return res;
+  getPrivacyPolicy = async ({ language = 'EN' } = {}) => {
+    const response = await this.call(shopQueries.getPrivacyPolicy, { language });
+    if (response?.errors) {
+      console.error(response.errors);
+      return response;
     }
-    return res?.data?.shop;
+    return response?.data?.shop;
   };
 
-  getRefundPolicy = async ({ language = "EN" } = {}) => {
-    const res = await this.call(shopQueries.getRefundPolicy, { language });
-    if (res?.errors) {
-      console.error(res.errors);
-      return res;
+  getRefundPolicy = async ({ language = 'EN' } = {}) => {
+    const response = await this.call(shopQueries.getRefundPolicy, { language });
+    if (response?.errors) {
+      console.error(response.errors);
+      return response;
     }
-    return res?.data?.shop;
+    return response?.data?.shop;
   };
 
-  getShippingPolicy = async ({ language = "EN" } = {}) => {
-    const res = await this.call(shopQueries.getShippingPolicy, { language });
-    if (res?.errors) {
-      console.error(res.errors);
-      return res;
+  getShippingPolicy = async ({ language = 'EN' } = {}) => {
+    const response = await this.call(shopQueries.getShippingPolicy, { language });
+    if (response?.errors) {
+      console.error(response.errors);
+      return response;
     }
-    return res?.data?.shop;
+    return response?.data?.shop;
   };
 
-  getSuscriptionPolicy = async ({ language = "EN" } = {}) => {
-    const res = await this.call(shopQueries.getSuscriptionPolicy, { language });
-    if (res?.errors) {
-      console.error(res.errors);
-      return res;
+  getSuscriptionPolicy = async ({ language = 'EN' } = {}) => {
+    const response = await this.call(shopQueries.getSuscriptionPolicy, { language });
+    if (response?.errors) {
+      console.error(response.errors);
+      return response;
     }
-    return res?.data?.shop;
+    return response?.data?.shop;
   };
 
-  getTermsOfService = async ({ language = "EN" } = {}) => {
-    const res = await this.call(shopQueries.getTermsOfService, { language });
-    if (res?.errors) {
-      console.error(res.errors);
-      return res;
+  getTermsOfService = async ({ language = 'EN' } = {}) => {
+    const response = await this.call(shopQueries.getTermsOfService, { language });
+    if (response?.errors) {
+      console.error(response.errors);
+      return response;
     }
-    return res?.data?.shop;
+    return response?.data?.shop;
   };
 
-  getMenu = async ({ handle, language = "EN" }) => {
-    const res = await this.call(shopQueries.getMenu, { handle, language });
-    if (res?.errors) {
-      console.error(res.errors);
-      return res;
+  getMenu = async ({ handle, language = 'EN' }) => {
+    const response = await this.call(shopQueries.getMenu, { handle, language });
+    if (response?.errors) {
+      console.error(response.errors);
+      return response;
     }
-    return res?.data?.menu?.items;
+    return response?.data?.menu?.items;
   };
 
-  getPage = async ({ handle, language = "EN" }) => {
-    const res = await this.call(shopQueries.getPage, { handle, language });
-    if (res?.errors) {
-      console.error(res.errors);
-      return res;
+  getPage = async ({ handle, language = 'EN' }) => {
+    const response = await this.call(shopQueries.getPage, { handle, language });
+    if (response?.errors) {
+      console.error(response.errors);
+      return response;
     }
-    const value = res?.data?.page?.data?.value;
+    const value = response?.data?.page?.data?.value;
     return value ? JSON.parse(value) : undefined;
   };
 
-  getMetaObject = async ({ handle, language = "EN" }) => {
-    const res = await this.call(shopQueries.getMetaObject, { handle, language });
-    if (res?.errors) {
-      console.error(res.errors);
-      return res;
+  getMetaObject = async ({ handle, language = 'EN' }) => {
+    const response = await this.call(shopQueries.getMetaObject, { handle, language });
+    if (response?.errors) {
+      console.error(response.errors);
+      return response;
     }
-    const value = res?.data?.metaobject?.fields?.[0].value;
+    const value = response?.data?.metaobject?.fields?.[0].value;
     return value && JSON.parse(value);
   };
 
-  localization = async ({ countryCode = "US" } = {}) => {
-    const res = await this.call(shopQueries.localization, { countryCode });
+  localization = async ({ countryCode = 'US' } = {}) => {
+    const response = await this.call(shopQueries.localization, { countryCode });
 
-    if (res?.errors) {
-      console.error(res.errors);
-      return res;
+    if (response?.errors) {
+      console.error(response.errors);
+      return response;
     }
-    return res?.data?.localization;
+    return response?.data?.localization;
   };
 }
 

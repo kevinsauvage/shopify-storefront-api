@@ -1,6 +1,6 @@
-import { cleanGraphQLResponse } from "../../helpers.js";
-import ShopifyStorefrontApi from "../ShopifyStorefrontApi.js";
-import collectionQueries from "./collectionQueries.js";
+import { cleanGraphQLResponse } from '../../helpers';
+import ShopifyStorefrontApi from '../ShopifyStorefrontApi';
+import collectionQueries from './collectionQueries';
 
 class Collection extends ShopifyStorefrontApi {
   collection = async ({
@@ -8,11 +8,11 @@ class Collection extends ShopifyStorefrontApi {
     filters,
     first = 100,
     after = null,
-    sort = "RELEVANCE",
+    sort = 'RELEVANCE',
     identifiers = [],
-    language = "EN",
+    language = 'EN',
   }) => {
-    const res = await this.call(collectionQueries.collection, {
+    const response = await this.call(collectionQueries.collection, {
       handle,
       first,
       filters,
@@ -22,12 +22,12 @@ class Collection extends ShopifyStorefrontApi {
       identifiers,
     });
 
-    if (res?.errors) {
-      console.error(res.errors);
-      return res;
+    if (response?.errors) {
+      console.error(response.errors);
+      return response;
     }
 
-    const collection = res?.data?.collection;
+    const collection = response?.data?.collection;
 
     if (collection) {
       const products = cleanGraphQLResponse(collection?.products);
@@ -41,14 +41,14 @@ class Collection extends ShopifyStorefrontApi {
   collections = async ({
     first = 250,
     after = null,
-    sortKey = "RELEVANCE",
+    sortKey = 'RELEVANCE',
     firstProducts = 250,
     afterProducts = null,
-    productsSortKey = "BEST_SELLING",
-    language = "EN",
+    productsSortKey = 'BEST_SELLING',
+    language = 'EN',
     identifiers = [],
   }) => {
-    const res = await this.call(collectionQueries.collections, {
+    const response = await this.call(collectionQueries.collections, {
       first,
       after,
       sortKey,
@@ -59,11 +59,14 @@ class Collection extends ShopifyStorefrontApi {
       identifiers,
     });
 
-    if (res?.errors) {
-      console.error(res.errors);
-      return res;
+    if (response?.errors) {
+      console.error(response.errors);
+      return response;
     }
-    return { collections: cleanGraphQLResponse(res?.data?.collections), pageInfo: res?.data?.collections?.pageInfo };
+    return {
+      collections: cleanGraphQLResponse(response?.data?.collections),
+      pageInfo: response?.data?.collections?.pageInfo,
+    };
   };
 }
 

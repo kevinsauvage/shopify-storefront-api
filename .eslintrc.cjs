@@ -3,24 +3,25 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: ["airbnb-base", "prettier"],
-  plugins: ["prettier"],
   parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
+    ecmaVersion: 'latest',
+    sourceType: 'module',
   },
-  rules: {
-    "prettier/prettier": ["error"],
+  plugins: ['prettier', 'sonarjs', 'unicorn'],
+  extends: [
+    'airbnb-base',
+    'prettier',
+    'plugin:sonarjs/recommended',
+    'eslint:recommended',
+    'plugin:unicorn/recommended',
+  ],
 
-    "import/extensions": [
-      "error",
-      "ignorePackages",
-      {
-        js: "never",
-        jsx: "never",
-        ts: "never",
-        tsx: "never",
-      },
-    ],
+  rules: {
+    'unicorn/no-array-reduce': 0,
+    'unicorn/no-array-for-each': 0,
+    'unicorn/filename-case': 0,
+    'unicorn/no-new-array': 0,
+    'unicorn/no-null': 0,
+    'prettier/prettier': ['error'],
   },
 };

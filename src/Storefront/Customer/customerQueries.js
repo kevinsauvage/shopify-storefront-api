@@ -4,7 +4,7 @@ import {
   lineItemFragment,
   orderFragment,
   pageInfoFragment,
-} from "../../fragment.js";
+} from '../../fragment';
 
 // {
 //  "input": {

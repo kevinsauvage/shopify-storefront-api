@@ -1,12 +1,12 @@
-import Customer from "./src/Storefront/Customer/Customer.js";
-import Product from "./src/Storefront/Product/Product.js";
-import Collection from "./src/Storefront/Collection/Collection.js";
-import Cart from "./src/Storefront/Cart/Cart.js";
-import Checkout from "./src/Storefront/Checkout/Checkout.js";
-import Shop from "./src/Storefront/Shop/Shop.js";
+import Customer from './src/Storefront/Customer/Customer';
+import Product from './src/Storefront/Product/Product';
+import Collection from './src/Storefront/Collection/Collection';
+import Cart from './src/Storefront/Cart/Cart';
+import Checkout from './src/Storefront/Checkout/Checkout';
+import Shop from './src/Storefront/Shop/Shop';
 
 // Admin
-import CustomerAdmin from "./src/Admin/Customer/Customer.js";
+import CustomerAdmin from './src/Admin/Customer/Customer';
 
 class ShopifyClient {
   constructor(options) {

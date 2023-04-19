@@ -1,34 +1,59 @@
-import { cleanGraphQLResponse } from "../../helpers.js";
-import ShopifyStorefrontApi from "../ShopifyStorefrontApi.js";
-import productQueries from "./productQueries.js";
+import { cleanGraphQLResponse } from '../../helpers';
+import ShopifyStorefrontApi from '../ShopifyStorefrontApi';
+import productQueries from './productQueries';
 
 class Product extends ShopifyStorefrontApi {
-  getProductByHandle = async ({ handle, identifiers = [], language = "EN" }) => {
-    const res = await this.call(productQueries.getProductByHandle, { handle, language, identifiers });
+  getProductByHandle = async ({ handle, identifiers = [], language = 'EN' }) => {
+    const response = await this.call(productQueries.getProductByHandle, {
+      handle,
+      language,
+      identifiers,
+    });
 
-    if (res?.errors) {
-      console.error(res.errors);
-      return res;
+    if (response?.errors) {
+      console.error(response.errors);
+      return response;
     }
-    return cleanGraphQLResponse(res.data.product);
+    return cleanGraphQLResponse(response.data.product);
   };
 
-  productRecommendations = async ({ productId, identifiers = [], language = "EN" }) => {
-    const res = await this.call(productQueries.productRecommendations, { productId, language, identifiers });
-    if (res?.errors) {
-      console.error(res.errors);
-      return res;
+  productRecommendations = async ({ productId, identifiers = [], language = 'EN' }) => {
+    const response = await this.call(productQueries.productRecommendations, {
+      productId,
+      language,
+      identifiers,
+    });
+    if (response?.errors) {
+      console.error(response.errors);
+      return response;
     }
-    return cleanGraphQLResponse(res.data.productRecommendations);
+    return cleanGraphQLResponse(response.data.productRecommendations);
   };
 
-  getProducts = async ({ sortKey, first = 100, after = null, query = "", language = "EN", identifiers = [] }) => {
-    const res = await this.call(productQueries.queryProducts, { first, sortKey, after, query, language, identifiers });
-    if (res?.errors) {
-      console.error(res.errors);
-      return res;
+  getProducts = async ({
+    sortKey,
+    first = 100,
+    after = null,
+    query = '',
+    language = 'EN',
+    identifiers = [],
+  }) => {
+    const response = await this.call(productQueries.queryProducts, {
+      first,
+      sortKey,
+      after,
+      query,
+      language,
+      identifiers,
+    });
+    if (response?.errors) {
+      console.error(response.errors);
+      return response;
     }
-    return { products: cleanGraphQLResponse(res?.data?.products), pageInfo: res?.data?.products?.pageInfo };
+    return {
+      products: cleanGraphQLResponse(response?.data?.products),
+      pageInfo: response?.data?.products?.pageInfo,
+    };
   };
 }
 
