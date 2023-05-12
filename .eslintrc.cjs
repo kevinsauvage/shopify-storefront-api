@@ -22,6 +22,7 @@ module.exports = {
     'unicorn/filename-case': 0,
     'unicorn/no-new-array': 0,
     'unicorn/no-null': 0,
+    'no-console': 'off',
     'prettier/prettier': ['error'],
   },
 };
