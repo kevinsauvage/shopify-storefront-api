@@ -14,22 +14,20 @@ class ShopifyAdminApi extends ShopifyApi {
     if (!this.adminToken) throw new Error('Missing admin token');
     if (!this.apiVersion) throw new Error('Missing api version');
 
+    const url = `https://${this.domain}/admin/api/${this.apiVersion}/graphql.json`;
+
+    const headers = {
+      'Content-Type': 'application/json',
+      'X-Shopify-Access-Token': this.adminToken,
+    };
+
+    const body = JSON.stringify({ query, variables });
+
     try {
-      const response = await fetch(
-        `https://${this.domain}/admin/api/${this.apiVersion}/graphql.json`,
-        {
-          method: 'POST',
+      const response = await fetch(url, { method: 'POST', headers, body });
+      const result = await response?.json();
 
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Shopify-Access-Token': this.adminToken,
-          },
-          body: JSON.stringify({ query, variables }),
-        }
-      );
-      const result = await response.json();
-
-      if (result.errors) {
+      if (result?.errors) {
         console.error('shopifyAdminApiCall error:', result.errors);
       }
       return result;
