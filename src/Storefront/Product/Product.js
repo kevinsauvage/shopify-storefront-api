@@ -10,10 +10,7 @@ class Product extends ShopifyStorefrontApi {
       identifiers,
     });
 
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return cleanGraphQLResponse(response.data.product);
   };
 
@@ -23,10 +20,7 @@ class Product extends ShopifyStorefrontApi {
       language,
       identifiers,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return cleanGraphQLResponse(response.data.productRecommendations);
   };
 
@@ -46,10 +40,7 @@ class Product extends ShopifyStorefrontApi {
       language,
       identifiers,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return {
       products: cleanGraphQLResponse(response?.data?.products),
       pageInfo: response?.data?.products?.pageInfo,

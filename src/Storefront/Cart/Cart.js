@@ -17,10 +17,7 @@ class Cart extends ShopifyStorefrontApi {
       after,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return cleanGraphQLResponse(response?.data?.cartAttributesUpdate);
   };
 
@@ -38,19 +35,14 @@ class Cart extends ShopifyStorefrontApi {
       after,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+
+    if (response?.errors) return response;
     return cleanGraphQLResponse(response?.data?.cartBuyerIdentityUpdate);
   };
 
   cartCreate = async ({ input, first = 250, after = null, language = 'EN' }) => {
     const response = await this.call(cartQueries.cartCreate, { input, first, after, language });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return cleanGraphQLResponse(response?.data?.cartCreate);
   };
 
@@ -68,10 +60,8 @@ class Cart extends ShopifyStorefrontApi {
       after,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+
+    if (response?.errors) return response;
     return cleanGraphQLResponse(response?.data?.cartDiscountCodesUpdate);
   };
 
@@ -83,10 +73,8 @@ class Cart extends ShopifyStorefrontApi {
       after,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+
+    if (response?.errors) return response;
     return cleanGraphQLResponse(response?.data?.cartLinesAdd);
   };
 
@@ -98,10 +86,8 @@ class Cart extends ShopifyStorefrontApi {
       after,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+
+    if (response?.errors) return response;
     return cleanGraphQLResponse(response?.data?.cartLinesRemove);
   };
 
@@ -113,10 +99,8 @@ class Cart extends ShopifyStorefrontApi {
       after,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+
+    if (response?.errors) return response;
     return cleanGraphQLResponse(response?.data?.cartLinesUpdate);
   };
 
@@ -128,29 +112,22 @@ class Cart extends ShopifyStorefrontApi {
       after,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+
+    if (response?.errors) return response;
     return cleanGraphQLResponse(response?.data?.cartNoteUpdate);
   };
 
   cartQuery = async ({ cartId, first = 250, after = null, language = 'EN' }) => {
     const response = await this.call(cartQueries.cartQuery, { cartId, first, after, language });
 
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return cleanGraphQLResponse(response?.data?.cart);
   };
 
   checkoutURL = async ({ cartId, language = 'EN' }) => {
     const response = await this.call(cartQueries.checkoutURL, { cartId, language });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+
+    if (response?.errors) return response;
     return cleanGraphQLResponse(response?.data?.cart);
   };
 }

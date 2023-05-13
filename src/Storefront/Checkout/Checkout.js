@@ -17,10 +17,7 @@ class Checkout extends ShopifyStorefrontApi {
       first,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return cleanGraphQLResponse(response?.data?.checkoutAttributesUpdateV2);
   };
 
@@ -40,10 +37,7 @@ class Checkout extends ShopifyStorefrontApi {
       first,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return cleanGraphQLResponse(response?.data?.checkoutCompleteWithCreditCardV2);
   };
 
@@ -54,10 +48,7 @@ class Checkout extends ShopifyStorefrontApi {
       first,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return cleanGraphQLResponse(response?.data?.checkoutCreate);
   };
 
@@ -75,10 +66,7 @@ class Checkout extends ShopifyStorefrontApi {
       first,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return cleanGraphQLResponse(response?.data?.checkoutCustomerAssociateV2);
   };
 
@@ -94,10 +82,7 @@ class Checkout extends ShopifyStorefrontApi {
       first,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return cleanGraphQLResponse(response?.data?.checkoutCustomerDisassociateV2);
   };
 
@@ -115,10 +100,7 @@ class Checkout extends ShopifyStorefrontApi {
       first,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return cleanGraphQLResponse(response?.data?.checkoutDiscountCodeApplyV2);
   };
 
@@ -134,10 +116,7 @@ class Checkout extends ShopifyStorefrontApi {
       first,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return cleanGraphQLResponse(response?.data?.checkoutDiscountCodeRemove);
   };
 
@@ -155,10 +134,7 @@ class Checkout extends ShopifyStorefrontApi {
       first,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return cleanGraphQLResponse(response?.data?.checkoutLineItemsAdd);
   };
 
@@ -176,10 +152,7 @@ class Checkout extends ShopifyStorefrontApi {
       first,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return cleanGraphQLResponse(response?.data?.checkoutLineItemsRemove);
   };
 
@@ -197,10 +170,7 @@ class Checkout extends ShopifyStorefrontApi {
       first,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return cleanGraphQLResponse(response?.data?.checkoutLineItemsUpdate);
   };
 
@@ -218,10 +188,7 @@ class Checkout extends ShopifyStorefrontApi {
       first,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return cleanGraphQLResponse(response?.data?.checkoutShippingAddressUpdateV2);
   };
 
@@ -232,10 +199,7 @@ class Checkout extends ShopifyStorefrontApi {
       first,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return cleanGraphQLResponse(response?.data?.node);
   };
 }

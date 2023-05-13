@@ -22,7 +22,11 @@ class ShopifyStorefrontApi extends ShopifyApi {
 
       const response = await fetch(url, { method: 'POST', headers, body });
 
-      return response && (await response.json());
+      const result = response && (await response.json());
+
+      if (result?.error) console.error(result.error);
+
+      return result;
     } catch (error) {
       console.error('Error:', error);
       throw error;
