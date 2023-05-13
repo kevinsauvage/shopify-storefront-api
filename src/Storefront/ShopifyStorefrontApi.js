@@ -28,8 +28,7 @@ class ShopifyStorefrontApi extends ShopifyApi {
 
       return result;
     } catch (error) {
-      console.error('Error:', error);
-      throw error;
+      return console.error('Shopify storefront api call error:', error.stack);
     }
   }
 }

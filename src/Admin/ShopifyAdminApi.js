@@ -31,7 +31,7 @@ class ShopifyAdminApi extends ShopifyApi {
 
       return result;
     } catch (error) {
-      return console.error('shopifyAdminApiCall error:', error);
+      return console.error('shopifyAdminApiCall error:', error.stack);
     }
   }
 }
