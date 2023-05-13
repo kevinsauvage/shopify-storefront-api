@@ -8,10 +8,7 @@ class Customer extends ShopifyStorefrontApi {
       input,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return response?.data?.customerAccessTokenCreate;
   };
 
@@ -20,10 +17,7 @@ class Customer extends ShopifyStorefrontApi {
       language,
       multipassToken,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return response?.data?.customerAccessTokenCreateWithMultipass;
   };
 
@@ -32,10 +26,7 @@ class Customer extends ShopifyStorefrontApi {
       customerAccessToken,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return response?.data?.customerAccessTokenDelete;
   };
 
@@ -44,19 +35,13 @@ class Customer extends ShopifyStorefrontApi {
       customerAccessToken,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return response?.data?.customerAccessTokenRenew;
   };
 
   customerActivate = async ({ id, input, language = 'EN' }) => {
     const response = await this.call(customerQueries.customerActivate, { id, input, language });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return response?.data?.customerActivate;
   };
 
@@ -66,10 +51,7 @@ class Customer extends ShopifyStorefrontApi {
       password,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return response?.data?.customerActivateByUrl;
   };
 
@@ -79,10 +61,7 @@ class Customer extends ShopifyStorefrontApi {
       customerAccessToken,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return response?.data?.customerAddressCreate;
   };
 
@@ -92,10 +71,7 @@ class Customer extends ShopifyStorefrontApi {
       addressId,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return response?.data?.customerAddressDelete;
   };
 
@@ -106,19 +82,13 @@ class Customer extends ShopifyStorefrontApi {
       addressId,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return response?.data?.customerAddressUpdate;
   };
 
   customerCreate = async ({ input, language = 'EN' }) => {
     const response = await this.call(customerQueries.customerCreate, { input, language });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return response?.data?.customerCreate;
   };
 
@@ -128,28 +98,19 @@ class Customer extends ShopifyStorefrontApi {
       addressId,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return response?.data?.customerDefaultAddressUpdate;
   };
 
   customerRecover = async ({ email, language = 'EN' }) => {
     const response = await this.call(customerQueries.customerRecover, { email, language });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return response?.data?.customerRecover;
   };
 
   customerReset = async ({ id, input, language = 'EN' }) => {
     const response = await this.call(customerQueries.customerReset, { id, input, language });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return response?.data?.customerReset;
   };
 
@@ -159,10 +120,7 @@ class Customer extends ShopifyStorefrontApi {
       resetUrl,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return response?.data?.customerResetByUrl;
   };
 
@@ -172,10 +130,7 @@ class Customer extends ShopifyStorefrontApi {
       customer,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return response?.data?.customerUpdate;
   };
 
@@ -184,10 +139,7 @@ class Customer extends ShopifyStorefrontApi {
       customerAccessToken,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return response?.data?.customer;
   };
 
@@ -197,10 +149,7 @@ class Customer extends ShopifyStorefrontApi {
       metafields,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return response?.data?.customer?.metafields;
   };
 
@@ -216,10 +165,7 @@ class Customer extends ShopifyStorefrontApi {
       after,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return cleanGraphQLResponse(response?.data?.customer?.addresses);
   };
 
@@ -228,10 +174,7 @@ class Customer extends ShopifyStorefrontApi {
       addressId,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return cleanGraphQLResponse(response?.data?.node);
   };
 
@@ -247,12 +190,9 @@ class Customer extends ShopifyStorefrontApi {
       first: Number(first),
       language,
     });
-    const orders = response?.data?.customer?.orders;
+    if (response?.errors) return response;
 
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    const orders = response?.data?.customer?.orders;
     if (!orders) throw new Error('Missing orders');
 
     const pageInfo = orders?.pageInfo || null;
@@ -267,10 +207,7 @@ class Customer extends ShopifyStorefrontApi {
       after,
       language,
     });
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return cleanGraphQLResponse(response?.data?.node);
   };
 }

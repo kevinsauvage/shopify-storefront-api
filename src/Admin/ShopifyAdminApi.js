@@ -25,11 +25,10 @@ class ShopifyAdminApi extends ShopifyApi {
 
     try {
       const response = await fetch(url, { method: 'POST', headers, body });
-      const result = await response?.json();
+      const result = response && (await response?.json());
 
-      if (result?.errors) {
-        console.error('shopifyAdminApiCall error:', result.errors);
-      }
+      if (result?.errors) console.error(result.errors);
+
       return result;
     } catch (error) {
       // TODO HANDLE ERRORS

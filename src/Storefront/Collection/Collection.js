@@ -22,11 +22,7 @@ class Collection extends ShopifyStorefrontApi {
       identifiers,
     });
 
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
-
+    if (response?.errors) return response;
     const collection = response?.data?.collection;
 
     if (collection) {
@@ -59,10 +55,7 @@ class Collection extends ShopifyStorefrontApi {
       identifiers,
     });
 
-    if (response?.errors) {
-      console.error(response.errors);
-      return response;
-    }
+    if (response?.errors) return response;
     return {
       collections: cleanGraphQLResponse(response?.data?.collections),
       pageInfo: response?.data?.collections?.pageInfo,
