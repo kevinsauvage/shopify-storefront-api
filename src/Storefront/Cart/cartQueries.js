@@ -1,4 +1,4 @@
-import { addressFragment, customerFragment, variantFragment } from '../../fragment';
+import { addressFragment, customerFragment, variantFragment } from '../../fragment.js';
 
 const lineFragment = `
 id

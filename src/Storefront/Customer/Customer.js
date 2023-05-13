@@ -1,6 +1,6 @@
-import { cleanGraphQLResponse } from '../../helpers';
-import ShopifyStorefrontApi from '../ShopifyStorefrontApi';
-import customerQueries from './customerQueries';
+import { cleanGraphQLResponse } from '../../helpers.js';
+import ShopifyStorefrontApi from '../ShopifyStorefrontApi.js';
+import customerQueries from './customerQueries.js';
 
 class Customer extends ShopifyStorefrontApi {
   customerAccessTokenCreate = async ({ input, language = 'EN' }) => {

@@ -1,4 +1,4 @@
-import { pageInfoFragment, productFragment } from '../../fragment';
+import { pageInfoFragment, productFragment } from '../../fragment.js';
 
 const getProductByHandle = `
 query getProductByHandle($handle: String, $language: LanguageCode,  $identifiers: [HasMetafieldsIdentifier!]!) 

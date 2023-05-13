@@ -3,7 +3,7 @@ import {
   filterFragment,
   pageInfoFragment,
   productFragment,
-} from '../../fragment';
+} from '../../fragment.js';
 
 const collection = `
 query collection($handle: String!, $first: Int!, $filters: [ProductFilter!], $sort: ProductCollectionSortKeys, $after: String, $language: LanguageCode, $identifiers: [HasMetafieldsIdentifier!]!) 

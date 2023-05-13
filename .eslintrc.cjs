@@ -24,5 +24,6 @@ module.exports = {
     'unicorn/no-null': 0,
     'no-console': 'off',
     'prettier/prettier': ['error'],
+    'import/extensions': 0,
   },
 };

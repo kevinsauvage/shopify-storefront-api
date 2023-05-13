@@ -1,4 +1,4 @@
-import { addressFragment, checkoutFragment } from '../../fragment';
+import { addressFragment, checkoutFragment } from '../../fragment.js';
 
 const returnFragment = `
 checkout { ${checkoutFragment} }

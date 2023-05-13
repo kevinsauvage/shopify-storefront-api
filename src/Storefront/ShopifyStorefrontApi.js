@@ -1,4 +1,4 @@
-import ShopifyApi from '../ShopifyApi';
+import ShopifyApi from '../ShopifyApi.js';
 
 class ShopifyStorefrontApi extends ShopifyApi {
   async call(query, variables) {

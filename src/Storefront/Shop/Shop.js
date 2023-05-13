@@ -1,5 +1,5 @@
-import ShopifyStorefrontApi from '../ShopifyStorefrontApi';
-import shopQueries from './shopQueries';
+import ShopifyStorefrontApi from '../ShopifyStorefrontApi.js';
+import shopQueries from './shopQueries.js';
 
 class Shop extends ShopifyStorefrontApi {
   getShop = async ({ language = 'EN' } = {}) => {

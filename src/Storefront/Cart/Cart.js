@@ -1,6 +1,6 @@
-import { cleanGraphQLResponse } from '../../helpers';
-import ShopifyStorefrontApi from '../ShopifyStorefrontApi';
-import cartQueries from './cartQueries';
+import { cleanGraphQLResponse } from '../../helpers.js';
+import ShopifyStorefrontApi from '../ShopifyStorefrontApi.js';
+import cartQueries from './cartQueries.js';
 
 class Cart extends ShopifyStorefrontApi {
   cartAttributesUpdate = async ({

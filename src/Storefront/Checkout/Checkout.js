@@ -1,6 +1,6 @@
-import { cleanGraphQLResponse } from '../../helpers';
-import ShopifyStorefrontApi from '../ShopifyStorefrontApi';
-import checkoutQueries from './checkoutQueries';
+import { cleanGraphQLResponse } from '../../helpers.js';
+import ShopifyStorefrontApi from '../ShopifyStorefrontApi.js';
+import checkoutQueries from './checkoutQueries.js';
 
 class Checkout extends ShopifyStorefrontApi {
   checkoutAttributesUpdateV2 = async ({

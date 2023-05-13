@@ -1,6 +1,6 @@
-import { cleanGraphQLResponse } from '../../helpers';
-import ShopifyStorefrontApi from '../ShopifyStorefrontApi';
-import productQueries from './productQueries';
+import { cleanGraphQLResponse } from '../../helpers.js';
+import ShopifyStorefrontApi from '../ShopifyStorefrontApi.js';
+import productQueries from './productQueries.js';
 
 class Product extends ShopifyStorefrontApi {
   getProductByHandle = async ({ handle, identifiers = [], language = 'EN' }) => {

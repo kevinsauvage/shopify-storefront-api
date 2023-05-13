@@ -1,6 +1,6 @@
-import { cleanGraphQLResponse } from '../../helpers';
-import ShopifyStorefrontApi from '../ShopifyStorefrontApi';
-import collectionQueries from './collectionQueries';
+import { cleanGraphQLResponse } from '../../helpers.js';
+import ShopifyStorefrontApi from '../ShopifyStorefrontApi.js';
+import collectionQueries from './collectionQueries.js';
 
 class Collection extends ShopifyStorefrontApi {
   collection = async ({

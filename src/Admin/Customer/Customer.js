@@ -1,5 +1,5 @@
-import ShopifyAdminApi from '../ShopifyAdminApi';
-import { metafieldsSet, queryDelegateAccessToken } from './customerQueries';
+import ShopifyAdminApi from '../ShopifyAdminApi.js';
+import { metafieldsSet, queryDelegateAccessToken } from './customerQueries.js';
 
 class CustomerAdmin extends ShopifyAdminApi {
   getDelegateToken = async ({ input }) => {
