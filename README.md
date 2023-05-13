@@ -150,12 +150,11 @@ Here is a brief description of the methods available in the `Shop` class:
 -   `localization`: Returns the localization information for the given country code.
 
 
-## Admin available method
+## Admin available method ( should only be called sever side )
 
 ### Customer
 
 Here is a brief description of the methods available in the `Customer` class:
 
-1.  `getDelegateToken` - This method is used to retrieve a delegate access token for a customer. It takes an input object as a parameter and returns a response object that contains the delegate access token.
-    
-2.  `metafieldsSet` - This method is used to create or update metafields for a customer. It takes a metafields object as a parameter and returns a response object that contains the created or updated metafields.
+-  `getDelegateToken` - This method is used to retrieve a delegate access token for a customer. It takes an input object as a parameter and returns a response object that contains the delegate access token.  
+-  `metafieldsSet` - This method is used to create or update metafields for a customer. It takes a metafields object as a parameter and returns a response object that contains the created or updated metafields.
