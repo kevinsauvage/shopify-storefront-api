@@ -1,87 +1,61 @@
-import { cleanGraphQLResponse } from '../../helpers.js';
+import { adjustPaginationVariables, cleanGraphQLResponse } from '../../helpers.js';
 import ShopifyStorefrontApi from '../ShopifyStorefrontApi.js';
 import customerQueries from './customerQueries.js';
 
 class Customer extends ShopifyStorefrontApi {
-  customerAccessTokenCreate = async ({ input, language = 'EN' }) => {
-    const response = await this.call(customerQueries.customerAccessTokenCreate, {
-      input,
-      language,
-    });
+  customerAccessTokenCreate = async (variables) => {
+    const response = await this.call(customerQueries.customerAccessTokenCreate, variables);
     if (response?.errors) return response;
     return response?.data?.customerAccessTokenCreate;
   };
 
-  customerAccessTokenCreateWithMultipass = async ({ multipassToken, language = 'EN' }) => {
-    const response = await this.call(customerQueries.customerAccessTokenCreateWithMultipass, {
-      language,
-      multipassToken,
-    });
+  customerAccessTokenCreateWithMultipass = async (variables) => {
+    const response = await this.call(
+      customerQueries.customerAccessTokenCreateWithMultipass,
+      variables
+    );
     if (response?.errors) return response;
     return response?.data?.customerAccessTokenCreateWithMultipass;
   };
 
-  customerAccessTokenDelete = async ({ customerAccessToken, language = 'EN' }) => {
-    const response = await this.call(customerQueries.customerAccessTokenDelete, {
-      customerAccessToken,
-      language,
-    });
+  customerAccessTokenDelete = async (variables) => {
+    const response = await this.call(customerQueries.customerAccessTokenDelete, variables);
     if (response?.errors) return response;
     return response?.data?.customerAccessTokenDelete;
   };
 
-  customerAccessTokenRenew = async ({ customerAccessToken, language = 'EN' }) => {
-    const response = await this.call(customerQueries.customerAccessTokenRenew, {
-      customerAccessToken,
-      language,
-    });
+  customerAccessTokenRenew = async (variables) => {
+    const response = await this.call(customerQueries.customerAccessTokenRenew, variables);
     if (response?.errors) return response;
     return response?.data?.customerAccessTokenRenew;
   };
 
-  customerActivate = async ({ id, input, language = 'EN' }) => {
-    const response = await this.call(customerQueries.customerActivate, { id, input, language });
+  customerActivate = async (variables) => {
+    const response = await this.call(customerQueries.customerActivate, variables);
     if (response?.errors) return response;
     return response?.data?.customerActivate;
   };
 
-  customerActivateByUrl = async ({ activationUrl, password, language = 'EN' }) => {
-    const response = await this.call(customerQueries.customerActivateByUrl, {
-      activationUrl,
-      password,
-      language,
-    });
+  customerActivateByUrl = async (variables) => {
+    const response = await this.call(customerQueries.customerActivateByUrl, variables);
     if (response?.errors) return response;
     return response?.data?.customerActivateByUrl;
   };
 
-  customerAddressCreate = async ({ address, customerAccessToken, language = 'EN' }) => {
-    const response = await this.call(customerQueries.customerAddressCreate, {
-      address,
-      customerAccessToken,
-      language,
-    });
+  customerAddressCreate = async (variables) => {
+    const response = await this.call(customerQueries.customerAddressCreate, variables);
     if (response?.errors) return response;
     return response?.data?.customerAddressCreate;
   };
 
-  customerAddressDelete = async ({ customerAccessToken, addressId, language = 'EN' }) => {
-    const response = await this.call(customerQueries.customerAddressDelete, {
-      customerAccessToken,
-      addressId,
-      language,
-    });
+  customerAddressDelete = async (variables) => {
+    const response = await this.call(customerQueries.customerAddressDelete, variables);
     if (response?.errors) return response;
     return response?.data?.customerAddressDelete;
   };
 
-  customerAddressUpdate = async ({ address, customerAccessToken, addressId, language = 'EN' }) => {
-    const response = await this.call(customerQueries.customerAddressUpdate, {
-      address,
-      customerAccessToken,
-      addressId,
-      language,
-    });
+  customerAddressUpdate = async (variables) => {
+    const response = await this.call(customerQueries.customerAddressUpdate, variables);
     if (response?.errors) return response;
     return response?.data?.customerAddressUpdate;
   };
@@ -92,121 +66,84 @@ class Customer extends ShopifyStorefrontApi {
     return response?.data?.customerCreate;
   };
 
-  customerDefaultAddressUpdate = async ({ customerAccessToken, addressId, language = 'EN' }) => {
-    const response = await this.call(customerQueries.customerDefaultAddressUpdate, {
-      customerAccessToken,
-      addressId,
-      language,
-    });
+  customerDefaultAddressUpdate = async (variables) => {
+    const response = await this.call(customerQueries.customerDefaultAddressUpdate, variables);
     if (response?.errors) return response;
     return response?.data?.customerDefaultAddressUpdate;
   };
 
-  customerRecover = async ({ email, language = 'EN' }) => {
-    const response = await this.call(customerQueries.customerRecover, { email, language });
+  customerRecover = async (variables) => {
+    const response = await this.call(customerQueries.customerRecover, variables);
     if (response?.errors) return response;
     return response?.data?.customerRecover;
   };
 
-  customerReset = async ({ id, input, language = 'EN' }) => {
-    const response = await this.call(customerQueries.customerReset, { id, input, language });
+  customerReset = async (variables) => {
+    const response = await this.call(customerQueries.customerReset, variables);
     if (response?.errors) return response;
     return response?.data?.customerReset;
   };
 
-  customerResetByUrl = async ({ password, resetUrl, language = 'EN' }) => {
-    const response = await this.call(customerQueries.customerResetByUrl, {
-      password,
-      resetUrl,
-      language,
-    });
+  customerResetByUrl = async (variables) => {
+    const response = await this.call(customerQueries.customerResetByUrl, variables);
     if (response?.errors) return response;
     return response?.data?.customerResetByUrl;
   };
 
-  customerUpdate = async ({ customerAccessToken, customer, language = 'EN' }) => {
-    const response = await this.call(customerQueries.customerUpdate, {
-      customerAccessToken,
-      customer,
-      language,
-    });
+  customerUpdate = async (variables) => {
+    const response = await this.call(customerQueries.customerUpdate, variables);
     if (response?.errors) return response;
     return response?.data?.customerUpdate;
   };
 
-  queryCustomer = async ({ customerAccessToken, language = 'EN' }) => {
-    const response = await this.call(customerQueries.queryCustomer, {
-      customerAccessToken,
-      language,
-    });
+  queryCustomer = async (variables) => {
+    const response = await this.call(customerQueries.queryCustomer, variables);
     if (response?.errors) return response;
     return response?.data?.customer;
   };
 
-  queryCustomerMetafields = async ({ customerAccessToken, metafields = [], language = 'EN' }) => {
-    const response = await this.call(customerQueries.queryCustomerMetafields, {
-      customerAccessToken,
-      metafields,
-      language,
-    });
+  queryCustomerMetafields = async (variables) => {
+    const response = await this.call(customerQueries.queryCustomerMetafields, variables);
     if (response?.errors) return response;
-    return response?.data?.customer?.metafields;
+    return response?.data?.customer?.metafields?.filter(Boolean);
   };
 
-  queryCustomerAddresses = async ({
-    customerAccessToken,
-    first = 100,
-    after = null,
-    language = 'EN',
-  }) => {
-    const response = await this.call(customerQueries.queryCustomerAddresses, {
-      customerAccessToken,
-      first,
-      after,
-      language,
-    });
+  queryCustomerAddresses = async (variables) => {
+    const response = await this.call(
+      customerQueries.queryCustomerAddresses,
+      adjustPaginationVariables(variables)
+    );
     if (response?.errors) return response;
     return cleanGraphQLResponse(response?.data?.customer?.addresses);
   };
 
-  queryCustomerAddressById = async ({ addressId, language = 'EN' }) => {
-    const response = await this.call(customerQueries.queryCustomerAddressById, {
-      addressId,
-      language,
-    });
+  queryCustomerAddressById = async (variables) => {
+    const response = await this.call(customerQueries.queryCustomerAddressById, variables);
     if (response?.errors) return response;
     return cleanGraphQLResponse(response?.data?.node);
   };
 
-  queryCustomerOrders = async ({
-    customerAccessToken,
-    first = 5,
-    after = null,
-    language = 'EN',
-  }) => {
-    const response = await this.call(customerQueries.queryCustomerOrders, {
-      customerAccessToken,
-      after: after || null,
-      first: Number(first),
-      language,
-    });
+  queryCustomerOrders = async (variables) => {
+    const response = await this.call(
+      customerQueries.queryCustomerOrders,
+      adjustPaginationVariables(variables)
+    );
+
     if (response?.errors) return response;
 
     const orders = response?.data?.customer?.orders;
-    if (!orders) throw new Error('Missing orders');
-
     const pageInfo = orders?.pageInfo || null;
     const totalCount = orders?.totalCount || null;
+
     return { orders: cleanGraphQLResponse(orders), pageInfo, totalCount };
   };
 
-  queryCustomerOrderById = async ({ orderId, first = 100, after = null, language = 'EN' }) => {
-    const response = await this.call(customerQueries.queryCustomerOrderById, {
-      orderId,
-      first,
-      after,
-      language,
-    });
+  queryCustomerOrderById = async (variables) => {
+    const response = await this.call(
+      customerQueries.queryCustomerOrderById,
+      adjustPaginationVariables(variables)
+    );
+
     if (response?.errors) return response;
     return cleanGraphQLResponse(response?.data?.node);
   };

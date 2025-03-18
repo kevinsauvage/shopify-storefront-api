@@ -165,9 +165,11 @@ export const customerFragment = `
 id
 firstName
 lastName
-acceptsMarketing
 email
 phone
+acceptsMarketing
+createdAt
+updatedAt
 defaultAddress {
  ${addressFragment}
 }`;

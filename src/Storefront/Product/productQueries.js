@@ -21,9 +21,12 @@ query productRecommendations($productId: ID!, $language: LanguageCode, $identifi
 }`;
 
 const queryProducts = `
-query products($first: Int, $after: String, $sortKey: ProductSortKeys, $query: String, $language: LanguageCode, $identifiers: [HasMetafieldsIdentifier!]!) 
+query products($first: Int, $last: Int, $after: String, $before: String, $sortKey: ProductSortKeys, $query: String, $language: LanguageCode, $identifiers: [HasMetafieldsIdentifier!]!) 
 @inContext(language: $language) {
-  products(first: $first, after: $after, sortKey: $sortKey , query: $query) {
+  products(first: $first, last: $last, after: $after, before: $before, sortKey: $sortKey, query: $query) {
+    edges {
+      cursor
+    }
     pageInfo {
       ${pageInfoFragment}
     }

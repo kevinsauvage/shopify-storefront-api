@@ -6,21 +6,29 @@ class Collection extends ShopifyStorefrontApi {
   collection = async ({
     handle,
     filters,
-    first = 100,
+    first = null,
+    before = null,
     after = null,
-    sort = 'RELEVANCE',
+    sortKey = 'RELEVANCE',
     identifiers = [],
     language = 'EN',
   }) => {
-    const response = await this.call(collectionQueries.collection, {
+    const variables = {
       handle,
-      first,
       filters,
-      sort,
-      after,
+      sortKey,
       language,
       identifiers,
-    });
+      first: after ? first || 10 : undefined, // Forward pagination
+      after: after || undefined, // Cursor for next page
+      last: before ? first || 10 : undefined, // Backward pagination
+      before: before || undefined, // Cursor for previous page
+    };
+
+    if (!after && !before) {
+      variables.first = first || 10;
+    }
+    const response = await this.call(collectionQueries.collection, variables);
 
     if (response?.errors) return response;
     const collection = response?.data?.collection;
@@ -37,23 +45,31 @@ class Collection extends ShopifyStorefrontApi {
   collections = async ({
     first = 250,
     after = null,
+    before = null,
     sortKey = 'RELEVANCE',
     firstProducts = 250,
     afterProducts = null,
+    beforeProducts = null,
     productsSortKey = 'BEST_SELLING',
     language = 'EN',
     identifiers = [],
   }) => {
-    const response = await this.call(collectionQueries.collections, {
-      first,
-      after,
+    const variables = {
+      first: after ? first || 10 : null, // Forward pagination
+      after: after || null, // Cursor for next page
+      last: before ? 10 : null, // Backward pagination
+      before: before || null, // Cursor for previous page
       sortKey,
       firstProducts,
+      beforeProducts,
       afterProducts,
       productsSortKey,
       language,
       identifiers,
-    });
+    };
+
+    const response = await this.call(collectionQueries.collections, variables);
+    console.log('🟩🟪🟦-->  ~ Collection ~ response:', response);
 
     if (response?.errors) return response;
     return {

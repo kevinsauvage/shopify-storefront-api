@@ -26,21 +26,31 @@ class Product extends ShopifyStorefrontApi {
 
   getProducts = async ({
     sortKey,
-    first = 100,
+    first = null,
     after = null,
     query = '',
     language = 'EN',
     identifiers = [],
+    before = null,
   }) => {
-    const response = await this.call(productQueries.queryProducts, {
-      first,
+    const variables = {
       sortKey,
-      after,
-      query,
       language,
       identifiers,
-    });
+      query,
+      first: after ? first || 10 : undefined, // Forward pagination
+      after: after || undefined, // Cursor for next page
+      last: before ? first || 10 : undefined, // Backward pagination
+      before: before || undefined, // Cursor for previous page
+    };
+
+    if (!after && !before) {
+      variables.first = first || 10;
+    }
+
+    const response = await this.call(productQueries.queryProducts, variables);
     if (response?.errors) return response;
+
     return {
       products: cleanGraphQLResponse(response?.data?.products),
       pageInfo: response?.data?.products?.pageInfo,

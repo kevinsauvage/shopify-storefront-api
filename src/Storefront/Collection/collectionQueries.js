@@ -6,35 +6,80 @@ import {
 } from '../../fragment.js';
 
 const collection = `
-query collection($handle: String!, $first: Int!, $filters: [ProductFilter!], $sort: ProductCollectionSortKeys, $after: String, $language: LanguageCode, $identifiers: [HasMetafieldsIdentifier!]!) 
-@inContext(language: $language) {
+query collection(
+  $handle: String!,
+  $first: Int,
+  $last: Int,
+  $after: String,
+  $before: String,
+  $filters: [ProductFilter!],
+  $sortKey: ProductCollectionSortKeys,
+  $language: LanguageCode,
+  $identifiers: [HasMetafieldsIdentifier!]
+) @inContext(language: $language) {
   collection(handle: $handle) {
     ${collectionFragment}
-    products(first: $first,  filters: $filters, sortKey: $sort, after: $after) {
-      filters { ${filterFragment} }
-      pageInfo { ${pageInfoFragment} }
+    products(
+      first: $first,
+      last: $last,
+      after: $after,
+      before: $before,
+      filters: $filters,
+      sortKey: $sortKey
+    ) {
       edges {
-        node { ${productFragment} }
+        cursor
+        node {
+          ${productFragment}
+        }
+      }
+      filters {
+        ${filterFragment}
+      }
+      pageInfo {
+        ${pageInfoFragment}
       }
     }
   }
 }`;
 
 const collections = `
-query collections($first: Int, $after: String, $sortKey: CollectionSortKeys, $firstProducts: Int, $afterProducts: String, $productsSortKey: ProductCollectionSortKeys, $language: LanguageCode, $identifiers: [HasMetafieldsIdentifier!]!) 
-@inContext(language: $language) {
-  collections(first: $first, after: $after, sortKey: $sortKey) {
+query collections(
+  $first: Int,
+  $after: String,
+  $before: String,
+  $sortKey: CollectionSortKeys,
+  $firstProducts: Int,
+  $beforeProducts: String,
+  $afterProducts: String,
+  $productsSortKey: ProductCollectionSortKeys,
+  $language: LanguageCode,
+  $identifiers: [HasMetafieldsIdentifier!]
+) @inContext(language: $language) {
+  collections(first: $first, after: $after, before: $before, sortKey: $sortKey) {
     pageInfo {
       ${pageInfoFragment}
     }
     edges {
       node {
         ${collectionFragment}
-        products(first: $firstProducts, after: $afterProducts, sortKey: $productsSortKey) {
-          filters { ${filterFragment} }
-          pageInfo { ${pageInfoFragment} }
+        products(
+          first: $firstProducts,
+          after: $afterProducts,
+          before: $beforeProducts,
+          sortKey: $productsSortKey
+        ) {
           edges {
-            node { ${productFragment} }
+            cursor
+            node {
+              ${productFragment}
+            }
+          }
+          filters {
+            ${filterFragment}
+          }
+          pageInfo {
+            ${pageInfoFragment}
           }
         }
       }
