@@ -8,7 +8,7 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint', 'prettier', 'sonarjs'],
+  plugins: ['@typescript-eslint', 'prettier', 'sonarjs', 'import'],
   extends: [
     'airbnb-base',
     'prettier',
@@ -22,6 +22,17 @@ module.exports = {
     'import/extensions': 0,
     '@typescript-eslint/no-unused-vars': ['error'], // TypeScript-specific rule
     '@typescript-eslint/explicit-module-boundary-types': 'off', // Optional
+    'import/no-unresolved': 'error',
+  },
+  settings: {
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
+    },
+    'import/resolver': {
+      typescript: {
+        alwaysTryTypes: true, // always try to resolve types under `<root>@types` directory even it doesn't contain any source code, like `@types/unist`
+      },
+    },
   },
   overrides: [
     {

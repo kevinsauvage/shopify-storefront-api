@@ -1,11 +1,5 @@
 import ShopifyApi from '../ShopifyApi';
 
-// Define the expected structure of a GraphQL response
-interface GraphQLResponse<T = any> {
-  data?: T; // Data is optional because not all responses may return data
-  errors?: Array<{ message: string }>; // Errors are optional but may exist
-}
-
 interface ShopifyAdminApiParams {
   adminToken: string | undefined;
   domain: string;
@@ -23,7 +17,7 @@ class ShopifyAdminApi extends ShopifyApi {
   }
 
   // Ensure the function returns the expected result or throws an error
-  async call<T>(query: string, variables?: Record<string, unknown>): Promise<GraphQLResponse<T>> {
+  async call(query: string, variables?: Record<string, unknown>) {
     // Ensure the function is only called server-side
     if (typeof window !== 'undefined') {
       throw new Error('This function should only be called on the server side.');
@@ -45,11 +39,13 @@ class ShopifyAdminApi extends ShopifyApi {
       const response = await fetch(url, { method: 'POST', headers, body });
 
       // Ensure we correctly type the response as a GraphQLResponse
-      const result: GraphQLResponse<T> = await response.json();
+      const result = await response.json();
 
       // Handle errors if present
       if (result.errors && result.errors.length > 0) {
-        throw new Error(`GraphQL errors: ${result.errors.map((e) => e.message).join(', ')}`);
+        throw new Error(
+          `GraphQL errors: ${result.errors.map((e: { message: string }) => e.message).join(', ')}`
+        );
       }
 
       if (!result.data) {

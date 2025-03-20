@@ -22,13 +22,15 @@ class Collection extends ShopifyStorefrontApi {
     pageInfo: PAGE_INFO_TYPE;
     collectionFilters: Array<FILTER_TYPE>;
   } | null> => {
-    if (!variables?.identifiers) {
-      variables.identifiers = [];
+    const variablesCopy = { ...variables };
+
+    if (!variablesCopy?.identifiers) {
+      variablesCopy.identifiers = [];
     }
 
     const response = (await this.call(
       collectionQueries.collection,
-      adjustPaginationVariables(variables)
+      adjustPaginationVariables(variablesCopy)
     )) as {
       collection: COLLECTION_TYPE;
     };
@@ -70,13 +72,15 @@ class Collection extends ShopifyStorefrontApi {
     collections: Array<COLLECTION_TYPE>;
     pageInfo: PAGE_INFO_TYPE;
   }> => {
-    if (!variables?.identifiers) {
-      variables.identifiers = [];
+    const variablesCopy = { ...variables };
+
+    if (!variablesCopy?.identifiers) {
+      variablesCopy.identifiers = [];
     }
     // TODO: fix firstProducts, afterProducts, beforeProducts, productsSortKey
     const response = (await this.call(
       collectionQueries.collections,
-      adjustPaginationVariables(variables)
+      adjustPaginationVariables(variablesCopy)
     )) as {
       collections: {
         edges: Array<{

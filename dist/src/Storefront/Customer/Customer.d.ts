@@ -3,11 +3,11 @@ type CUSTOMER_ACTIVATE_BY_URL = {
     customer: {
         id: string;
         email: string;
-    };
+    } | null;
     customerAccessToken: {
         accessToken: string;
         expiresAt: string;
-    };
+    } | null;
     customerUserErrors: Array<USER_ERROR_TYPE>;
 };
 declare class Customer extends ShopifyStorefrontApi {
@@ -20,7 +20,7 @@ declare class Customer extends ShopifyStorefrontApi {
     }) => Promise<{
         customerAccessToken: {
             accessToken: string;
-        };
+        } | null;
         customerUserErrors: Array<USER_ERROR_TYPE>;
     }>;
     customerAccessTokenCreateWithMultipass: (variables: {
@@ -29,14 +29,14 @@ declare class Customer extends ShopifyStorefrontApi {
     }) => Promise<{
         customerAccessToken: {
             accessToken: string;
-        };
+        } | null;
         customerUserErrors: Array<USER_ERROR_TYPE>;
     }>;
     customerAccessTokenDelete: (variables: {
         customerAccessToken: string;
         language?: string;
     }) => Promise<{
-        deletedAccessTokenId: string;
+        deletedAccessTokenId: string | null;
         customerUserErrors: Array<USER_ERROR_TYPE>;
     }>;
     customerAccessTokenRenew: (variables: {
@@ -48,6 +48,9 @@ declare class Customer extends ShopifyStorefrontApi {
             expiresAt: string;
         };
         userErrors: Array<USER_ERROR_TYPE>;
+    } | {
+        userErrors: USER_ERROR_TYPE[];
+        customerAccessToken: null;
     }>;
     customerActivate: (variables: {
         id: string;
@@ -59,11 +62,11 @@ declare class Customer extends ShopifyStorefrontApi {
         customer: {
             id: string;
             email: string;
-        };
+        } | null;
         customerAccessToken: {
             accessToken: string;
             expiresAt: string;
-        };
+        } | null;
         customerUserErrors: Array<USER_ERROR_TYPE>;
     }>;
     customerActivateByUrl: (variables: {
@@ -76,7 +79,7 @@ declare class Customer extends ShopifyStorefrontApi {
         customerAccessToken: string;
         language?: string;
     }) => Promise<{
-        customerAddress: CUSTOMER_ADDRESS_TYPE;
+        customerAddress: CUSTOMER_ADDRESS_TYPE | null;
         customerUserErrors: Array<USER_ERROR_TYPE>;
     }>;
     customerAddressDelete: (variables: {
@@ -84,7 +87,7 @@ declare class Customer extends ShopifyStorefrontApi {
         addressId: string;
         language?: string;
     }) => Promise<{
-        deletedCustomerAddressId: string;
+        deletedCustomerAddressId: string | null;
         customerUserErrors: Array<USER_ERROR_TYPE>;
     }>;
     customerAddressUpdate: (variables: {
@@ -92,18 +95,18 @@ declare class Customer extends ShopifyStorefrontApi {
         customerAccessToken: string;
         language?: string;
     }) => Promise<{
-        customerAddress: CUSTOMER_ADDRESS_TYPE;
+        customerAddress: CUSTOMER_ADDRESS_TYPE | null;
         userErrors: Array<USER_ERROR_TYPE>;
     }>;
     customerCreate: (variables: {
         input: CUSTOMER_CREATE_INPUT_TYPE;
         language?: string;
     }) => Promise<{
-        customer: CUSTOMER_TYPE;
+        customer: CUSTOMER_TYPE | null;
         customerAccessToken: {
             accessToken: string;
             expiresAt: string;
-        };
+        } | null;
         customerUserErrors: Array<USER_ERROR_TYPE>;
     }>;
     customerDefaultAddressUpdate: (variables: {
@@ -111,7 +114,7 @@ declare class Customer extends ShopifyStorefrontApi {
         addressId: string;
         language?: string;
     }) => Promise<{
-        customer: CUSTOMER_TYPE;
+        customer: CUSTOMER_TYPE | null;
         customerUserErrors: Array<USER_ERROR_TYPE>;
     }>;
     customerRecover: (variables: {
@@ -128,11 +131,11 @@ declare class Customer extends ShopifyStorefrontApi {
         };
         language?: string;
     }) => Promise<{
-        customer: CUSTOMER_TYPE;
+        customer: CUSTOMER_TYPE | null;
         customerAccessToken: {
             accessToken: string;
             expiresAt: string;
-        };
+        } | null;
         customerUserErrors: Array<USER_ERROR_TYPE>;
     }>;
     customerResetByUrl: (variables: {
@@ -140,11 +143,11 @@ declare class Customer extends ShopifyStorefrontApi {
         resetUrl: string;
         language?: string;
     }) => Promise<{
-        customer: CUSTOMER_TYPE;
+        customer: CUSTOMER_TYPE | null;
         customerAccessToken: {
             accessToken: string;
             expiresAt: string;
-        };
+        } | null;
         customerUserErrors: Array<USER_ERROR_TYPE>;
     }>;
     customerUpdate: (variables: {
@@ -152,7 +155,7 @@ declare class Customer extends ShopifyStorefrontApi {
         customer: CUSTOMER_CREATE_INPUT_TYPE;
         language?: string;
     }) => Promise<{
-        customer: CUSTOMER_TYPE;
+        customer: CUSTOMER_TYPE | null;
         customerUserErrors: Array<USER_ERROR_TYPE>;
     }>;
     queryCustomer: (variables: {
@@ -161,7 +164,7 @@ declare class Customer extends ShopifyStorefrontApi {
     }) => Promise<CUSTOMER_TYPE>;
     queryCustomerMetafields: (variables: {
         customerAccessToken: string;
-        metafields?: any[];
+        metafields?: METAFIELD_TYPE[];
         language?: string;
     }) => Promise<Array<METAFIELD_TYPE>>;
     queryCustomerAddresses: (variables: {
@@ -173,7 +176,7 @@ declare class Customer extends ShopifyStorefrontApi {
         language?: string;
     }) => Promise<{
         addresses: Array<CUSTOMER_ADDRESS_TYPE>;
-        pageInfo: PAGE_INFO_TYPE;
+        pageInfo: PAGE_INFO_TYPE | null;
         totalCount: number;
     }>;
     queryCustomerOrders: (variables: {
@@ -187,6 +190,7 @@ declare class Customer extends ShopifyStorefrontApi {
         language: string;
     }) => Promise<{
         orders: Array<CUSTOMER_ORDER_TYPE>;
+        customerUserErrors: Array<USER_ERROR_TYPE>;
     }>;
 }
 export default Customer;

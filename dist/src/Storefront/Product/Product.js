@@ -3,30 +3,33 @@ import ShopifyStorefrontApi from '../ShopifyStorefrontApi';
 import productQueries from './productQueries';
 class Product extends ShopifyStorefrontApi {
     getProductByHandle = async (variables) => {
-        if (!variables?.identifiers) {
-            variables.identifiers = [];
+        const variablesCopy = { ...variables };
+        if (!variablesCopy?.identifiers) {
+            variablesCopy.identifiers = [];
         }
-        const response = (await this.call(productQueries.getProductByHandle, variables));
+        const response = (await this.call(productQueries.getProductByHandle, variablesCopy));
         if (!response?.product) {
             throw new Error('Product not found');
         }
         return cleanGraphQLResponse(response?.product);
     };
     productRecommendations = async (variables) => {
-        if (!variables?.identifiers) {
-            variables.identifiers = [];
+        const variablesCopy = { ...variables };
+        if (!variablesCopy?.identifiers) {
+            variablesCopy.identifiers = [];
         }
-        const response = (await this.call(productQueries.productRecommendations, variables));
+        const response = (await this.call(productQueries.productRecommendations, variablesCopy));
         if (!response?.productRecommendations) {
             throw new Error('No data returned from the GraphQL query');
         }
         return cleanGraphQLResponse(response.productRecommendations);
     };
     getProducts = async (variables) => {
-        if (!variables?.identifiers) {
-            variables.identifiers = [];
+        const variablesCopy = { ...variables };
+        if (!variablesCopy?.identifiers) {
+            variablesCopy.identifiers = [];
         }
-        const response = (await this.call(productQueries.queryProducts, adjustPaginationVariables(variables)));
+        const response = (await this.call(productQueries.queryProducts, adjustPaginationVariables(variablesCopy)));
         if (!response?.products) {
             throw new Error('No data returned from the GraphQL query');
         }

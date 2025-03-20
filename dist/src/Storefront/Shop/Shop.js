@@ -1,45 +1,46 @@
 import ShopifyStorefrontApi from '../ShopifyStorefrontApi';
 import shopQueries from './shopQueries';
+const DEFAULT_ERROR_MESSAGE = 'No data returned from the GraphQL query';
 class Shop extends ShopifyStorefrontApi {
     getShop = async (variables) => {
         const response = (await this.call(shopQueries.getShop, variables));
         if (!response?.shop) {
-            throw new Error('Shop not found');
+            throw new Error(DEFAULT_ERROR_MESSAGE);
         }
         return response?.shop;
     };
     getPrivacyPolicy = async (variables) => {
         const response = (await this.call(shopQueries.getPrivacyPolicy, variables));
         if (!response?.shop) {
-            throw new Error('Shop not found');
+            throw new Error(DEFAULT_ERROR_MESSAGE);
         }
         return response?.shop;
     };
     getRefundPolicy = async (variables) => {
         const response = (await this.call(shopQueries.getRefundPolicy, variables));
         if (!response?.shop) {
-            throw new Error('Shop not found');
+            throw new Error(DEFAULT_ERROR_MESSAGE);
         }
         return response?.shop;
     };
     getShippingPolicy = async (variables) => {
         const response = (await this.call(shopQueries.getShippingPolicy, variables));
         if (!response?.shop) {
-            throw new Error('Shop not found');
+            throw new Error(DEFAULT_ERROR_MESSAGE);
         }
         return response?.shop;
     };
     getSubscriptionPolicy = async (variables) => {
         const response = (await this.call(shopQueries.getSubscriptionPolicy, variables));
         if (!response?.shop) {
-            throw new Error('Shop not found');
+            throw new Error(DEFAULT_ERROR_MESSAGE);
         }
         return response?.shop;
     };
     getTermsOfService = async (variables) => {
         const response = (await this.call(shopQueries.getTermsOfService, variables));
         if (!response?.shop) {
-            throw new Error('Shop not found');
+            throw new Error(DEFAULT_ERROR_MESSAGE);
         }
         return response?.shop;
     };

@@ -1,7 +1,13 @@
 import ShopifyStorefrontApi from '../ShopifyStorefrontApi';
 declare class Cart extends ShopifyStorefrontApi {
     cartAttributesUpdate: (variables: {
-        attributes: any;
+        attributes: {
+            attributes: {
+                key: string;
+                value: string;
+            }[];
+            cartId: string;
+        };
         cartId: string;
         first?: number | undefined;
         after?: string | undefined;
@@ -14,7 +20,16 @@ declare class Cart extends ShopifyStorefrontApi {
         }>;
     }>;
     cartBuyerIdentityUpdate: (variables: {
-        buyerIdentity: any;
+        buyerIdentity: {
+            buyerIdentity: {
+                customerAccessToken: string | null;
+                companyLocationId: string | null;
+                countryCode: string | null;
+                email: string | null;
+                phone: string | null;
+            };
+            cartId: string;
+        };
         cartId: string;
         first?: number | undefined;
         after?: string | undefined;
@@ -27,7 +42,7 @@ declare class Cart extends ShopifyStorefrontApi {
         }>;
     }>;
     cartCreate: (variables: {
-        input: any;
+        input: CART_INPUT_TYPE;
         first?: number | undefined;
         after?: string | undefined;
         language?: string | undefined;
@@ -53,7 +68,10 @@ declare class Cart extends ShopifyStorefrontApi {
     }>;
     cartLinesAdd: (variables: {
         cartId: string;
-        lines: any[];
+        lines: {
+            cartId: string;
+            lines: CART_LINE_INPUT_TYPE[];
+        };
         first?: number | undefined;
         after?: string | undefined;
         language?: string | undefined;
@@ -66,7 +84,10 @@ declare class Cart extends ShopifyStorefrontApi {
     }>;
     cartLinesRemove: (variables: {
         cartId: string;
-        lines: any[];
+        lines: {
+            cartId: string;
+            lineIds: string[];
+        };
         first?: number | undefined;
         after?: string | undefined;
         language?: string | undefined;
@@ -79,7 +100,7 @@ declare class Cart extends ShopifyStorefrontApi {
     }>;
     cartLinesUpdate: (variables: {
         cartId: string;
-        lines: any[];
+        lines: CART_LINE_INPUT_TYPE[];
         first?: number | undefined;
         after?: string | undefined;
         language?: string | undefined;

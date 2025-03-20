@@ -16,7 +16,7 @@ export const cleanGraphQLResponse = (data) => {
   return result;
 };
 
-export const findPageInfo = (obj: any): PAGE_INFO_TYPE | null => {
+export const findPageInfo = (obj: unknown): PAGE_INFO_TYPE | null => {
   if (obj && typeof obj === 'object') {
     if (obj.pageInfo) {
       return obj.pageInfo;
@@ -33,7 +33,7 @@ export const findPageInfo = (obj: any): PAGE_INFO_TYPE | null => {
   return null;
 };
 
-export const findFilters = (obj: any): Array<FILTER_TYPE> | null => {
+export const findFilters = (obj: unknown): Array<FILTER_TYPE> | null => {
   if (obj && typeof obj === 'object') {
     if (obj.filters) {
       return obj.filters;

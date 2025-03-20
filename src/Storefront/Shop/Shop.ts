@@ -1,6 +1,8 @@
 import ShopifyStorefrontApi from '../ShopifyStorefrontApi';
 import shopQueries from './shopQueries';
 
+const DEFAULT_ERROR_MESSAGE = 'No data returned from the GraphQL query';
+
 class Shop extends ShopifyStorefrontApi {
   getShop = async (variables: { language?: string }): Promise<SHOP_TYPE> => {
     const response = (await this.call(shopQueries.getShop, variables)) as {
@@ -8,7 +10,7 @@ class Shop extends ShopifyStorefrontApi {
     };
 
     if (!response?.shop) {
-      throw new Error('Shop not found');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
 
     return response?.shop;
@@ -19,7 +21,7 @@ class Shop extends ShopifyStorefrontApi {
       shop: SHOP_TYPE;
     };
     if (!response?.shop) {
-      throw new Error('Shop not found');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
 
     return response?.shop;
@@ -31,7 +33,7 @@ class Shop extends ShopifyStorefrontApi {
     };
 
     if (!response?.shop) {
-      throw new Error('Shop not found');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
 
     return response?.shop;
@@ -42,7 +44,7 @@ class Shop extends ShopifyStorefrontApi {
       shop: SHOP_TYPE;
     };
     if (!response?.shop) {
-      throw new Error('Shop not found');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
 
     return response?.shop;
@@ -54,7 +56,7 @@ class Shop extends ShopifyStorefrontApi {
     };
 
     if (!response?.shop) {
-      throw new Error('Shop not found');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
 
     return response?.shop;
@@ -65,7 +67,7 @@ class Shop extends ShopifyStorefrontApi {
       shop: SHOP_TYPE;
     };
     if (!response?.shop) {
-      throw new Error('Shop not found');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
     return response?.shop;
   };

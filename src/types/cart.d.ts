@@ -56,4 +56,21 @@ declare global {
     discountCodes: string[]; // Array of applied discount codes
     buyerIdentity: BUYER_IDENTITY_TYPE; // Information about the buyer
   };
+
+  type CART_LINE_INPUT_TYPE = {
+    attributes: ATTRIBUTE_TYPE[]; // Array of custom attributes for the cart line
+    merchandiseId: string; // Unique identifier for the merchandise
+    quantity: number; // Quantity of the item in the cart line
+    metafields: {
+      key: string; // Key of the metafield
+      type: string; // Type of the metafield
+      value: string; // Value of the metafield
+    }[]; // Array of metafields for the cart line
+  };
+
+  type CART_INPUT_TYPE = {
+    buyerIdentity: BUYER_IDENTITY_TYPE; // Information about the buyer
+    discountCodes: string[]; // Array of discount codes to apply
+    lines: CART_LINE_TYPE;
+  };
 }

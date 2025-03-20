@@ -1,6 +1,7 @@
 import { adjustPaginationVariables, cleanGraphQLResponse } from '../../helpers';
 import ShopifyStorefrontApi from '../ShopifyStorefrontApi';
 import customerQueries from './customerQueries';
+const DEFAULT_ERROR_MESSAGE = 'No data returned from the GraphQL query';
 const handleUserErrors = (errors) => {
     if (errors?.length) {
         const errorMessages = errors.map((error) => error.message);
@@ -11,129 +12,213 @@ class Customer extends ShopifyStorefrontApi {
     customerAccessTokenCreate = async (variables) => {
         const response = (await this.call(customerQueries.customerAccessTokenCreate, variables));
         if (!response?.customerAccessTokenCreate) {
-            throw new Error('No data returned from the GraphQL query');
+            throw new Error(DEFAULT_ERROR_MESSAGE);
         }
-        handleUserErrors(response?.customerAccessTokenCreate?.customerUserErrors);
+        const customerUserErrors = response?.customerAccessTokenCreate?.customerUserErrors;
+        if (customerUserErrors?.length) {
+            return {
+                customerUserErrors,
+                customerAccessToken: null,
+            };
+        }
         return response?.customerAccessTokenCreate;
     };
     customerAccessTokenCreateWithMultipass = async (variables) => {
         const response = (await this.call(customerQueries.customerAccessTokenCreateWithMultipass, variables));
         if (!response?.customerAccessTokenCreateWithMultipass) {
-            throw new Error('No data returned from the GraphQL query');
+            throw new Error(DEFAULT_ERROR_MESSAGE);
         }
-        handleUserErrors(response?.customerAccessTokenCreateWithMultipass?.customerUserErrors);
+        const customerUserErrors = response?.customerAccessTokenCreateWithMultipass?.customerUserErrors;
+        if (customerUserErrors?.length) {
+            return {
+                customerUserErrors,
+                customerAccessToken: null,
+            };
+        }
         return response?.customerAccessTokenCreateWithMultipass;
     };
     customerAccessTokenDelete = async (variables) => {
         const response = (await this.call(customerQueries.customerAccessTokenDelete, variables));
         if (!response?.customerAccessTokenDelete) {
-            throw new Error('No data returned from the GraphQL query');
+            throw new Error(DEFAULT_ERROR_MESSAGE);
         }
-        handleUserErrors(response?.customerAccessTokenDelete?.customerUserErrors);
+        const customerUserErrors = response?.customerAccessTokenDelete?.customerUserErrors;
+        if (customerUserErrors?.length) {
+            return {
+                customerUserErrors,
+                deletedAccessTokenId: null,
+            };
+        }
         return response?.customerAccessTokenDelete;
     };
     customerAccessTokenRenew = async (variables) => {
         const response = (await this.call(customerQueries.customerAccessTokenRenew, variables));
         if (!response?.customerAccessTokenRenew) {
-            throw new Error('No data returned from the GraphQL query');
+            throw new Error(DEFAULT_ERROR_MESSAGE);
         }
-        handleUserErrors(response?.customerAccessTokenRenew?.userErrors);
+        const userErrors = response?.customerAccessTokenRenew?.userErrors;
+        if (userErrors?.length) {
+            return {
+                userErrors,
+                customerAccessToken: null,
+            };
+        }
         return response?.customerAccessTokenRenew;
     };
     customerActivate = async (variables) => {
         const response = (await this.call(customerQueries.customerActivate, variables));
         if (!response?.customerActivate) {
-            throw new Error('No data returned from the GraphQL query');
+            throw new Error(DEFAULT_ERROR_MESSAGE);
         }
-        handleUserErrors(response?.customerActivate?.customerUserErrors);
+        const customerUserErrors = response?.customerActivate?.customerUserErrors;
+        if (customerUserErrors?.length) {
+            return {
+                customerUserErrors,
+                customer: null,
+                customerAccessToken: null,
+            };
+        }
         return response?.customerActivate;
     };
     customerActivateByUrl = async (variables) => {
         const response = (await this.call(customerQueries.customerActivateByUrl, variables));
         if (!response?.customerActivateByUrl) {
-            throw new Error('No data returned from the GraphQL query');
+            throw new Error(DEFAULT_ERROR_MESSAGE);
         }
-        handleUserErrors(response?.customerActivateByUrl?.customerUserErrors);
+        const customerUserErrors = response?.customerActivateByUrl?.customerUserErrors;
+        if (customerUserErrors?.length) {
+            return {
+                customerUserErrors,
+                customer: null,
+                customerAccessToken: null,
+            };
+        }
         return response?.customerActivateByUrl;
     };
     customerAddressCreate = async (variables) => {
         const response = (await this.call(customerQueries.customerAddressCreate, variables));
         if (!response?.customerAddressCreate) {
-            throw new Error('No data returned from the GraphQL query');
+            throw new Error(DEFAULT_ERROR_MESSAGE);
         }
-        handleUserErrors(response?.customerAddressCreate?.customerUserErrors);
+        const customerUserErrors = response?.customerAddressCreate?.customerUserErrors;
+        if (customerUserErrors?.length) {
+            return {
+                customerUserErrors,
+                customerAddress: null,
+            };
+        }
         return response?.customerAddressCreate;
     };
     customerAddressDelete = async (variables) => {
         const response = (await this.call(customerQueries.customerAddressDelete, variables));
         if (!response?.customerAddressDelete) {
-            throw new Error('No data returned from the GraphQL query');
+            throw new Error(DEFAULT_ERROR_MESSAGE);
         }
-        handleUserErrors(response?.customerAddressDelete?.customerUserErrors);
+        const customerUserErrors = response?.customerAddressDelete?.customerUserErrors;
+        if (customerUserErrors?.length) {
+            return {
+                customerUserErrors,
+                deletedCustomerAddressId: null,
+            };
+        }
         return response?.customerAddressDelete;
     };
     customerAddressUpdate = async (variables) => {
         const response = (await this.call(customerQueries.customerAddressUpdate, variables));
         if (!response?.customerAddressUpdate) {
-            throw new Error('No data returned from the GraphQL query');
+            throw new Error(DEFAULT_ERROR_MESSAGE);
         }
-        handleUserErrors(response?.customerAddressUpdate?.userErrors);
+        const customerUserErrors = response?.customerAddressUpdate?.userErrors;
+        if (customerUserErrors?.length) {
+            return {
+                customerAddress: null,
+                userErrors: customerUserErrors,
+            };
+        }
         return response?.customerAddressUpdate;
     };
     customerCreate = async (variables) => {
         const response = (await this.call(customerQueries.customerCreate, variables));
         if (!response?.customerCreate) {
-            throw new Error('No data returned from the GraphQL query');
+            throw new Error(DEFAULT_ERROR_MESSAGE);
         }
-        handleUserErrors(response?.customerCreate?.customerUserErrors);
+        const customerUserErrors = response?.customerCreate?.customerUserErrors;
+        if (customerUserErrors?.length) {
+            return {
+                customerUserErrors,
+                customer: null,
+                customerAccessToken: null,
+            };
+        }
         return response?.customerCreate;
     };
     customerDefaultAddressUpdate = async (variables) => {
         const response = (await this.call(customerQueries.customerDefaultAddressUpdate, variables));
         if (!response?.customerDefaultAddressUpdate) {
-            throw new Error('No data returned from the GraphQL query');
+            throw new Error(DEFAULT_ERROR_MESSAGE);
         }
-        handleUserErrors(response?.customerDefaultAddressUpdate?.customerUserErrors);
+        const customerUserErrors = response?.customerDefaultAddressUpdate?.customerUserErrors;
+        if (customerUserErrors?.length) {
+            return {
+                customerUserErrors,
+                customer: null,
+            };
+        }
         return response?.customerDefaultAddressUpdate;
     };
     customerRecover = async (variables) => {
         const response = (await this.call(customerQueries.customerRecover, variables));
         if (!response?.customerRecover) {
-            throw new Error('No data returned from the GraphQL query');
+            throw new Error(DEFAULT_ERROR_MESSAGE);
         }
-        handleUserErrors(response?.customerRecover?.customerUserErrors);
         return response?.customerRecover;
     };
     customerReset = async (variables) => {
         const response = (await this.call(customerQueries.customerReset, variables));
         if (!response?.customerReset) {
-            throw new Error('No data returned from the GraphQL query');
+            throw new Error(DEFAULT_ERROR_MESSAGE);
         }
-        handleUserErrors(response?.customerReset?.customerUserErrors);
+        const customerUserErrors = response?.customerReset?.customerUserErrors;
+        if (customerUserErrors?.length) {
+            return {
+                customerUserErrors,
+                customer: null,
+                customerAccessToken: null,
+            };
+        }
         return response?.customerReset;
     };
     customerResetByUrl = async (variables) => {
         const response = (await this.call(customerQueries.customerResetByUrl, variables));
         if (!response?.customerResetByUrl) {
-            throw new Error('No data returned from the GraphQL query');
+            throw new Error(DEFAULT_ERROR_MESSAGE);
         }
-        handleUserErrors(response?.customerResetByUrl?.customerUserErrors);
+        const customerUserErrors = response?.customerResetByUrl?.customerUserErrors;
+        if (customerUserErrors?.length) {
+            return {
+                customerUserErrors,
+                customer: null,
+                customerAccessToken: null,
+            };
+        }
         return response?.customerResetByUrl;
     };
     customerUpdate = async (variables) => {
         const response = (await this.call(customerQueries.customerUpdate, variables));
         if (!response?.customerUpdate) {
-            throw new Error('No data returned from the GraphQL query');
+            throw new Error(DEFAULT_ERROR_MESSAGE);
         }
-        handleUserErrors(response?.customerUpdate?.customerUserErrors);
+        const customerUserErrors = response?.customerUpdate?.customerUserErrors;
+        if (customerUserErrors?.length) {
+            return {
+                customerUserErrors,
+                customer: null,
+            };
+        }
         return response?.customerUpdate;
     };
     queryCustomer = async (variables) => {
         const response = (await this.call(customerQueries.queryCustomer, variables));
-        if (!response?.customer) {
-            throw new Error('No data returned from the GraphQL query');
-        }
-        handleUserErrors(response?.customerUserErrors);
         return response?.customer;
     };
     queryCustomerMetafields = async (variables) => {
@@ -149,7 +234,14 @@ class Customer extends ShopifyStorefrontApi {
         if (!response?.customer?.addresses) {
             throw new Error('No addresses returned from the GraphQL query');
         }
-        handleUserErrors(response?.customer?.customerUserErrors);
+        const customerUserErrors = response?.customer?.customerUserErrors;
+        if (customerUserErrors?.length) {
+            return {
+                addresses: [],
+                pageInfo: null,
+                totalCount: 0,
+            };
+        }
         return cleanGraphQLResponse(response?.customer?.addresses);
     };
     queryCustomerOrders = async (variables) => {
@@ -157,8 +249,14 @@ class Customer extends ShopifyStorefrontApi {
         if (!response?.customer?.orders) {
             throw new Error('No orders returned from the GraphQL query');
         }
-        handleUserErrors(response?.customer?.customerUserErrors);
-        return cleanGraphQLResponse(response?.customer?.orders);
+        const customerUserErrors = response?.customer?.customerUserErrors;
+        if (customerUserErrors?.length) {
+            return {
+                orders: [],
+                customerUserErrors,
+            };
+        }
+        return { orders: cleanGraphQLResponse(response?.customer?.orders), customerUserErrors };
     };
 }
 export default Customer;

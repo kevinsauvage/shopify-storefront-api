@@ -2,9 +2,17 @@ import { adjustPaginationVariables, cleanGraphQLResponse } from '../../helpers';
 import ShopifyStorefrontApi from '../ShopifyStorefrontApi';
 import cartQueries from './cartQueries';
 
+const DEFAULT_ERROR_MESSAGE = 'No data returned from the GraphQL query';
+
 class Cart extends ShopifyStorefrontApi {
   cartAttributesUpdate = async (variables: {
-    attributes: any;
+    attributes: {
+      attributes: {
+        key: string;
+        value: string;
+      }[];
+      cartId: string;
+    };
     cartId: string;
     first?: number | undefined;
     after?: string | undefined;
@@ -23,14 +31,23 @@ class Cart extends ShopifyStorefrontApi {
       };
     };
     if (!response?.cartAttributesUpdate) {
-      throw new Error('No data returned from the GraphQL query');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
 
     return cleanGraphQLResponse(response?.cartAttributesUpdate);
   };
 
   cartBuyerIdentityUpdate = async (variables: {
-    buyerIdentity: any;
+    buyerIdentity: {
+      buyerIdentity: {
+        customerAccessToken: string | null;
+        companyLocationId: string | null;
+        countryCode: string | null;
+        email: string | null;
+        phone: string | null;
+      };
+      cartId: string;
+    };
     cartId: string;
     first?: number | undefined;
     after?: string | undefined;
@@ -50,14 +67,14 @@ class Cart extends ShopifyStorefrontApi {
     };
 
     if (!response?.cartBuyerIdentityUpdate) {
-      throw new Error('No data returned from the GraphQL query');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
 
     return cleanGraphQLResponse(response?.cartBuyerIdentityUpdate);
   };
 
   cartCreate = async (variables: {
-    input: any;
+    input: CART_INPUT_TYPE;
     first?: number | undefined;
     after?: string | undefined;
     language?: string | undefined;
@@ -76,7 +93,7 @@ class Cart extends ShopifyStorefrontApi {
     };
 
     if (!response?.cartCreate) {
-      throw new Error('No data returned from the GraphQL query');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
 
     return cleanGraphQLResponse(response?.cartCreate);
@@ -102,7 +119,7 @@ class Cart extends ShopifyStorefrontApi {
       };
     };
     if (!response?.cartDiscountCodesUpdate) {
-      throw new Error('No data returned from the GraphQL query');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
 
     return cleanGraphQLResponse(response?.cartDiscountCodesUpdate);
@@ -110,7 +127,10 @@ class Cart extends ShopifyStorefrontApi {
 
   cartLinesAdd = async (variables: {
     cartId: string;
-    lines: any[];
+    lines: {
+      cartId: string;
+      lines: CART_LINE_INPUT_TYPE[];
+    };
     first?: number | undefined;
     after?: string | undefined;
     language?: string | undefined;
@@ -128,7 +148,7 @@ class Cart extends ShopifyStorefrontApi {
       };
     };
     if (!response?.cartLinesAdd) {
-      throw new Error('No data returned from the GraphQL query');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
 
     return cleanGraphQLResponse(response?.cartLinesAdd);
@@ -136,7 +156,7 @@ class Cart extends ShopifyStorefrontApi {
 
   cartLinesRemove = async (variables: {
     cartId: string;
-    lines: any[];
+    lines: { cartId: string; lineIds: string[] };
     first?: number | undefined;
     after?: string | undefined;
     language?: string | undefined;
@@ -154,7 +174,7 @@ class Cart extends ShopifyStorefrontApi {
       };
     };
     if (!response?.cartLinesRemove) {
-      throw new Error('No data returned from the GraphQL query');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
 
     return cleanGraphQLResponse(response?.cartLinesRemove);
@@ -162,7 +182,7 @@ class Cart extends ShopifyStorefrontApi {
 
   cartLinesUpdate = async (variables: {
     cartId: string;
-    lines: any[];
+    lines: CART_LINE_INPUT_TYPE[];
     first?: number | undefined;
     after?: string | undefined;
     language?: string | undefined;
@@ -180,7 +200,7 @@ class Cart extends ShopifyStorefrontApi {
       };
     };
     if (!response?.cartLinesUpdate) {
-      throw new Error('No data returned from the GraphQL query');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
 
     return cleanGraphQLResponse(response?.cartLinesUpdate);
@@ -206,7 +226,7 @@ class Cart extends ShopifyStorefrontApi {
       };
     };
     if (!response?.cartNoteUpdate) {
-      throw new Error('No data returned from the GraphQL query');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
 
     return cleanGraphQLResponse(response?.cartNoteUpdate);
@@ -226,7 +246,7 @@ class Cart extends ShopifyStorefrontApi {
     };
 
     if (!response?.cart) {
-      throw new Error('No data returned from the GraphQL query');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
 
     return cleanGraphQLResponse(response?.cart);
@@ -247,7 +267,7 @@ class Cart extends ShopifyStorefrontApi {
     };
 
     if (!response?.cart) {
-      throw new Error('No data returned from the GraphQL query');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
 
     return cleanGraphQLResponse(response?.cart);

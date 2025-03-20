@@ -1,10 +1,4 @@
 import ShopifyApi from '../ShopifyApi';
-interface GraphQLResponse<T = any> {
-    data?: T;
-    errors?: Array<{
-        message: string;
-    }>;
-}
 interface ShopifyAdminApiParams {
     adminToken: string | undefined;
     domain: string;
@@ -13,6 +7,6 @@ interface ShopifyAdminApiParams {
 declare class ShopifyAdminApi extends ShopifyApi {
     private adminToken;
     constructor({ adminToken, domain, apiVersion }: ShopifyAdminApiParams);
-    call<T>(query: string, variables?: Record<string, unknown>): Promise<GraphQLResponse<T>>;
+    call(query: string, variables?: Record<string, unknown>): Promise<any>;
 }
 export default ShopifyAdminApi;

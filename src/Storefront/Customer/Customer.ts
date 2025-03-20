@@ -2,6 +2,8 @@ import { adjustPaginationVariables, cleanGraphQLResponse } from '../../helpers';
 import ShopifyStorefrontApi from '../ShopifyStorefrontApi';
 import customerQueries from './customerQueries';
 
+const DEFAULT_ERROR_MESSAGE = 'No data returned from the GraphQL query';
+
 const handleUserErrors = (errors: Array<USER_ERROR_TYPE>) => {
   if (errors?.length) {
     const errorMessages = errors.map((error) => error.message);
@@ -13,11 +15,11 @@ type CUSTOMER_ACTIVATE_BY_URL = {
   customer: {
     id: string;
     email: string;
-  };
+  } | null;
   customerAccessToken: {
     accessToken: string;
     expiresAt: string;
-  };
+  } | null;
   customerUserErrors: Array<USER_ERROR_TYPE>;
 };
 
@@ -28,7 +30,7 @@ class Customer extends ShopifyStorefrontApi {
   }): Promise<{
     customerAccessToken: {
       accessToken: string;
-    };
+    } | null;
     customerUserErrors: Array<USER_ERROR_TYPE>;
   }> => {
     const response = (await this.call(customerQueries.customerAccessTokenCreate, variables)) as {
@@ -41,10 +43,17 @@ class Customer extends ShopifyStorefrontApi {
     };
 
     if (!response?.customerAccessTokenCreate) {
-      throw new Error('No data returned from the GraphQL query');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
 
-    handleUserErrors(response?.customerAccessTokenCreate?.customerUserErrors);
+    const customerUserErrors = response?.customerAccessTokenCreate?.customerUserErrors;
+
+    if (customerUserErrors?.length) {
+      return {
+        customerUserErrors,
+        customerAccessToken: null,
+      };
+    }
 
     return response?.customerAccessTokenCreate;
   };
@@ -55,7 +64,7 @@ class Customer extends ShopifyStorefrontApi {
   }): Promise<{
     customerAccessToken: {
       accessToken: string;
-    };
+    } | null;
     customerUserErrors: Array<USER_ERROR_TYPE>;
   }> => {
     const response = (await this.call(
@@ -70,9 +79,16 @@ class Customer extends ShopifyStorefrontApi {
       };
     };
     if (!response?.customerAccessTokenCreateWithMultipass) {
-      throw new Error('No data returned from the GraphQL query');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
-    handleUserErrors(response?.customerAccessTokenCreateWithMultipass?.customerUserErrors);
+
+    const customerUserErrors = response?.customerAccessTokenCreateWithMultipass?.customerUserErrors;
+    if (customerUserErrors?.length) {
+      return {
+        customerUserErrors,
+        customerAccessToken: null,
+      };
+    }
 
     return response?.customerAccessTokenCreateWithMultipass;
   };
@@ -81,7 +97,7 @@ class Customer extends ShopifyStorefrontApi {
     customerAccessToken: string;
     language?: string;
   }): Promise<{
-    deletedAccessTokenId: string;
+    deletedAccessTokenId: string | null;
     customerUserErrors: Array<USER_ERROR_TYPE>;
   }> => {
     const response = (await this.call(customerQueries.customerAccessTokenDelete, variables)) as {
@@ -91,9 +107,16 @@ class Customer extends ShopifyStorefrontApi {
       };
     };
     if (!response?.customerAccessTokenDelete) {
-      throw new Error('No data returned from the GraphQL query');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
-    handleUserErrors(response?.customerAccessTokenDelete?.customerUserErrors);
+
+    const customerUserErrors = response?.customerAccessTokenDelete?.customerUserErrors;
+    if (customerUserErrors?.length) {
+      return {
+        customerUserErrors,
+        deletedAccessTokenId: null,
+      };
+    }
 
     return response?.customerAccessTokenDelete;
   };
@@ -113,10 +136,16 @@ class Customer extends ShopifyStorefrontApi {
     };
 
     if (!response?.customerAccessTokenRenew) {
-      throw new Error('No data returned from the GraphQL query');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
 
-    handleUserErrors(response?.customerAccessTokenRenew?.userErrors);
+    const userErrors = response?.customerAccessTokenRenew?.userErrors;
+    if (userErrors?.length) {
+      return {
+        userErrors,
+        customerAccessToken: null,
+      };
+    }
 
     return response?.customerAccessTokenRenew;
   };
@@ -129,11 +158,11 @@ class Customer extends ShopifyStorefrontApi {
     customer: {
       id: string;
       email: string;
-    };
+    } | null;
     customerAccessToken: {
       accessToken: string;
       expiresAt: string;
-    };
+    } | null;
     customerUserErrors: Array<USER_ERROR_TYPE>;
   }> => {
     const response = (await this.call(customerQueries.customerActivate, variables)) as {
@@ -151,9 +180,17 @@ class Customer extends ShopifyStorefrontApi {
     };
 
     if (!response?.customerActivate) {
-      throw new Error('No data returned from the GraphQL query');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
-    handleUserErrors(response?.customerActivate?.customerUserErrors);
+
+    const customerUserErrors = response?.customerActivate?.customerUserErrors;
+    if (customerUserErrors?.length) {
+      return {
+        customerUserErrors,
+        customer: null,
+        customerAccessToken: null,
+      };
+    }
 
     return response?.customerActivate;
   };
@@ -168,10 +205,17 @@ class Customer extends ShopifyStorefrontApi {
     };
 
     if (!response?.customerActivateByUrl) {
-      throw new Error('No data returned from the GraphQL query');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
 
-    handleUserErrors(response?.customerActivateByUrl?.customerUserErrors);
+    const customerUserErrors = response?.customerActivateByUrl?.customerUserErrors;
+    if (customerUserErrors?.length) {
+      return {
+        customerUserErrors,
+        customer: null,
+        customerAccessToken: null,
+      };
+    }
 
     return response?.customerActivateByUrl;
   };
@@ -181,7 +225,7 @@ class Customer extends ShopifyStorefrontApi {
     customerAccessToken: string;
     language?: string;
   }): Promise<{
-    customerAddress: CUSTOMER_ADDRESS_TYPE;
+    customerAddress: CUSTOMER_ADDRESS_TYPE | null;
     customerUserErrors: Array<USER_ERROR_TYPE>;
   }> => {
     const response = (await this.call(customerQueries.customerAddressCreate, variables)) as {
@@ -192,9 +236,15 @@ class Customer extends ShopifyStorefrontApi {
     };
 
     if (!response?.customerAddressCreate) {
-      throw new Error('No data returned from the GraphQL query');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
-    handleUserErrors(response?.customerAddressCreate?.customerUserErrors);
+    const customerUserErrors = response?.customerAddressCreate?.customerUserErrors;
+    if (customerUserErrors?.length) {
+      return {
+        customerUserErrors,
+        customerAddress: null,
+      };
+    }
 
     return response?.customerAddressCreate;
   };
@@ -204,7 +254,7 @@ class Customer extends ShopifyStorefrontApi {
     addressId: string;
     language?: string;
   }): Promise<{
-    deletedCustomerAddressId: string;
+    deletedCustomerAddressId: string | null;
     customerUserErrors: Array<USER_ERROR_TYPE>;
   }> => {
     const response = (await this.call(customerQueries.customerAddressDelete, variables)) as {
@@ -214,9 +264,15 @@ class Customer extends ShopifyStorefrontApi {
       };
     };
     if (!response?.customerAddressDelete) {
-      throw new Error('No data returned from the GraphQL query');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
-    handleUserErrors(response?.customerAddressDelete?.customerUserErrors);
+    const customerUserErrors = response?.customerAddressDelete?.customerUserErrors;
+    if (customerUserErrors?.length) {
+      return {
+        customerUserErrors,
+        deletedCustomerAddressId: null,
+      };
+    }
 
     return response?.customerAddressDelete;
   };
@@ -226,7 +282,7 @@ class Customer extends ShopifyStorefrontApi {
     customerAccessToken: string;
     language?: string;
   }): Promise<{
-    customerAddress: CUSTOMER_ADDRESS_TYPE;
+    customerAddress: CUSTOMER_ADDRESS_TYPE | null;
     userErrors: Array<USER_ERROR_TYPE>;
   }> => {
     const response = (await this.call(customerQueries.customerAddressUpdate, variables)) as {
@@ -237,10 +293,16 @@ class Customer extends ShopifyStorefrontApi {
     };
 
     if (!response?.customerAddressUpdate) {
-      throw new Error('No data returned from the GraphQL query');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
 
-    handleUserErrors(response?.customerAddressUpdate?.userErrors);
+    const customerUserErrors = response?.customerAddressUpdate?.userErrors;
+    if (customerUserErrors?.length) {
+      return {
+        customerAddress: null,
+        userErrors: customerUserErrors,
+      };
+    }
 
     return response?.customerAddressUpdate;
   };
@@ -249,11 +311,11 @@ class Customer extends ShopifyStorefrontApi {
     input: CUSTOMER_CREATE_INPUT_TYPE;
     language?: string;
   }): Promise<{
-    customer: CUSTOMER_TYPE;
+    customer: CUSTOMER_TYPE | null;
     customerAccessToken: {
       accessToken: string;
       expiresAt: string;
-    };
+    } | null;
     customerUserErrors: Array<USER_ERROR_TYPE>;
   }> => {
     const response = (await this.call(customerQueries.customerCreate, variables)) as {
@@ -267,9 +329,17 @@ class Customer extends ShopifyStorefrontApi {
       };
     };
     if (!response?.customerCreate) {
-      throw new Error('No data returned from the GraphQL query');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
-    handleUserErrors(response?.customerCreate?.customerUserErrors);
+
+    const customerUserErrors = response?.customerCreate?.customerUserErrors;
+    if (customerUserErrors?.length) {
+      return {
+        customerUserErrors,
+        customer: null,
+        customerAccessToken: null,
+      };
+    }
 
     return response?.customerCreate;
   };
@@ -279,7 +349,7 @@ class Customer extends ShopifyStorefrontApi {
     addressId: string;
     language?: string;
   }): Promise<{
-    customer: CUSTOMER_TYPE;
+    customer: CUSTOMER_TYPE | null;
     customerUserErrors: Array<USER_ERROR_TYPE>;
   }> => {
     const response = (await this.call(customerQueries.customerDefaultAddressUpdate, variables)) as {
@@ -290,10 +360,16 @@ class Customer extends ShopifyStorefrontApi {
     };
 
     if (!response?.customerDefaultAddressUpdate) {
-      throw new Error('No data returned from the GraphQL query');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
 
-    handleUserErrors(response?.customerDefaultAddressUpdate?.customerUserErrors);
+    const customerUserErrors = response?.customerDefaultAddressUpdate?.customerUserErrors;
+    if (customerUserErrors?.length) {
+      return {
+        customerUserErrors,
+        customer: null,
+      };
+    }
 
     return response?.customerDefaultAddressUpdate;
   };
@@ -310,10 +386,8 @@ class Customer extends ShopifyStorefrontApi {
       };
     };
     if (!response?.customerRecover) {
-      throw new Error('No data returned from the GraphQL query');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
-
-    handleUserErrors(response?.customerRecover?.customerUserErrors);
 
     return response?.customerRecover;
   };
@@ -323,11 +397,11 @@ class Customer extends ShopifyStorefrontApi {
     input: { password: string; resetToken: string };
     language?: string;
   }): Promise<{
-    customer: CUSTOMER_TYPE;
+    customer: CUSTOMER_TYPE | null;
     customerAccessToken: {
       accessToken: string;
       expiresAt: string;
-    };
+    } | null;
     customerUserErrors: Array<USER_ERROR_TYPE>;
   }> => {
     const response = (await this.call(customerQueries.customerReset, variables)) as {
@@ -342,10 +416,17 @@ class Customer extends ShopifyStorefrontApi {
     };
 
     if (!response?.customerReset) {
-      throw new Error('No data returned from the GraphQL query');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
 
-    handleUserErrors(response?.customerReset?.customerUserErrors);
+    const customerUserErrors = response?.customerReset?.customerUserErrors;
+    if (customerUserErrors?.length) {
+      return {
+        customerUserErrors,
+        customer: null,
+        customerAccessToken: null,
+      };
+    }
 
     return response?.customerReset;
   };
@@ -355,11 +436,11 @@ class Customer extends ShopifyStorefrontApi {
     resetUrl: string;
     language?: string;
   }): Promise<{
-    customer: CUSTOMER_TYPE;
+    customer: CUSTOMER_TYPE | null;
     customerAccessToken: {
       accessToken: string;
       expiresAt: string;
-    };
+    } | null;
     customerUserErrors: Array<USER_ERROR_TYPE>;
   }> => {
     const response = (await this.call(customerQueries.customerResetByUrl, variables)) as {
@@ -374,10 +455,17 @@ class Customer extends ShopifyStorefrontApi {
     };
 
     if (!response?.customerResetByUrl) {
-      throw new Error('No data returned from the GraphQL query');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
 
-    handleUserErrors(response?.customerResetByUrl?.customerUserErrors);
+    const customerUserErrors = response?.customerResetByUrl?.customerUserErrors;
+    if (customerUserErrors?.length) {
+      return {
+        customerUserErrors,
+        customer: null,
+        customerAccessToken: null,
+      };
+    }
 
     return response?.customerResetByUrl;
   };
@@ -387,7 +475,7 @@ class Customer extends ShopifyStorefrontApi {
     customer: CUSTOMER_CREATE_INPUT_TYPE;
     language?: string;
   }): Promise<{
-    customer: CUSTOMER_TYPE;
+    customer: CUSTOMER_TYPE | null;
     customerUserErrors: Array<USER_ERROR_TYPE>;
   }> => {
     const response = (await this.call(customerQueries.customerUpdate, variables)) as {
@@ -397,10 +485,17 @@ class Customer extends ShopifyStorefrontApi {
       };
     };
     if (!response?.customerUpdate) {
-      throw new Error('No data returned from the GraphQL query');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
 
-    handleUserErrors(response?.customerUpdate?.customerUserErrors);
+    const customerUserErrors = response?.customerUpdate?.customerUserErrors;
+
+    if (customerUserErrors?.length) {
+      return {
+        customerUserErrors,
+        customer: null,
+      };
+    }
 
     return response?.customerUpdate;
   };
@@ -411,14 +506,7 @@ class Customer extends ShopifyStorefrontApi {
   }): Promise<CUSTOMER_TYPE> => {
     const response = (await this.call(customerQueries.queryCustomer, variables)) as {
       customer: CUSTOMER_TYPE;
-      customerUserErrors: Array<USER_ERROR_TYPE>;
     };
-
-    if (!response?.customer) {
-      throw new Error('No data returned from the GraphQL query');
-    }
-
-    handleUserErrors(response?.customerUserErrors);
 
     return response?.customer;
   };
@@ -453,7 +541,7 @@ class Customer extends ShopifyStorefrontApi {
     language?: string;
   }): Promise<{
     addresses: Array<CUSTOMER_ADDRESS_TYPE>;
-    pageInfo: PAGE_INFO_TYPE;
+    pageInfo: PAGE_INFO_TYPE | null;
     totalCount: number;
   }> => {
     const response = (await this.call(
@@ -474,7 +562,14 @@ class Customer extends ShopifyStorefrontApi {
       throw new Error('No addresses returned from the GraphQL query');
     }
 
-    handleUserErrors(response?.customer?.customerUserErrors);
+    const customerUserErrors = response?.customer?.customerUserErrors;
+    if (customerUserErrors?.length) {
+      return {
+        addresses: [],
+        pageInfo: null,
+        totalCount: 0,
+      };
+    }
 
     return cleanGraphQLResponse(response?.customer?.addresses);
   };
@@ -490,6 +585,7 @@ class Customer extends ShopifyStorefrontApi {
     language: string;
   }): Promise<{
     orders: Array<CUSTOMER_ORDER_TYPE>;
+    customerUserErrors: Array<USER_ERROR_TYPE>;
   }> => {
     const response = (await this.call(
       customerQueries.queryCustomerOrders,
@@ -507,9 +603,15 @@ class Customer extends ShopifyStorefrontApi {
     if (!response?.customer?.orders) {
       throw new Error('No orders returned from the GraphQL query');
     }
-    handleUserErrors(response?.customer?.customerUserErrors);
+    const customerUserErrors = response?.customer?.customerUserErrors;
+    if (customerUserErrors?.length) {
+      return {
+        orders: [],
+        customerUserErrors,
+      };
+    }
 
-    return cleanGraphQLResponse(response?.customer?.orders);
+    return { orders: cleanGraphQLResponse(response?.customer?.orders), customerUserErrors };
   };
 }
 

@@ -1,6 +1,6 @@
 export declare const cleanGraphQLResponse: (data: any) => any;
-export declare const findPageInfo: (obj: any) => PAGE_INFO_TYPE | null;
-export declare const findFilters: (obj: any) => Array<FILTER_TYPE> | null;
+export declare const findPageInfo: (obj: unknown) => PAGE_INFO_TYPE | null;
+export declare const findFilters: (obj: unknown) => Array<FILTER_TYPE> | null;
 interface PaginationVariables {
     after?: string;
     before?: string;

@@ -1,4 +1,4 @@
-import { cleanGraphQLResponse, adjustPaginationVariables } from '@/helpers';
+import { cleanGraphQLResponse, adjustPaginationVariables } from '../../helpers';
 import ShopifyStorefrontApi from '../ShopifyStorefrontApi';
 import productQueries from './productQueries';
 
@@ -8,10 +8,11 @@ class Product extends ShopifyStorefrontApi {
     identifiers?: unknown[];
     language?: string;
   }): Promise<PRODUCT_TYPE> => {
-    if (!variables?.identifiers) {
-      variables.identifiers = [];
+    const variablesCopy = { ...variables };
+    if (!variablesCopy?.identifiers) {
+      variablesCopy.identifiers = [];
     }
-    const response = (await this.call(productQueries.getProductByHandle, variables)) as {
+    const response = (await this.call(productQueries.getProductByHandle, variablesCopy)) as {
       product: PRODUCT_TYPE;
     };
     if (!response?.product) {
@@ -26,10 +27,11 @@ class Product extends ShopifyStorefrontApi {
     identifiers?: unknown[];
     language?: string;
   }): Promise<Array<PRODUCT_TYPE>> => {
-    if (!variables?.identifiers) {
-      variables.identifiers = [];
+    const variablesCopy = { ...variables };
+    if (!variablesCopy?.identifiers) {
+      variablesCopy.identifiers = [];
     }
-    const response = (await this.call(productQueries.productRecommendations, variables)) as {
+    const response = (await this.call(productQueries.productRecommendations, variablesCopy)) as {
       productRecommendations: Array<PRODUCT_TYPE>;
     };
 
@@ -52,13 +54,14 @@ class Product extends ShopifyStorefrontApi {
     products: Array<PRODUCT_TYPE>;
     pageInfo: PAGE_INFO_TYPE;
   }> => {
-    if (!variables?.identifiers) {
-      variables.identifiers = [];
+    const variablesCopy = { ...variables };
+    if (!variablesCopy?.identifiers) {
+      variablesCopy.identifiers = [];
     }
 
     const response = (await this.call(
       productQueries.queryProducts,
-      adjustPaginationVariables(variables)
+      adjustPaginationVariables(variablesCopy)
     )) as {
       products: {
         edges: Array<{

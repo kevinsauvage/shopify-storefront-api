@@ -3,10 +3,11 @@ import ShopifyStorefrontApi from '../ShopifyStorefrontApi';
 import collectionQueries from './collectionQueries';
 class Collection extends ShopifyStorefrontApi {
     collection = async (variables) => {
-        if (!variables?.identifiers) {
-            variables.identifiers = [];
+        const variablesCopy = { ...variables };
+        if (!variablesCopy?.identifiers) {
+            variablesCopy.identifiers = [];
         }
-        const response = (await this.call(collectionQueries.collection, adjustPaginationVariables(variables)));
+        const response = (await this.call(collectionQueries.collection, adjustPaginationVariables(variablesCopy)));
         if (!response?.collection) {
             throw new Error('Collection not found');
         }
@@ -25,11 +26,12 @@ class Collection extends ShopifyStorefrontApi {
         return null;
     };
     collections = async (variables) => {
-        if (!variables?.identifiers) {
-            variables.identifiers = [];
+        const variablesCopy = { ...variables };
+        if (!variablesCopy?.identifiers) {
+            variablesCopy.identifiers = [];
         }
         // TODO: fix firstProducts, afterProducts, beforeProducts, productsSortKey
-        const response = (await this.call(collectionQueries.collections, adjustPaginationVariables(variables)));
+        const response = (await this.call(collectionQueries.collections, adjustPaginationVariables(variablesCopy)));
         if (!response?.collections) {
             throw new Error('No data returned from the GraphQL query');
         }
