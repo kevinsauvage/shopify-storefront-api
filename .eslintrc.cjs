@@ -3,27 +3,33 @@ module.exports = {
     browser: true,
     es2021: true,
   },
+  parser: '@typescript-eslint/parser', // Add TypeScript parser
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['prettier', 'sonarjs', 'unicorn'],
+  plugins: ['@typescript-eslint', 'prettier', 'sonarjs'],
   extends: [
     'airbnb-base',
     'prettier',
     'plugin:sonarjs/recommended',
     'eslint:recommended',
-    'plugin:unicorn/recommended',
+    'plugin:@typescript-eslint/recommended', // Add TypeScript rules
   ],
-
   rules: {
-    'unicorn/no-array-reduce': 0,
-    'unicorn/no-array-for-each': 0,
-    'unicorn/filename-case': 0,
-    'unicorn/no-new-array': 0,
-    'unicorn/no-null': 0,
     'no-console': 'off',
     'prettier/prettier': ['error'],
     'import/extensions': 0,
+    '@typescript-eslint/no-unused-vars': ['error'], // TypeScript-specific rule
+    '@typescript-eslint/explicit-module-boundary-types': 'off', // Optional
   },
+  overrides: [
+    {
+      files: ['*.ts'],
+      rules: {
+        'no-unused-vars': 'off', // Disable base rule in favor of TypeScript version
+        'no-params-reassign': 'off', // Disable base rule in favor of TypeScript version
+      },
+    },
+  ],
 };

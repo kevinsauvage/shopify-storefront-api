@@ -1,0 +1,23 @@
+declare const customerQueries: {
+    customerAccessTokenCreate: string;
+    customerCreate: string;
+    customerAccessTokenCreateWithMultipass: string;
+    customerAccessTokenRenew: string;
+    customerAccessTokenDelete: string;
+    customerActivate: string;
+    customerActivateByUrl: string;
+    customerRecover: string;
+    customerResetByUrl: string;
+    customerReset: string;
+    customerUpdate: string;
+    customerAddressCreate: string;
+    customerAddressUpdate: string;
+    customerDefaultAddressUpdate: string;
+    customerAddressDelete: string;
+    queryCustomer: string;
+    queryCustomerMetafields: string;
+    queryCustomerAddresses: string;
+    queryCustomerOrders: string;
+    queryCustomerOrderById: string;
+};
+export default customerQueries;
