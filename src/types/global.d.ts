@@ -49,5 +49,8 @@ declare global {
     }>;
   };
 
-  type USER_ERROR_TYPE = { field: string; message: string };
+  type USER_ERROR_TYPE = {
+    message: string; // Error message
+    field: Array<string>; // Fields associated with the error
+  };
 }

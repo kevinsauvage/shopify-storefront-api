@@ -48,9 +48,6 @@ declare class Customer extends ShopifyStorefrontApi {
             expiresAt: string;
         };
         userErrors: Array<USER_ERROR_TYPE>;
-    } | {
-        userErrors: USER_ERROR_TYPE[];
-        customerAccessToken: null;
     }>;
     customerActivate: (variables: {
         id: string;
@@ -191,6 +188,7 @@ declare class Customer extends ShopifyStorefrontApi {
     }) => Promise<{
         orders: Array<CUSTOMER_ORDER_TYPE>;
         customerUserErrors: Array<USER_ERROR_TYPE>;
+        pageInfo: PAGE_INFO_TYPE | null;
     }>;
 }
 export default Customer;

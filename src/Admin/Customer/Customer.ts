@@ -1,13 +1,6 @@
 import ShopifyAdminApi from '../ShopifyAdminApi';
 import { metafieldsSet, queryDelegateAccessToken } from './customerQueries';
 
-const handleUserErrors = (errors: Array<USER_ERROR_TYPE>) => {
-  if (errors?.length) {
-    const errorMessages = errors.map((error) => error.message);
-    throw new Error(`Customer user errors: ${errorMessages.join(', ')}`);
-  }
-};
-
 class CustomerAdmin extends ShopifyAdminApi {
   getDelegateToken = async (variables: {
     input: {
@@ -25,10 +18,6 @@ class CustomerAdmin extends ShopifyAdminApi {
       };
     };
 
-    if (response?.delegateAccessTokenCreate?.userErrors) {
-      handleUserErrors(response?.delegateAccessTokenCreate?.userErrors);
-    }
-
     return response?.delegateAccessTokenCreate;
   };
 
@@ -36,11 +25,9 @@ class CustomerAdmin extends ShopifyAdminApi {
     const response = (await this.call(metafieldsSet, variables)) as {
       metafieldsSet: {
         metafields: Array<METAFIELD_TYPE>;
+        userErrors: Array<USER_ERROR_TYPE>;
       };
-      userErrors: Array<USER_ERROR_TYPE>;
     };
-
-    handleUserErrors(response?.userErrors);
 
     return response?.metafieldsSet;
   };

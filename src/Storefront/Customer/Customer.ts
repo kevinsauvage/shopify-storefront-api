@@ -1,15 +1,8 @@
-import { adjustPaginationVariables, cleanGraphQLResponse } from '../../helpers';
+import { adjustPaginationVariables, cleanGraphQLResponse, findPageInfo } from '../../helpers';
 import ShopifyStorefrontApi from '../ShopifyStorefrontApi';
 import customerQueries from './customerQueries';
 
 const DEFAULT_ERROR_MESSAGE = 'No data returned from the GraphQL query';
-
-const handleUserErrors = (errors: Array<USER_ERROR_TYPE>) => {
-  if (errors?.length) {
-    const errorMessages = errors.map((error) => error.message);
-    throw new Error(`Customer user errors: ${errorMessages.join(', ')}`);
-  }
-};
 
 type CUSTOMER_ACTIVATE_BY_URL = {
   customer: {
@@ -82,14 +75,6 @@ class Customer extends ShopifyStorefrontApi {
       throw new Error(DEFAULT_ERROR_MESSAGE);
     }
 
-    const customerUserErrors = response?.customerAccessTokenCreateWithMultipass?.customerUserErrors;
-    if (customerUserErrors?.length) {
-      return {
-        customerUserErrors,
-        customerAccessToken: null,
-      };
-    }
-
     return response?.customerAccessTokenCreateWithMultipass;
   };
 
@@ -108,14 +93,6 @@ class Customer extends ShopifyStorefrontApi {
     };
     if (!response?.customerAccessTokenDelete) {
       throw new Error(DEFAULT_ERROR_MESSAGE);
-    }
-
-    const customerUserErrors = response?.customerAccessTokenDelete?.customerUserErrors;
-    if (customerUserErrors?.length) {
-      return {
-        customerUserErrors,
-        deletedAccessTokenId: null,
-      };
     }
 
     return response?.customerAccessTokenDelete;
@@ -137,14 +114,6 @@ class Customer extends ShopifyStorefrontApi {
 
     if (!response?.customerAccessTokenRenew) {
       throw new Error(DEFAULT_ERROR_MESSAGE);
-    }
-
-    const userErrors = response?.customerAccessTokenRenew?.userErrors;
-    if (userErrors?.length) {
-      return {
-        userErrors,
-        customerAccessToken: null,
-      };
     }
 
     return response?.customerAccessTokenRenew;
@@ -183,15 +152,6 @@ class Customer extends ShopifyStorefrontApi {
       throw new Error(DEFAULT_ERROR_MESSAGE);
     }
 
-    const customerUserErrors = response?.customerActivate?.customerUserErrors;
-    if (customerUserErrors?.length) {
-      return {
-        customerUserErrors,
-        customer: null,
-        customerAccessToken: null,
-      };
-    }
-
     return response?.customerActivate;
   };
 
@@ -206,15 +166,6 @@ class Customer extends ShopifyStorefrontApi {
 
     if (!response?.customerActivateByUrl) {
       throw new Error(DEFAULT_ERROR_MESSAGE);
-    }
-
-    const customerUserErrors = response?.customerActivateByUrl?.customerUserErrors;
-    if (customerUserErrors?.length) {
-      return {
-        customerUserErrors,
-        customer: null,
-        customerAccessToken: null,
-      };
     }
 
     return response?.customerActivateByUrl;
@@ -238,13 +189,6 @@ class Customer extends ShopifyStorefrontApi {
     if (!response?.customerAddressCreate) {
       throw new Error(DEFAULT_ERROR_MESSAGE);
     }
-    const customerUserErrors = response?.customerAddressCreate?.customerUserErrors;
-    if (customerUserErrors?.length) {
-      return {
-        customerUserErrors,
-        customerAddress: null,
-      };
-    }
 
     return response?.customerAddressCreate;
   };
@@ -265,13 +209,6 @@ class Customer extends ShopifyStorefrontApi {
     };
     if (!response?.customerAddressDelete) {
       throw new Error(DEFAULT_ERROR_MESSAGE);
-    }
-    const customerUserErrors = response?.customerAddressDelete?.customerUserErrors;
-    if (customerUserErrors?.length) {
-      return {
-        customerUserErrors,
-        deletedCustomerAddressId: null,
-      };
     }
 
     return response?.customerAddressDelete;
@@ -294,14 +231,6 @@ class Customer extends ShopifyStorefrontApi {
 
     if (!response?.customerAddressUpdate) {
       throw new Error(DEFAULT_ERROR_MESSAGE);
-    }
-
-    const customerUserErrors = response?.customerAddressUpdate?.userErrors;
-    if (customerUserErrors?.length) {
-      return {
-        customerAddress: null,
-        userErrors: customerUserErrors,
-      };
     }
 
     return response?.customerAddressUpdate;
@@ -332,15 +261,6 @@ class Customer extends ShopifyStorefrontApi {
       throw new Error(DEFAULT_ERROR_MESSAGE);
     }
 
-    const customerUserErrors = response?.customerCreate?.customerUserErrors;
-    if (customerUserErrors?.length) {
-      return {
-        customerUserErrors,
-        customer: null,
-        customerAccessToken: null,
-      };
-    }
-
     return response?.customerCreate;
   };
 
@@ -361,14 +281,6 @@ class Customer extends ShopifyStorefrontApi {
 
     if (!response?.customerDefaultAddressUpdate) {
       throw new Error(DEFAULT_ERROR_MESSAGE);
-    }
-
-    const customerUserErrors = response?.customerDefaultAddressUpdate?.customerUserErrors;
-    if (customerUserErrors?.length) {
-      return {
-        customerUserErrors,
-        customer: null,
-      };
     }
 
     return response?.customerDefaultAddressUpdate;
@@ -419,15 +331,6 @@ class Customer extends ShopifyStorefrontApi {
       throw new Error(DEFAULT_ERROR_MESSAGE);
     }
 
-    const customerUserErrors = response?.customerReset?.customerUserErrors;
-    if (customerUserErrors?.length) {
-      return {
-        customerUserErrors,
-        customer: null,
-        customerAccessToken: null,
-      };
-    }
-
     return response?.customerReset;
   };
 
@@ -458,15 +361,6 @@ class Customer extends ShopifyStorefrontApi {
       throw new Error(DEFAULT_ERROR_MESSAGE);
     }
 
-    const customerUserErrors = response?.customerResetByUrl?.customerUserErrors;
-    if (customerUserErrors?.length) {
-      return {
-        customerUserErrors,
-        customer: null,
-        customerAccessToken: null,
-      };
-    }
-
     return response?.customerResetByUrl;
   };
 
@@ -486,15 +380,6 @@ class Customer extends ShopifyStorefrontApi {
     };
     if (!response?.customerUpdate) {
       throw new Error(DEFAULT_ERROR_MESSAGE);
-    }
-
-    const customerUserErrors = response?.customerUpdate?.customerUserErrors;
-
-    if (customerUserErrors?.length) {
-      return {
-        customerUserErrors,
-        customer: null,
-      };
     }
 
     return response?.customerUpdate;
@@ -522,8 +407,6 @@ class Customer extends ShopifyStorefrontApi {
         customerUserErrors: Array<USER_ERROR_TYPE>;
       };
     };
-
-    handleUserErrors(response?.customer?.customerUserErrors);
 
     if (!response?.customer?.metafields) {
       throw new Error('No metafields returned from the GraphQL query');
@@ -562,15 +445,6 @@ class Customer extends ShopifyStorefrontApi {
       throw new Error('No addresses returned from the GraphQL query');
     }
 
-    const customerUserErrors = response?.customer?.customerUserErrors;
-    if (customerUserErrors?.length) {
-      return {
-        addresses: [],
-        pageInfo: null,
-        totalCount: 0,
-      };
-    }
-
     return cleanGraphQLResponse(response?.customer?.addresses);
   };
 
@@ -586,6 +460,7 @@ class Customer extends ShopifyStorefrontApi {
   }): Promise<{
     orders: Array<CUSTOMER_ORDER_TYPE>;
     customerUserErrors: Array<USER_ERROR_TYPE>;
+    pageInfo: PAGE_INFO_TYPE | null;
   }> => {
     const response = (await this.call(
       customerQueries.queryCustomerOrders,
@@ -603,15 +478,16 @@ class Customer extends ShopifyStorefrontApi {
     if (!response?.customer?.orders) {
       throw new Error('No orders returned from the GraphQL query');
     }
-    const customerUserErrors = response?.customer?.customerUserErrors;
-    if (customerUserErrors?.length) {
-      return {
-        orders: [],
-        customerUserErrors,
-      };
-    }
 
-    return { orders: cleanGraphQLResponse(response?.customer?.orders), customerUserErrors };
+    const pageInfo = findPageInfo(response?.customer?.orders);
+
+    const customerUserErrors = response?.customer?.customerUserErrors;
+
+    return {
+      orders: cleanGraphQLResponse(response?.customer?.orders),
+      customerUserErrors,
+      pageInfo,
+    };
   };
 }
 

@@ -1,5 +1,4 @@
-// @ts-nocheck
-
+// @ts-noCheck
 export const cleanGraphQLResponse = (data) => {
   let result = Array.isArray(data) ? [] : {};
 
@@ -18,34 +17,27 @@ export const cleanGraphQLResponse = (data) => {
 
 export const findPageInfo = (obj: unknown): PAGE_INFO_TYPE | null => {
   if (obj && typeof obj === 'object') {
-    if (obj.pageInfo) {
-      return obj.pageInfo;
+    if ('pageInfo' in obj) {
+      return (obj as { pageInfo: PAGE_INFO_TYPE }).pageInfo;
     }
-    for (const key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        const result = findPageInfo(obj[key]);
-        if (result) {
-          return result;
-        }
-      }
-    }
+
+    return Object.entries(obj).reduce<PAGE_INFO_TYPE | null>(
+      (found, [, value]) => found ?? findPageInfo(value),
+      null
+    );
   }
   return null;
 };
-
 export const findFilters = (obj: unknown): Array<FILTER_TYPE> | null => {
   if (obj && typeof obj === 'object') {
-    if (obj.filters) {
-      return obj.filters;
+    if ('filters' in obj) {
+      return (obj as { filters: Array<FILTER_TYPE> }).filters;
     }
-    for (const key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        const result = findFilters(obj[key]);
-        if (result) {
-          return result;
-        }
-      }
-    }
+
+    return Object.values(obj).reduce<Array<FILTER_TYPE> | null>(
+      (found, value) => found ?? findFilters(value),
+      null
+    );
   }
   return null;
 };

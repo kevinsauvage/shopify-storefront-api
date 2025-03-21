@@ -7,10 +7,7 @@ const DEFAULT_ERROR_MESSAGE = 'No data returned from the GraphQL query';
 class Cart extends ShopifyStorefrontApi {
   cartAttributesUpdate = async (variables: {
     attributes: {
-      attributes: {
-        key: string;
-        value: string;
-      }[];
+      attributes: Array<ATTRIBUTE_TYPE>;
       cartId: string;
     };
     cartId: string;
@@ -19,7 +16,7 @@ class Cart extends ShopifyStorefrontApi {
     language?: string | undefined;
   }): Promise<{
     cart: CART_TYPE;
-    userErrors: Array<{ field: string; message: string }>;
+    userErrors: Array<USER_ERROR_TYPE>;
   }> => {
     const response = (await this.call(
       cartQueries.cartAttributesUpdate,
@@ -27,7 +24,7 @@ class Cart extends ShopifyStorefrontApi {
     )) as {
       cartAttributesUpdate: {
         cart: CART_TYPE;
-        userErrors: Array<{ field: string; message: string }>;
+        userErrors: Array<USER_ERROR_TYPE>;
       };
     };
     if (!response?.cartAttributesUpdate) {
@@ -39,13 +36,7 @@ class Cart extends ShopifyStorefrontApi {
 
   cartBuyerIdentityUpdate = async (variables: {
     buyerIdentity: {
-      buyerIdentity: {
-        customerAccessToken: string | null;
-        companyLocationId: string | null;
-        countryCode: string | null;
-        email: string | null;
-        phone: string | null;
-      };
+      buyerIdentity: BUYER_IDENTITY_TYPE;
       cartId: string;
     };
     cartId: string;
@@ -54,7 +45,7 @@ class Cart extends ShopifyStorefrontApi {
     language?: string | undefined;
   }): Promise<{
     cart: CART_TYPE;
-    userErrors: Array<{ field: string; message: string }>;
+    userErrors: Array<USER_ERROR_TYPE>;
   }> => {
     const response = (await this.call(
       cartQueries.cartBuyerIdentityUpdate,
@@ -62,7 +53,7 @@ class Cart extends ShopifyStorefrontApi {
     )) as {
       cartBuyerIdentityUpdate: {
         cart: CART_TYPE;
-        userErrors: Array<{ field: string; message: string }>;
+        userErrors: Array<USER_ERROR_TYPE>;
       };
     };
 
@@ -80,7 +71,7 @@ class Cart extends ShopifyStorefrontApi {
     language?: string | undefined;
   }): Promise<{
     cart: CART_TYPE;
-    userErrors: Array<{ field: string; message: string }>;
+    userErrors: Array<USER_ERROR_TYPE>;
   }> => {
     const response = (await this.call(
       cartQueries.cartCreate,
@@ -88,7 +79,7 @@ class Cart extends ShopifyStorefrontApi {
     )) as {
       cartCreate: {
         cart: CART_TYPE;
-        userErrors: Array<{ field: string; message: string }>;
+        userErrors: Array<USER_ERROR_TYPE>;
       };
     };
 
@@ -107,7 +98,7 @@ class Cart extends ShopifyStorefrontApi {
     language?: string | undefined;
   }): Promise<{
     cart: CART_TYPE;
-    userErrors: Array<{ field: string; message: string }>;
+    userErrors: Array<USER_ERROR_TYPE>;
   }> => {
     const response = (await this.call(
       cartQueries.cartDiscountCodesUpdate,
@@ -115,7 +106,7 @@ class Cart extends ShopifyStorefrontApi {
     )) as {
       cartDiscountCodesUpdate: {
         cart: CART_TYPE;
-        userErrors: Array<{ field: string; message: string }>;
+        userErrors: Array<USER_ERROR_TYPE>;
       };
     };
     if (!response?.cartDiscountCodesUpdate) {
@@ -136,7 +127,7 @@ class Cart extends ShopifyStorefrontApi {
     language?: string | undefined;
   }): Promise<{
     cart: CART_TYPE;
-    userErrors: Array<{ field: string; message: string }>;
+    userErrors: Array<USER_ERROR_TYPE>;
   }> => {
     const response = (await this.call(
       cartQueries.cartLinesAdd,
@@ -144,7 +135,7 @@ class Cart extends ShopifyStorefrontApi {
     )) as {
       cartLinesAdd: {
         cart: CART_TYPE;
-        userErrors: Array<{ field: string; message: string }>;
+        userErrors: Array<USER_ERROR_TYPE>;
       };
     };
     if (!response?.cartLinesAdd) {
@@ -162,7 +153,7 @@ class Cart extends ShopifyStorefrontApi {
     language?: string | undefined;
   }): Promise<{
     cart: CART_TYPE;
-    userErrors: Array<{ field: string; message: string }>;
+    userErrors: Array<USER_ERROR_TYPE>;
   }> => {
     const response = (await this.call(
       cartQueries.cartLinesRemove,
@@ -170,7 +161,7 @@ class Cart extends ShopifyStorefrontApi {
     )) as {
       cartLinesRemove: {
         cart: CART_TYPE;
-        userErrors: Array<{ field: string; message: string }>;
+        userErrors: Array<USER_ERROR_TYPE>;
       };
     };
     if (!response?.cartLinesRemove) {
@@ -188,7 +179,7 @@ class Cart extends ShopifyStorefrontApi {
     language?: string | undefined;
   }): Promise<{
     cart: CART_TYPE;
-    userErrors: Array<{ field: string; message: string }>;
+    userErrors: Array<USER_ERROR_TYPE>;
   }> => {
     const response = (await this.call(
       cartQueries.cartLinesUpdate,
@@ -196,7 +187,7 @@ class Cart extends ShopifyStorefrontApi {
     )) as {
       cartLinesUpdate: {
         cart: CART_TYPE;
-        userErrors: Array<{ field: string; message: string }>;
+        userErrors: Array<USER_ERROR_TYPE>;
       };
     };
     if (!response?.cartLinesUpdate) {
@@ -214,7 +205,7 @@ class Cart extends ShopifyStorefrontApi {
     language?: string | undefined;
   }): Promise<{
     cart: CART_TYPE;
-    userErrors: Array<{ field: string; message: string }>;
+    userErrors: Array<USER_ERROR_TYPE>;
   }> => {
     const response = (await this.call(
       cartQueries.cartNoteUpdate,
@@ -222,7 +213,7 @@ class Cart extends ShopifyStorefrontApi {
     )) as {
       cartNoteUpdate: {
         cart: CART_TYPE;
-        userErrors: Array<{ field: string; message: string }>;
+        userErrors: Array<USER_ERROR_TYPE>;
       };
     };
     if (!response?.cartNoteUpdate) {
