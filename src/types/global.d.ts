@@ -40,7 +40,7 @@ declare global {
   type FILTER_TYPE = {
     id: string;
     label: string;
-    type: 'SELECT' | 'MULTISELECT' | 'PRICE_RANGE' | 'LIST';
+    type: 'BOOLEAN' | 'LIST' | 'PRICE_RANGE';
     values: Array<{
       id: string;
       label: string;
