@@ -4,9 +4,9 @@ import shopQueries from './shopQueries';
 const DEFAULT_ERROR_MESSAGE = 'No data returned from the GraphQL query';
 
 class Shop extends ShopifyStorefrontApi {
-  getShop = async (variables: { language?: string }): Promise<SHOP_TYPE> => {
+  getShop = async (variables: { language?: string }): Promise<ShopType> => {
     const response = (await this.call(shopQueries.getShop, variables)) as {
-      shop: SHOP_TYPE;
+      shop: ShopType;
     };
 
     if (!response?.shop) {
@@ -16,9 +16,9 @@ class Shop extends ShopifyStorefrontApi {
     return response?.shop;
   };
 
-  getPrivacyPolicy = async (variables: { language?: string }): Promise<SHOP_TYPE> => {
+  getPrivacyPolicy = async (variables: { language?: string }): Promise<ShopType> => {
     const response = (await this.call(shopQueries.getPrivacyPolicy, variables)) as {
-      shop: SHOP_TYPE;
+      shop: ShopType;
     };
     if (!response?.shop) {
       throw new Error(DEFAULT_ERROR_MESSAGE);
@@ -27,9 +27,9 @@ class Shop extends ShopifyStorefrontApi {
     return response?.shop;
   };
 
-  getRefundPolicy = async (variables: { language?: string }): Promise<SHOP_TYPE> => {
+  getRefundPolicy = async (variables: { language?: string }): Promise<ShopType> => {
     const response = (await this.call(shopQueries.getRefundPolicy, variables)) as {
-      shop: SHOP_TYPE;
+      shop: ShopType;
     };
 
     if (!response?.shop) {
@@ -39,9 +39,9 @@ class Shop extends ShopifyStorefrontApi {
     return response?.shop;
   };
 
-  getShippingPolicy = async (variables: { language?: string }): Promise<SHOP_TYPE> => {
+  getShippingPolicy = async (variables: { language?: string }): Promise<ShopType> => {
     const response = (await this.call(shopQueries.getShippingPolicy, variables)) as {
-      shop: SHOP_TYPE;
+      shop: ShopType;
     };
     if (!response?.shop) {
       throw new Error(DEFAULT_ERROR_MESSAGE);
@@ -50,9 +50,9 @@ class Shop extends ShopifyStorefrontApi {
     return response?.shop;
   };
 
-  getSubscriptionPolicy = async (variables: { language?: string }): Promise<SHOP_TYPE> => {
+  getSubscriptionPolicy = async (variables: { language?: string }): Promise<ShopType> => {
     const response = (await this.call(shopQueries.getSubscriptionPolicy, variables)) as {
-      shop: SHOP_TYPE;
+      shop: ShopType;
     };
 
     if (!response?.shop) {
@@ -62,9 +62,9 @@ class Shop extends ShopifyStorefrontApi {
     return response?.shop;
   };
 
-  getTermsOfService = async (variables: { language?: string }): Promise<SHOP_TYPE> => {
+  getTermsOfService = async (variables: { language?: string }): Promise<ShopType> => {
     const response = (await this.call(shopQueries.getTermsOfService, variables)) as {
-      shop: SHOP_TYPE;
+      shop: ShopType;
     };
     if (!response?.shop) {
       throw new Error(DEFAULT_ERROR_MESSAGE);
@@ -72,25 +72,25 @@ class Shop extends ShopifyStorefrontApi {
     return response?.shop;
   };
 
-  getMenu = async (variables: { language?: string; handle: string }): Promise<MENU_TYPE> => {
+  getMenu = async (variables: { language?: string; handle: string }): Promise<MenuType> => {
     const response = (await this.call(shopQueries.getMenu, variables)) as {
-      menu: MENU_TYPE;
+      menu: MenuType;
     };
 
     if (!response.menu) {
-      throw new Error('No data returned from the GraphQL query');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
 
     return response.menu;
   };
 
-  getPage = async (variables: { language?: string; handle: string }): Promise<PAGE_TYPE> => {
+  getPage = async (variables: { language?: string; handle: string }): Promise<PageType> => {
     const response = (await this.call(shopQueries.getPage, variables)) as {
-      page: PAGE_TYPE;
+      page: PageType;
     };
 
     if (!response?.page) {
-      throw new Error('Page not found');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
 
     return response?.page;
@@ -117,7 +117,7 @@ class Shop extends ShopifyStorefrontApi {
     const value = response?.metaobject?.fields?.[0].value;
 
     if (!value) {
-      throw new Error('Metaobject not found');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
 
     return value && JSON.parse(value);
@@ -139,7 +139,7 @@ class Shop extends ShopifyStorefrontApi {
     };
 
     if (!response?.localization) {
-      throw new Error('Localization not found');
+      throw new Error(DEFAULT_ERROR_MESSAGE);
     }
 
     return response?.localization;

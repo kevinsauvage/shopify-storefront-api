@@ -1,28 +1,28 @@
 export {};
 
 declare global {
-  type PAGE_TYPE = {
+  type PageType = {
     bodySummary: string; // Summary of the page body
     handle: string; // Unique handle for the page
     id: string; // Unique identifier for the page
-    data: METAFIELD_TYPE;
+    data: MetafieldType;
   };
-  type MENU_ITEM_TYPE = {
+  type MenuItemType = {
     id: string; // Unique identifier for the menu item
     title: string; // Title of the menu item
     url?: string; // URL of the menu item (optional)
     type?: string; // Type of the menu item (optional)
     resourceId?: string | null; // Resource ID (optional)
     tags?: string[]; // Tags associated with the menu item (optional)
-    items?: MENU_ITEM_TYPE[]; // Nested menu items (optional)
+    items?: MenuItemType[]; // Nested menu items (optional)
   };
 
-  type MENU_TYPE = {
+  type MenuType = {
     id: string; // Unique identifier for the menu
-    items: MENU_ITEM_TYPE[]; // This ensures menu contains an array of items
+    items: MenuItemType[]; // This ensures menu contains an array of items
   };
 
-  type SHOP_TYPE = {
+  type ShopType = {
     description: string; // Description of the shop
     name: string; // Name of the shop
     moneyFormat: string; // Format for displaying money values

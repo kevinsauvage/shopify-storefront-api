@@ -1,15 +1,15 @@
 export {};
 
 declare global {
-  type COLLECTION_TYPE = {
+  type CollectionType = {
     handle: string;
     description: string;
     title: string;
     id: string;
     image: string | null;
-    seo: SEO_TYPE;
-    products: Array<PRODUCT_TYPE>;
-    filters: Array<FILTER_TYPE>;
-    pageInfo: PAGE_INFO_TYPE;
+    seo: SeoType;
+    products: Array<ProductType>;
+    filters: Array<FilterType>;
+    pageInfo: PageInfoType;
   };
 }

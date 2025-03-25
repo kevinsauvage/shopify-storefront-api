@@ -1,7 +1,7 @@
 export {};
 
 declare global {
-  type BUYER_IDENTITY_TYPE = {
+  type BuyerIdentityType = {
     email: string | null; // Email of the buyer or null if not provided
     phone: string | null; // Phone number of the buyer or null if not provided
     customer: {
@@ -24,7 +24,7 @@ declare global {
     }[]; // Array of delivery address preferences
   };
 
-  type CART_LINE_TYPE = {
+  type CartLineType = {
     cursor: string | null; // Cursor for pagination
     id: string; // Unique identifier for the cart line
     quantity: number; // Quantity of the item in the cart line
@@ -40,25 +40,25 @@ declare global {
         title: string; // Title of the product
       }; // Product object
     }; // Merchandise object
-    attributes: ATTRIBUTE_TYPE[]; // Array of custom attributes for the cart line
+    attributes: AttributeType[]; // Array of custom attributes for the cart line
   };
 
-  type CART_TYPE = {
+  type CartType = {
     id: string; // Unique identifier for the cart
     createdAt: string; // Timestamp of when the cart was created
     updatedAt: string; // Timestamp of when the cart was last updated
     checkoutUrl: string; // URL to proceed to checkout
     totalQuantity: number; // Total number of items in the cart
     note: string | null; // Optional note associated with the cart
-    lines: CART_LINE_TYPE[]; // Array of items in the cart
-    attributes: ATTRIBUTE_TYPE[]; // Array of custom attributes for the cart
-    cost: COST_TYPE; // Cost details of the cart
+    lines: CartLineType[]; // Array of items in the cart
+    attributes: AttributeType[]; // Array of custom attributes for the cart
+    cost: CostType; // Cost details of the cart
     discountCodes: string[]; // Array of applied discount codes
-    buyerIdentity: BUYER_IDENTITY_TYPE; // Information about the buyer
+    buyerIdentity: BuyerIdentityType; // Information about the buyer
   };
 
   type CART_LINE_INPUT_TYPE = {
-    attributes: ATTRIBUTE_TYPE[]; // Array of custom attributes for the cart line
+    attributes: AttributeType[]; // Array of custom attributes for the cart line
     merchandiseId: string; // Unique identifier for the merchandise
     quantity: number; // Quantity of the item in the cart line
     metafields: {
@@ -69,8 +69,8 @@ declare global {
   };
 
   type CART_INPUT_TYPE = {
-    buyerIdentity: BUYER_IDENTITY_TYPE; // Information about the buyer
+    buyerIdentity: BuyerIdentityType; // Information about the buyer
     discountCodes: string[]; // Array of discount codes to apply
-    lines: CART_LINE_TYPE;
+    lines: CartLineType;
   };
 }

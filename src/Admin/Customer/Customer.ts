@@ -14,18 +14,27 @@ class CustomerAdmin extends ShopifyAdminApi {
           accessToken: string;
           createdAt: string;
         };
-        userErrors: Array<USER_ERROR_TYPE>;
+        userErrors: Array<UserErrorType>;
       };
     };
 
     return response?.delegateAccessTokenCreate;
   };
 
-  metafieldsSet = async (variables: { metafields: Array<metafieldsSetInput> }) => {
+  metafieldsSet = async (variables: {
+    metafields: Array<{
+      compareDigest?: string;
+      key: string;
+      namespace: string;
+      ownerId: string;
+      type?: string;
+      value: string;
+    }>;
+  }) => {
     const response = (await this.call(metafieldsSet, variables)) as {
       metafieldsSet: {
-        metafields: Array<METAFIELD_TYPE>;
-        userErrors: Array<USER_ERROR_TYPE>;
+        metafields: Array<MetafieldType>;
+        userErrors: Array<UserErrorType>;
       };
     };
 

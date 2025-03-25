@@ -1,9 +1,12 @@
 import {
+  accessTokenFragment,
   addressFragment,
   customerFragment,
+  customerUserErrorsFragment,
   lineItemFragment,
   orderFragment,
   pageInfoFragment,
+  userErrorsFragment,
 } from '../../fragment';
 
 const customerAccessTokenCreate = `
@@ -13,12 +16,10 @@ const customerAccessTokenCreate = `
   ) @inContext(language: $language) {
     customerAccessTokenCreate(input: $input) {
       customerAccessToken {
-        accessToken
-        expiresAt
+        ${accessTokenFragment}
       }
       customerUserErrors {
-        field
-        message
+        ${customerUserErrorsFragment}
       }
     }
   }
@@ -31,12 +32,10 @@ const customerAccessTokenCreateWithMultipass = `
   ) @inContext(language: $language) {
     customerAccessTokenCreateWithMultipass(multipassToken: $multipassToken) {
       customerAccessToken {
-        accessToken
-        expiresAt
+        ${accessTokenFragment}
       }
       customerUserErrors {
-        field
-        message
+        ${customerUserErrorsFragment}
       }
     }
   }
@@ -51,8 +50,7 @@ const customerAccessTokenDelete = `
       deletedAccessToken
       deletedCustomerAccessTokenId
       userErrors {
-        field
-        message
+        ${userErrorsFragment}
       }
     }
   }
@@ -65,12 +63,10 @@ const customerAccessTokenRenew = `
   ) @inContext(language: $language) {
     customerAccessTokenRenew(customerAccessToken: $customerAccessToken) {
       customerAccessToken {
-        accessToken
-        expiresAt
+        ${accessTokenFragment}
       }
       userErrors {
-        field
-        message
+        ${userErrorsFragment}
       }
     }
   }
@@ -90,12 +86,10 @@ const customerActivate = `
         ${customerFragment}
       }
       customerAccessToken {
-        accessToken
-        expiresAt
+        ${accessTokenFragment}
       }
       customerUserErrors {
-        field
-        message
+        ${customerUserErrorsFragment}
       }
     }
   }
@@ -115,12 +109,10 @@ const customerActivateByUrl = `
         ${customerFragment}
       }
       customerAccessToken {
-        accessToken
-        expiresAt
+        ${accessTokenFragment}
       }
       customerUserErrors {
-        field
-        message
+        ${customerUserErrorsFragment}
       }
     }
   }
@@ -140,8 +132,7 @@ const customerAddressCreate = `
         ${addressFragment}
       }
       customerUserErrors {
-        field
-        message
+        ${customerUserErrorsFragment}
       }
     }
   }
@@ -159,8 +150,7 @@ const customerAddressDelete = `
     ) {
       deletedCustomerAddressId
       customerUserErrors {
-        field
-        message
+         ${customerUserErrorsFragment}
       }
     }
   }
@@ -182,8 +172,7 @@ const customerAddressUpdate = `
         ${addressFragment}
       }
       customerUserErrors {
-        field
-        message
+        ${customerUserErrorsFragment}
       }
     }
   }
@@ -196,8 +185,7 @@ const customerCreate = `
         ${customerFragment}
       }
       userErrors {
-        field
-        message
+        ${userErrorsFragment}
       }
     }
   }
@@ -217,8 +205,7 @@ const customerDefaultAddressUpdate = `
         ${customerFragment}
       }
       customerUserErrors {
-        field
-        message
+        ${customerUserErrorsFragment}
       }
     }
   }
@@ -231,8 +218,7 @@ const customerRecover = `
   ) @inContext(language: $language) {
     customerRecover(email: $email) {
       customerUserErrors {
-        field
-        message
+         ${customerUserErrorsFragment}
       }
     }
   }
@@ -252,12 +238,10 @@ const customerReset = `
         ${customerFragment}
       }
       customerAccessToken {
-        accessToken
-        expiresAt
+        ${accessTokenFragment}
       }
       customerUserErrors {
-        field
-        message
+        ${customerUserErrorsFragment}
       }
     }
   }
@@ -277,12 +261,10 @@ const customerResetByUrl = `
         ${customerFragment}
       }
       customerAccessToken {
-        accessToken
-        expiresAt
+        ${accessTokenFragment}
       }
       customerUserErrors {
-        field
-        message
+        ${customerUserErrorsFragment}
       }
     }
   }
@@ -302,12 +284,10 @@ const customerUpdate = `
         ${customerFragment}
       }
       customerAccessToken {
-        accessToken
-        expiresAt
+        ${accessTokenFragment}
       }
       customerUserErrors {
-        field
-        message
+        ${customerUserErrorsFragment}
       }
     }
   }
@@ -364,10 +344,7 @@ const queryCustomerAddresses = `
           }
         }
         pageInfo {
-          hasNextPage
-          hasPreviousPage
-          startCursor
-          endCursor
+          ${pageInfoFragment}
         }
       }
     }
@@ -388,10 +365,10 @@ const queryCustomerOrders = `
   @inContext(language: $language) {
     customer(customerAccessToken: $customerAccessToken) {
       orders(first: $first, last: $last, before: $before, after: $after, sortKey: $sortKey, reverse: $reverse) {
+        totalCount
         edges {
           cursor
         }
-        totalCount
         pageInfo {
           ${pageInfoFragment}
         }

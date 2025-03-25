@@ -1,42 +1,37 @@
 export {};
 
 declare global {
-  type CUSTOMER_ADDRESS_TYPE = {
+  type CustomerOrderType = {
+    cursor: string;
     id: string;
     name: string;
-    provinceCode: string | null;
-    address1: string;
-    address2: string;
-    city: string;
-    province: string;
-    country: string;
-    zip: string;
-    phone?: string;
-    firstName?: string;
-    lastName?: string;
-    company?: string;
-    countryCode: string;
-    countryCodeV2: string;
-    formattedArea: string;
-    latitude: number | null;
-    longitude: number | null;
-  };
-
-  type CUSTOMER_ORDER_TYPE = {
-    id: string;
-    orderNumber: string;
-    totalPrice: string;
+    fulfillmentStatus: string;
     currencyCode: string;
+    customerUrl: string;
+    email: string;
+    financialStatus: string;
+    orderNumber: number;
+    phone: string | null;
+    processedAt: string;
+    subtotalPriceV2: MoneyV2Type;
+    totalPriceV2: MoneyV2Type;
+    totalRefundedV2: MoneyV2Type;
+    totalShippingPriceV2: MoneyV2Type;
+    totalTaxV2: MoneyV2Type;
+    successfulFulfillments: FulfillmentType[];
+    customAttributes: AttributeType[];
+    shippingAddress: MailingAddressType;
+    billingAddress: MailingAddressType;
   };
 
-  type METAFIELD_TYPE = {
+  type MetafieldType = {
     id: string;
     namespace: string;
     key: string;
     value: string;
   };
 
-  type CUSTOMER_TYPE = {
+  type CustomerType = {
     id: string;
     firstName: string;
     lastName: string;
@@ -45,13 +40,13 @@ declare global {
     acceptsMarketing: boolean;
     createdAt: string;
     updatedAt: string;
-    defaultAddress: CUSTOMER_ADDRESS_TYPE | null;
-    addresses: CUSTOMER_ADDRESS_TYPE[];
-    orders: CUSTOMER_ORDER_TYPE[];
-    metafields: METAFIELD_TYPE[];
+    defaultAddress: MailingAddressType | null;
+    addresses: MailingAddressType[];
+    orders: CustomerOrderType[];
+    metafields: MetafieldType[];
   };
 
-  type CUSTOMER_ADDRESS_INPUT_TYPE = {
+  type CustomerAddressInputType = {
     address1: string;
     address2?: string;
     city: string;
@@ -64,7 +59,7 @@ declare global {
     phone?: string;
   };
 
-  type CUSTOMER_CREATE_INPUT_TYPE = {
+  type CustomerCreateInputType = {
     email: string;
     password: string;
     firstName?: string;

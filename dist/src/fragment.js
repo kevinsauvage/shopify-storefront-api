@@ -172,6 +172,31 @@ export const orderFragment = `
 id
 name
 fulfillmentStatus
+successfulFulfillments(first: 100) {
+  trackingCompany
+  trackingInfo(first: 100) {
+    number
+    url
+  }
+  fulfillmentLineItems (first: 100) {
+    edges {
+      node {
+        lineItem {
+           discountedTotalPrice {
+             amount
+             currencyCode
+           }
+        quantity
+        title
+        variant {
+          ${variantFragment}
+        }
+        }
+   
+      }   
+    }
+  }    
+}
 currencyCode
 customerUrl
 email
@@ -198,13 +223,6 @@ totalShippingPriceV2 {
 totalTaxV2 {
   amount
   currencyCode
-}
-successfulFulfillments(first: 10) {
-  trackingCompany
-  trackingInfo(first: 10) {
-    number
-    url
-  }
 }
 customAttributes {
   key
@@ -290,4 +308,17 @@ variant {
   }
   title
 }
+`;
+export const customerUserErrorsFragment = `
+  code
+  field
+  message
+`;
+export const userErrorsFragment = `
+  field
+  message
+`;
+export const accessTokenFragment = `
+  accessToken
+  expiresAt
 `;

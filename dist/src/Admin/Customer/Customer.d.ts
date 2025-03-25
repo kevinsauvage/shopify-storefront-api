@@ -10,13 +10,13 @@ declare class CustomerAdmin extends ShopifyAdminApi {
             accessToken: string;
             createdAt: string;
         };
-        userErrors: Array<USER_ERROR_TYPE>;
+        userErrors: Array<UserErrorType>;
     }>;
     metafieldsSet: (variables: {
         metafields: Array<metafieldsSetInput>;
     }) => Promise<{
-        metafields: Array<METAFIELD_TYPE>;
-        userErrors: Array<USER_ERROR_TYPE>;
+        metafields: Array<MetafieldType>;
+        userErrors: Array<UserErrorType>;
     }>;
 }
 export default CustomerAdmin;

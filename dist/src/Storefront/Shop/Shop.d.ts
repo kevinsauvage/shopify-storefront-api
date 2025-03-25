@@ -2,30 +2,30 @@ import ShopifyStorefrontApi from '../ShopifyStorefrontApi';
 declare class Shop extends ShopifyStorefrontApi {
     getShop: (variables: {
         language?: string;
-    }) => Promise<SHOP_TYPE>;
+    }) => Promise<ShopType>;
     getPrivacyPolicy: (variables: {
         language?: string;
-    }) => Promise<SHOP_TYPE>;
+    }) => Promise<ShopType>;
     getRefundPolicy: (variables: {
         language?: string;
-    }) => Promise<SHOP_TYPE>;
+    }) => Promise<ShopType>;
     getShippingPolicy: (variables: {
         language?: string;
-    }) => Promise<SHOP_TYPE>;
+    }) => Promise<ShopType>;
     getSubscriptionPolicy: (variables: {
         language?: string;
-    }) => Promise<SHOP_TYPE>;
+    }) => Promise<ShopType>;
     getTermsOfService: (variables: {
         language?: string;
-    }) => Promise<SHOP_TYPE>;
+    }) => Promise<ShopType>;
     getMenu: (variables: {
         language?: string;
         handle: string;
-    }) => Promise<MENU_TYPE>;
+    }) => Promise<MenuType>;
     getPage: (variables: {
         language?: string;
         handle: string;
-    }) => Promise<PAGE_TYPE>;
+    }) => Promise<PageType>;
     getMetaObject: (variables: {
         language?: string;
         handle: string;

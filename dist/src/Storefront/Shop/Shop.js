@@ -47,14 +47,14 @@ class Shop extends ShopifyStorefrontApi {
     getMenu = async (variables) => {
         const response = (await this.call(shopQueries.getMenu, variables));
         if (!response.menu) {
-            throw new Error('No data returned from the GraphQL query');
+            throw new Error(DEFAULT_ERROR_MESSAGE);
         }
         return response.menu;
     };
     getPage = async (variables) => {
         const response = (await this.call(shopQueries.getPage, variables));
         if (!response?.page) {
-            throw new Error('Page not found');
+            throw new Error(DEFAULT_ERROR_MESSAGE);
         }
         return response?.page;
     };
@@ -62,14 +62,14 @@ class Shop extends ShopifyStorefrontApi {
         const response = (await this.call(shopQueries.getMetaObject, variables));
         const value = response?.metaobject?.fields?.[0].value;
         if (!value) {
-            throw new Error('Metaobject not found');
+            throw new Error(DEFAULT_ERROR_MESSAGE);
         }
         return value && JSON.parse(value);
     };
     localization = async (variables) => {
         const response = (await this.call(shopQueries.localization, variables));
         if (!response?.localization) {
-            throw new Error('Localization not found');
+            throw new Error(DEFAULT_ERROR_MESSAGE);
         }
         return response?.localization;
     };

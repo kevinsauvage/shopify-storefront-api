@@ -10,10 +10,8 @@ declare class Collection extends ShopifyStorefrontApi {
         identifiers?: unknown[] | undefined;
         language?: string | undefined;
     }) => Promise<{
-        collection: COLLECTION_TYPE;
-        pageInfo: PAGE_INFO_TYPE;
-        collectionFilters: Array<FILTER_TYPE>;
-    } | null>;
+        collection: CollectionType;
+    }>;
     collections: (variables: {
         first?: number;
         after?: string;
@@ -26,8 +24,8 @@ declare class Collection extends ShopifyStorefrontApi {
         language?: string;
         identifiers?: unknown[];
     }) => Promise<{
-        collections: Array<COLLECTION_TYPE>;
-        pageInfo: PAGE_INFO_TYPE;
+        collections: Array<CollectionType>;
+        pageInfo: PageInfoType;
     }>;
 }
 export default Collection;

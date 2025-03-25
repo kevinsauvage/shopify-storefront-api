@@ -7,13 +7,13 @@ class Product extends ShopifyStorefrontApi {
     handle: string;
     identifiers?: unknown[];
     language?: string;
-  }): Promise<PRODUCT_TYPE> => {
+  }): Promise<ProductType> => {
     const variablesCopy = { ...variables };
     if (!variablesCopy?.identifiers) {
       variablesCopy.identifiers = [];
     }
     const response = (await this.call(productQueries.getProductByHandle, variablesCopy)) as {
-      product: PRODUCT_TYPE;
+      product: ProductType;
     };
     if (!response?.product) {
       throw new Error('Product not found');
@@ -26,13 +26,13 @@ class Product extends ShopifyStorefrontApi {
     productId: string;
     identifiers?: unknown[];
     language?: string;
-  }): Promise<Array<PRODUCT_TYPE>> => {
+  }): Promise<Array<ProductType>> => {
     const variablesCopy = { ...variables };
     if (!variablesCopy?.identifiers) {
       variablesCopy.identifiers = [];
     }
     const response = (await this.call(productQueries.productRecommendations, variablesCopy)) as {
-      productRecommendations: Array<PRODUCT_TYPE>;
+      productRecommendations: Array<ProductType>;
     };
 
     if (!response?.productRecommendations) {
@@ -51,8 +51,8 @@ class Product extends ShopifyStorefrontApi {
     identifiers?: unknown[];
     before?: string;
   }): Promise<{
-    products: Array<PRODUCT_TYPE>;
-    pageInfo: PAGE_INFO_TYPE;
+    products: Array<ProductType>;
+    pageInfo: PageInfoType;
   }> => {
     const variablesCopy = { ...variables };
     if (!variablesCopy?.identifiers) {
@@ -66,9 +66,9 @@ class Product extends ShopifyStorefrontApi {
       products: {
         edges: Array<{
           cursor: string;
-          node: PRODUCT_TYPE;
+          node: ProductType;
         }>;
-        pageInfo: PAGE_INFO_TYPE;
+        pageInfo: PageInfoType;
       };
     };
 

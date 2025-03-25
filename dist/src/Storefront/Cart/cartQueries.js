@@ -19,6 +19,22 @@ const cartFragment = `
   checkoutUrl
   totalQuantity
   note
+  appliedGiftCards {
+    id
+    amountUsed {
+      amount
+      currencyCode
+    }
+    balance {
+      amount
+      currencyCode
+    } 
+    lastCharacters
+    presentmentAmountUsed {
+      amount
+      currencyCode
+    }
+  }
   lines(first: $first, after: $after) {
     edges {
       node {
@@ -55,10 +71,10 @@ const cartFragment = `
   buyerIdentity {
     email
     phone
+    countryCode
     customer {
       ${customerFragment}
     }
-    countryCode
     deliveryAddressPreferences {
       ... on MailingAddress {
         ${addressFragment}

@@ -4,29 +4,27 @@ import cartQueries from './cartQueries';
 
 const DEFAULT_ERROR_MESSAGE = 'No data returned from the GraphQL query';
 
+type CartDefaultResponseType = {
+  cart: CartType;
+  userErrors: Array<UserErrorType>;
+};
+
 class Cart extends ShopifyStorefrontApi {
   cartAttributesUpdate = async (variables: {
     attributes: {
-      attributes: Array<ATTRIBUTE_TYPE>;
+      attributes: Array<AttributeType>;
       cartId: string;
     };
     cartId: string;
     first?: number | undefined;
     after?: string | undefined;
     language?: string | undefined;
-  }): Promise<{
-    cart: CART_TYPE;
-    userErrors: Array<USER_ERROR_TYPE>;
-  }> => {
+  }): Promise<CartDefaultResponseType> => {
     const response = (await this.call(
       cartQueries.cartAttributesUpdate,
       adjustPaginationVariables(variables)
-    )) as {
-      cartAttributesUpdate: {
-        cart: CART_TYPE;
-        userErrors: Array<USER_ERROR_TYPE>;
-      };
-    };
+    )) as { cartAttributesUpdate: CartDefaultResponseType };
+
     if (!response?.cartAttributesUpdate) {
       throw new Error(DEFAULT_ERROR_MESSAGE);
     }
@@ -36,26 +34,18 @@ class Cart extends ShopifyStorefrontApi {
 
   cartBuyerIdentityUpdate = async (variables: {
     buyerIdentity: {
-      buyerIdentity: BUYER_IDENTITY_TYPE;
+      buyerIdentity: BuyerIdentityType;
       cartId: string;
     };
     cartId: string;
     first?: number | undefined;
     after?: string | undefined;
     language?: string | undefined;
-  }): Promise<{
-    cart: CART_TYPE;
-    userErrors: Array<USER_ERROR_TYPE>;
-  }> => {
+  }): Promise<CartDefaultResponseType> => {
     const response = (await this.call(
       cartQueries.cartBuyerIdentityUpdate,
       adjustPaginationVariables(variables)
-    )) as {
-      cartBuyerIdentityUpdate: {
-        cart: CART_TYPE;
-        userErrors: Array<USER_ERROR_TYPE>;
-      };
-    };
+    )) as { cartBuyerIdentityUpdate: CartDefaultResponseType };
 
     if (!response?.cartBuyerIdentityUpdate) {
       throw new Error(DEFAULT_ERROR_MESSAGE);
@@ -69,19 +59,11 @@ class Cart extends ShopifyStorefrontApi {
     first?: number | undefined;
     after?: string | undefined;
     language?: string | undefined;
-  }): Promise<{
-    cart: CART_TYPE;
-    userErrors: Array<USER_ERROR_TYPE>;
-  }> => {
+  }): Promise<CartDefaultResponseType> => {
     const response = (await this.call(
       cartQueries.cartCreate,
       adjustPaginationVariables(variables)
-    )) as {
-      cartCreate: {
-        cart: CART_TYPE;
-        userErrors: Array<USER_ERROR_TYPE>;
-      };
-    };
+    )) as { cartCreate: CartDefaultResponseType };
 
     if (!response?.cartCreate) {
       throw new Error(DEFAULT_ERROR_MESSAGE);
@@ -96,19 +78,12 @@ class Cart extends ShopifyStorefrontApi {
     first?: number | undefined;
     after?: string | undefined;
     language?: string | undefined;
-  }): Promise<{
-    cart: CART_TYPE;
-    userErrors: Array<USER_ERROR_TYPE>;
-  }> => {
+  }): Promise<CartDefaultResponseType> => {
     const response = (await this.call(
       cartQueries.cartDiscountCodesUpdate,
       adjustPaginationVariables(variables)
-    )) as {
-      cartDiscountCodesUpdate: {
-        cart: CART_TYPE;
-        userErrors: Array<USER_ERROR_TYPE>;
-      };
-    };
+    )) as { cartDiscountCodesUpdate: CartDefaultResponseType };
+
     if (!response?.cartDiscountCodesUpdate) {
       throw new Error(DEFAULT_ERROR_MESSAGE);
     }
@@ -125,19 +100,12 @@ class Cart extends ShopifyStorefrontApi {
     first?: number | undefined;
     after?: string | undefined;
     language?: string | undefined;
-  }): Promise<{
-    cart: CART_TYPE;
-    userErrors: Array<USER_ERROR_TYPE>;
-  }> => {
+  }): Promise<CartDefaultResponseType> => {
     const response = (await this.call(
       cartQueries.cartLinesAdd,
       adjustPaginationVariables(variables)
-    )) as {
-      cartLinesAdd: {
-        cart: CART_TYPE;
-        userErrors: Array<USER_ERROR_TYPE>;
-      };
-    };
+    )) as { cartLinesAdd: CartDefaultResponseType };
+
     if (!response?.cartLinesAdd) {
       throw new Error(DEFAULT_ERROR_MESSAGE);
     }
@@ -151,19 +119,12 @@ class Cart extends ShopifyStorefrontApi {
     first?: number | undefined;
     after?: string | undefined;
     language?: string | undefined;
-  }): Promise<{
-    cart: CART_TYPE;
-    userErrors: Array<USER_ERROR_TYPE>;
-  }> => {
+  }): Promise<CartDefaultResponseType> => {
     const response = (await this.call(
       cartQueries.cartLinesRemove,
       adjustPaginationVariables(variables)
-    )) as {
-      cartLinesRemove: {
-        cart: CART_TYPE;
-        userErrors: Array<USER_ERROR_TYPE>;
-      };
-    };
+    )) as { cartLinesRemove: CartDefaultResponseType };
+
     if (!response?.cartLinesRemove) {
       throw new Error(DEFAULT_ERROR_MESSAGE);
     }
@@ -177,19 +138,12 @@ class Cart extends ShopifyStorefrontApi {
     first?: number | undefined;
     after?: string | undefined;
     language?: string | undefined;
-  }): Promise<{
-    cart: CART_TYPE;
-    userErrors: Array<USER_ERROR_TYPE>;
-  }> => {
+  }): Promise<CartDefaultResponseType> => {
     const response = (await this.call(
       cartQueries.cartLinesUpdate,
       adjustPaginationVariables(variables)
-    )) as {
-      cartLinesUpdate: {
-        cart: CART_TYPE;
-        userErrors: Array<USER_ERROR_TYPE>;
-      };
-    };
+    )) as { cartLinesUpdate: CartDefaultResponseType };
+
     if (!response?.cartLinesUpdate) {
       throw new Error(DEFAULT_ERROR_MESSAGE);
     }
@@ -203,19 +157,12 @@ class Cart extends ShopifyStorefrontApi {
     first?: number | undefined;
     after?: string | undefined;
     language?: string | undefined;
-  }): Promise<{
-    cart: CART_TYPE;
-    userErrors: Array<USER_ERROR_TYPE>;
-  }> => {
+  }): Promise<CartDefaultResponseType> => {
     const response = (await this.call(
       cartQueries.cartNoteUpdate,
       adjustPaginationVariables(variables)
-    )) as {
-      cartNoteUpdate: {
-        cart: CART_TYPE;
-        userErrors: Array<USER_ERROR_TYPE>;
-      };
-    };
+    )) as { cartNoteUpdate: CartDefaultResponseType };
+
     if (!response?.cartNoteUpdate) {
       throw new Error(DEFAULT_ERROR_MESSAGE);
     }
@@ -228,13 +175,11 @@ class Cart extends ShopifyStorefrontApi {
     first?: number | undefined;
     after?: string | undefined;
     language: string;
-  }): Promise<CART_TYPE> => {
+  }): Promise<CartType> => {
     const response = (await this.call(
       cartQueries.cartQuery,
       adjustPaginationVariables(variables)
-    )) as {
-      cart: CART_TYPE;
-    };
+    )) as { cart: CartType };
 
     if (!response?.cart) {
       throw new Error(DEFAULT_ERROR_MESSAGE);
@@ -246,15 +191,9 @@ class Cart extends ShopifyStorefrontApi {
   checkoutURL = async (variables: {
     cartId: string;
     language?: string;
-  }): Promise<{
-    cart: {
-      checkoutUrl: string;
-    };
-  }> => {
+  }): Promise<{ cart: { checkoutUrl: string } }> => {
     const response = (await this.call(cartQueries.checkoutURL, variables)) as {
-      cart: {
-        checkoutUrl: string;
-      };
+      cart: { checkoutUrl: string };
     };
 
     if (!response?.cart) {

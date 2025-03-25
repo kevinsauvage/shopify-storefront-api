@@ -17,11 +17,7 @@ class Collection extends ShopifyStorefrontApi {
     sortKey?: string | undefined;
     identifiers?: unknown[] | undefined;
     language?: string | undefined;
-  }): Promise<{
-    collection: COLLECTION_TYPE;
-    pageInfo: PAGE_INFO_TYPE;
-    collectionFilters: Array<FILTER_TYPE>;
-  } | null> => {
+  }): Promise<{ collection: CollectionType }> => {
     const variablesCopy = { ...variables };
 
     if (!variablesCopy?.identifiers) {
@@ -31,9 +27,7 @@ class Collection extends ShopifyStorefrontApi {
     const response = (await this.call(
       collectionQueries.collection,
       adjustPaginationVariables(variablesCopy)
-    )) as {
-      collection: COLLECTION_TYPE;
-    };
+    )) as { collection: CollectionType };
 
     if (!response?.collection) {
       throw new Error('Collection not found');
@@ -41,20 +35,17 @@ class Collection extends ShopifyStorefrontApi {
 
     const collection = response?.collection;
 
-    if (collection && typeof collection === 'object') {
-      const pageInfo = findPageInfo(collection.products);
-      const collectionFilters = findFilters(collection.products);
+    const pageInfo = findPageInfo(collection.products);
+    const collectionFilters = findFilters(collection.products);
 
-      if (collectionFilters) {
-        collection.filters = collectionFilters;
-      }
-      if (pageInfo) {
-        collection.pageInfo = pageInfo;
-      }
-
-      return cleanGraphQLResponse(collection);
+    if (collectionFilters) {
+      collection.filters = collectionFilters;
     }
-    return null;
+    if (pageInfo) {
+      collection.pageInfo = pageInfo;
+    }
+
+    return cleanGraphQLResponse(collection);
   };
 
   collections = async (variables: {
@@ -69,8 +60,8 @@ class Collection extends ShopifyStorefrontApi {
     language?: string;
     identifiers?: unknown[];
   }): Promise<{
-    collections: Array<COLLECTION_TYPE>;
-    pageInfo: PAGE_INFO_TYPE;
+    collections: Array<CollectionType>;
+    pageInfo: PageInfoType;
   }> => {
     const variablesCopy = { ...variables };
 
@@ -85,9 +76,9 @@ class Collection extends ShopifyStorefrontApi {
       collections: {
         edges: Array<{
           cursor: string;
-          node: COLLECTION_TYPE;
+          node: CollectionType;
         }>;
-        pageInfo: PAGE_INFO_TYPE;
+        pageInfo: PageInfoType;
         totalCount: number;
       };
     };

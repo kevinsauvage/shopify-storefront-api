@@ -1,7 +1,7 @@
 export {};
 
 declare global {
-  type PRICE_RANGE_TYPE = {
+  type PriceRangeType = {
     maxVariantPrice: {
       amount: string;
       currencyCode: 'USD' | 'CAD' | 'EUR' | 'GBP' | 'AUD' | 'JPY' | 'CNY';
@@ -12,13 +12,13 @@ declare global {
     };
   };
 
-  type PRODUCT_OPTION_TYPE = {
+  type ProductOptionType = {
     id: string;
     name: string;
     values: Array<string>;
   };
 
-  type IMAGE_TYPE = {
+  type ImageType = {
     id: string;
     src: string;
     altText: string | null;
@@ -30,7 +30,7 @@ declare global {
     height: number;
   };
 
-  type PRODUCT_VARIANT_TYPE = {
+  type ProductVariantType = {
     cursor?: string | null;
     id?: string | null;
     availableForSale?: boolean | null;
@@ -47,14 +47,14 @@ declare global {
       name?: string | null;
       value?: string | null;
     }> | null;
-    image?: IMAGE_TYPE | null;
+    image?: ImageType | null;
     priceV2?: {
       amount?: string | null;
       currencyCode?: 'USD' | 'CAD' | 'EUR' | 'GBP' | 'AUD' | 'JPY' | 'CNY' | null;
     } | null;
   };
 
-  type PRODUCT_TYPE = {
+  type ProductType = {
     id: string;
     title: string;
     handle: string;
@@ -63,14 +63,14 @@ declare global {
     productType: string;
     tags: Array<string>;
     totalInventory: number;
-    options: Array<PRODUCT_OPTION_TYPE>;
-    images: Array<IMAGE_TYPE>;
-    priceRange: PRICE_RANGE_TYPE;
-    variants: Array<PRODUCT_VARIANT_TYPE>;
+    options: Array<ProductOptionType>;
+    images: Array<ImageType>;
+    priceRange: PriceRangeType;
+    variants: Array<ProductVariantType>;
     collections: Array<{
       cursor: string | null;
       handle: string;
     }>;
-    metafields: Array<METAFIELD_TYPE>;
+    metafields: Array<MetafieldType>;
   };
 }

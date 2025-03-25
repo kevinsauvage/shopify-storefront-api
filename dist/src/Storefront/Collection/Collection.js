@@ -12,18 +12,15 @@ class Collection extends ShopifyStorefrontApi {
             throw new Error('Collection not found');
         }
         const collection = response?.collection;
-        if (collection && typeof collection === 'object') {
-            const pageInfo = findPageInfo(collection.products);
-            const collectionFilters = findFilters(collection.products);
-            if (collectionFilters) {
-                collection.filters = collectionFilters;
-            }
-            if (pageInfo) {
-                collection.pageInfo = pageInfo;
-            }
-            return cleanGraphQLResponse(collection);
+        const pageInfo = findPageInfo(collection.products);
+        const collectionFilters = findFilters(collection.products);
+        if (collectionFilters) {
+            collection.filters = collectionFilters;
         }
-        return null;
+        if (pageInfo) {
+            collection.pageInfo = pageInfo;
+        }
+        return cleanGraphQLResponse(collection);
     };
     collections = async (variables) => {
         const variablesCopy = { ...variables };

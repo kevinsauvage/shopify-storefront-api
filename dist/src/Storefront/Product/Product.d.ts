@@ -4,12 +4,12 @@ declare class Product extends ShopifyStorefrontApi {
         handle: string;
         identifiers?: unknown[];
         language?: string;
-    }) => Promise<PRODUCT_TYPE>;
+    }) => Promise<ProductType>;
     productRecommendations: (variables: {
         productId: string;
         identifiers?: unknown[];
         language?: string;
-    }) => Promise<Array<PRODUCT_TYPE>>;
+    }) => Promise<Array<ProductType>>;
     getProducts: (variables: {
         sortKey: string;
         first?: number;
@@ -19,8 +19,8 @@ declare class Product extends ShopifyStorefrontApi {
         identifiers?: unknown[];
         before?: string;
     }) => Promise<{
-        products: Array<PRODUCT_TYPE>;
-        pageInfo: PAGE_INFO_TYPE;
+        products: Array<ProductType>;
+        pageInfo: PageInfoType;
     }>;
 }
 export default Product;

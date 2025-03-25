@@ -15,13 +15,13 @@ export const cleanGraphQLResponse = (data) => {
   return result;
 };
 
-export const findPageInfo = (obj: unknown): PAGE_INFO_TYPE | null => {
+export const findPageInfo = (obj: unknown): PageInfoType | null => {
   if (obj && typeof obj === 'object') {
     if ('pageInfo' in obj) {
-      return (obj as { pageInfo: PAGE_INFO_TYPE }).pageInfo;
+      return (obj as { pageInfo: PageInfoType }).pageInfo;
     }
 
-    return Object.entries(obj).reduce<PAGE_INFO_TYPE | null>(
+    return Object.entries(obj).reduce<PageInfoType | null>(
       (found, [, value]) => found ?? findPageInfo(value),
       null
     );

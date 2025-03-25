@@ -1,50 +1,42 @@
 import ShopifyStorefrontApi from '../ShopifyStorefrontApi';
+type CartDefaultResponseType = {
+    cart: CartType;
+    userErrors: Array<UserErrorType>;
+};
 declare class Cart extends ShopifyStorefrontApi {
     cartAttributesUpdate: (variables: {
         attributes: {
-            attributes: Array<ATTRIBUTE_TYPE>;
+            attributes: Array<AttributeType>;
             cartId: string;
         };
         cartId: string;
         first?: number | undefined;
         after?: string | undefined;
         language?: string | undefined;
-    }) => Promise<{
-        cart: CART_TYPE;
-        userErrors: Array<USER_ERROR_TYPE>;
-    }>;
+    }) => Promise<CartDefaultResponseType>;
     cartBuyerIdentityUpdate: (variables: {
         buyerIdentity: {
-            buyerIdentity: BUYER_IDENTITY_TYPE;
+            buyerIdentity: BuyerIdentityType;
             cartId: string;
         };
         cartId: string;
         first?: number | undefined;
         after?: string | undefined;
         language?: string | undefined;
-    }) => Promise<{
-        cart: CART_TYPE;
-        userErrors: Array<USER_ERROR_TYPE>;
-    }>;
+    }) => Promise<CartDefaultResponseType>;
     cartCreate: (variables: {
         input: CART_INPUT_TYPE;
         first?: number | undefined;
         after?: string | undefined;
         language?: string | undefined;
-    }) => Promise<{
-        cart: CART_TYPE;
-        userErrors: Array<USER_ERROR_TYPE>;
-    }>;
+    }) => Promise<CartDefaultResponseType>;
     cartDiscountCodesUpdate: (variables: {
         cartId: string;
         discountCodes: string[];
         first?: number | undefined;
         after?: string | undefined;
         language?: string | undefined;
-    }) => Promise<{
-        cart: CART_TYPE;
-        userErrors: Array<USER_ERROR_TYPE>;
-    }>;
+    }) => Promise<CartDefaultResponseType>;
     cartLinesAdd: (variables: {
         cartId: string;
         lines: {
@@ -54,10 +46,7 @@ declare class Cart extends ShopifyStorefrontApi {
         first?: number | undefined;
         after?: string | undefined;
         language?: string | undefined;
-    }) => Promise<{
-        cart: CART_TYPE;
-        userErrors: Array<USER_ERROR_TYPE>;
-    }>;
+    }) => Promise<CartDefaultResponseType>;
     cartLinesRemove: (variables: {
         cartId: string;
         lines: {
@@ -67,36 +56,27 @@ declare class Cart extends ShopifyStorefrontApi {
         first?: number | undefined;
         after?: string | undefined;
         language?: string | undefined;
-    }) => Promise<{
-        cart: CART_TYPE;
-        userErrors: Array<USER_ERROR_TYPE>;
-    }>;
+    }) => Promise<CartDefaultResponseType>;
     cartLinesUpdate: (variables: {
         cartId: string;
         lines: CART_LINE_INPUT_TYPE[];
         first?: number | undefined;
         after?: string | undefined;
         language?: string | undefined;
-    }) => Promise<{
-        cart: CART_TYPE;
-        userErrors: Array<USER_ERROR_TYPE>;
-    }>;
+    }) => Promise<CartDefaultResponseType>;
     cartNoteUpdate: (variables: {
         cartId: string;
         note: string;
         first?: number | undefined;
         after?: string | undefined;
         language?: string | undefined;
-    }) => Promise<{
-        cart: CART_TYPE;
-        userErrors: Array<USER_ERROR_TYPE>;
-    }>;
+    }) => Promise<CartDefaultResponseType>;
     cartQuery: (variables: {
         cartId: string;
         first?: number | undefined;
         after?: string | undefined;
         language: string;
-    }) => Promise<CART_TYPE>;
+    }) => Promise<CartType>;
     checkoutURL: (variables: {
         cartId: string;
         language?: string;

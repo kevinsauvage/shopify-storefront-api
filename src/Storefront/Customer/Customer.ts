@@ -4,35 +4,32 @@ import customerQueries from './customerQueries';
 
 const DEFAULT_ERROR_MESSAGE = 'No data returned from the GraphQL query';
 
-type CUSTOMER_ACTIVATE_BY_URL = {
+type CustomerActivateByUrlType = {
   customer: {
     id: string;
     email: string;
   } | null;
-  customerAccessToken: {
-    accessToken: string;
-    expiresAt: string;
-  } | null;
-  customerUserErrors: Array<USER_ERROR_TYPE>;
+  customerAccessToken: CustomerAccessTokenType | null;
+  customerUserErrors: Array<UserErrorType>;
+};
+
+type CustomerAccessTokenCreateType = {
+  customerAccessToken: CustomerAccessTokenType | null;
+  customerUserErrors: Array<UserErrorType>;
+};
+
+type CustomerAccessTokenDeleteType = {
+  deletedAccessTokenId: string;
+  customerUserErrors: Array<UserErrorType>;
 };
 
 class Customer extends ShopifyStorefrontApi {
   customerAccessTokenCreate = async (variables: {
     input: { email: string; password: string };
     language?: string;
-  }): Promise<{
-    customerAccessToken: {
-      accessToken: string;
-    } | null;
-    customerUserErrors: Array<USER_ERROR_TYPE>;
-  }> => {
+  }): Promise<CustomerAccessTokenCreateType> => {
     const response = (await this.call(customerQueries.customerAccessTokenCreate, variables)) as {
-      customerAccessTokenCreate: {
-        customerAccessToken: {
-          accessToken: string;
-        };
-        customerUserErrors: Array<USER_ERROR_TYPE>;
-      };
+      customerAccessTokenCreate: CustomerAccessTokenCreateType;
     };
 
     if (!response?.customerAccessTokenCreate) {
@@ -54,23 +51,12 @@ class Customer extends ShopifyStorefrontApi {
   customerAccessTokenCreateWithMultipass = async (variables: {
     multipassToken: string;
     language?: string;
-  }): Promise<{
-    customerAccessToken: {
-      accessToken: string;
-    } | null;
-    customerUserErrors: Array<USER_ERROR_TYPE>;
-  }> => {
+  }): Promise<CustomerAccessTokenCreateType> => {
     const response = (await this.call(
       customerQueries.customerAccessTokenCreateWithMultipass,
       variables
-    )) as {
-      customerAccessTokenCreateWithMultipass: {
-        customerAccessToken: {
-          accessToken: string;
-        };
-        customerUserErrors: Array<USER_ERROR_TYPE>;
-      };
-    };
+    )) as { customerAccessTokenCreateWithMultipass: CustomerAccessTokenCreateType };
+
     if (!response?.customerAccessTokenCreateWithMultipass) {
       throw new Error(DEFAULT_ERROR_MESSAGE);
     }
@@ -81,16 +67,11 @@ class Customer extends ShopifyStorefrontApi {
   customerAccessTokenDelete = async (variables: {
     customerAccessToken: string;
     language?: string;
-  }): Promise<{
-    deletedAccessTokenId: string | null;
-    customerUserErrors: Array<USER_ERROR_TYPE>;
-  }> => {
+  }): Promise<CustomerAccessTokenDeleteType> => {
     const response = (await this.call(customerQueries.customerAccessTokenDelete, variables)) as {
-      customerAccessTokenDelete: {
-        deletedAccessTokenId: string;
-        customerUserErrors: Array<USER_ERROR_TYPE>;
-      };
+      customerAccessTokenDelete: CustomerAccessTokenDeleteType;
     };
+
     if (!response?.customerAccessTokenDelete) {
       throw new Error(DEFAULT_ERROR_MESSAGE);
     }
@@ -101,14 +82,20 @@ class Customer extends ShopifyStorefrontApi {
   customerAccessTokenRenew = async (variables: {
     customerAccessToken: string;
     language?: string;
-  }) => {
+  }): Promise<{
+    customerAccessToken: {
+      accessToken: string;
+      expiresAt: string;
+    };
+    userErrors: Array<UserErrorType>;
+  }> => {
     const response = (await this.call(customerQueries.customerAccessTokenRenew, variables)) as {
       customerAccessTokenRenew: {
         customerAccessToken: {
           accessToken: string;
           expiresAt: string;
         };
-        userErrors: Array<USER_ERROR_TYPE>;
+        userErrors: Array<UserErrorType>;
       };
     };
 
@@ -132,7 +119,7 @@ class Customer extends ShopifyStorefrontApi {
       accessToken: string;
       expiresAt: string;
     } | null;
-    customerUserErrors: Array<USER_ERROR_TYPE>;
+    customerUserErrors: Array<UserErrorType>;
   }> => {
     const response = (await this.call(customerQueries.customerActivate, variables)) as {
       customerActivate: {
@@ -144,7 +131,7 @@ class Customer extends ShopifyStorefrontApi {
           accessToken: string;
           expiresAt: string;
         };
-        customerUserErrors: Array<USER_ERROR_TYPE>;
+        customerUserErrors: Array<UserErrorType>;
       };
     };
 
@@ -159,9 +146,9 @@ class Customer extends ShopifyStorefrontApi {
     activationUrl: string;
     password: string;
     language?: string;
-  }): Promise<CUSTOMER_ACTIVATE_BY_URL> => {
+  }): Promise<CustomerActivateByUrlType> => {
     const response = (await this.call(customerQueries.customerActivateByUrl, variables)) as {
-      customerActivateByUrl: CUSTOMER_ACTIVATE_BY_URL;
+      customerActivateByUrl: CustomerActivateByUrlType;
     };
 
     if (!response?.customerActivateByUrl) {
@@ -172,17 +159,17 @@ class Customer extends ShopifyStorefrontApi {
   };
 
   customerAddressCreate = async (variables: {
-    address: CUSTOMER_ADDRESS_INPUT_TYPE;
+    address: CustomerAddressInputType;
     customerAccessToken: string;
     language?: string;
   }): Promise<{
-    customerAddress: CUSTOMER_ADDRESS_TYPE | null;
-    customerUserErrors: Array<USER_ERROR_TYPE>;
+    customerAddress: MailingAddressType | null;
+    customerUserErrors: Array<UserErrorType>;
   }> => {
     const response = (await this.call(customerQueries.customerAddressCreate, variables)) as {
       customerAddressCreate: {
-        customerAddress: CUSTOMER_ADDRESS_TYPE;
-        customerUserErrors: Array<USER_ERROR_TYPE>;
+        customerAddress: MailingAddressType;
+        customerUserErrors: Array<UserErrorType>;
       };
     };
 
@@ -199,12 +186,12 @@ class Customer extends ShopifyStorefrontApi {
     language?: string;
   }): Promise<{
     deletedCustomerAddressId: string | null;
-    customerUserErrors: Array<USER_ERROR_TYPE>;
+    customerUserErrors: Array<UserErrorType>;
   }> => {
     const response = (await this.call(customerQueries.customerAddressDelete, variables)) as {
       customerAddressDelete: {
         deletedCustomerAddressId: string;
-        customerUserErrors: Array<USER_ERROR_TYPE>;
+        customerUserErrors: Array<UserErrorType>;
       };
     };
     if (!response?.customerAddressDelete) {
@@ -215,17 +202,17 @@ class Customer extends ShopifyStorefrontApi {
   };
 
   customerAddressUpdate = async (variables: {
-    address: CUSTOMER_ADDRESS_INPUT_TYPE;
+    address: CustomerAddressInputType;
     customerAccessToken: string;
     language?: string;
   }): Promise<{
-    customerAddress: CUSTOMER_ADDRESS_TYPE | null;
-    userErrors: Array<USER_ERROR_TYPE>;
+    customerAddress: MailingAddressType | null;
+    userErrors: Array<UserErrorType>;
   }> => {
     const response = (await this.call(customerQueries.customerAddressUpdate, variables)) as {
       customerAddressUpdate: {
-        customerAddress: CUSTOMER_ADDRESS_TYPE;
-        userErrors: Array<USER_ERROR_TYPE>;
+        customerAddress: MailingAddressType;
+        userErrors: Array<UserErrorType>;
       };
     };
 
@@ -237,24 +224,24 @@ class Customer extends ShopifyStorefrontApi {
   };
 
   customerCreate = async (variables: {
-    input: CUSTOMER_CREATE_INPUT_TYPE;
+    input: CustomerCreateInputType;
     language?: string;
   }): Promise<{
-    customer: CUSTOMER_TYPE | null;
+    customer: CustomerType | null;
     customerAccessToken: {
       accessToken: string;
       expiresAt: string;
     } | null;
-    customerUserErrors: Array<USER_ERROR_TYPE>;
+    customerUserErrors: Array<UserErrorType>;
   }> => {
     const response = (await this.call(customerQueries.customerCreate, variables)) as {
       customerCreate: {
-        customer: CUSTOMER_TYPE;
+        customer: CustomerType;
         customerAccessToken: {
           accessToken: string;
           expiresAt: string;
         };
-        customerUserErrors: Array<USER_ERROR_TYPE>;
+        customerUserErrors: Array<UserErrorType>;
       };
     };
     if (!response?.customerCreate) {
@@ -269,13 +256,13 @@ class Customer extends ShopifyStorefrontApi {
     addressId: string;
     language?: string;
   }): Promise<{
-    customer: CUSTOMER_TYPE | null;
-    customerUserErrors: Array<USER_ERROR_TYPE>;
+    customer: CustomerType | null;
+    customerUserErrors: Array<UserErrorType>;
   }> => {
     const response = (await this.call(customerQueries.customerDefaultAddressUpdate, variables)) as {
       customerDefaultAddressUpdate: {
-        customer: CUSTOMER_TYPE;
-        customerUserErrors: Array<USER_ERROR_TYPE>;
+        customer: CustomerType;
+        customerUserErrors: Array<UserErrorType>;
       };
     };
 
@@ -290,11 +277,11 @@ class Customer extends ShopifyStorefrontApi {
     email: string;
     language?: string;
   }): Promise<{
-    customerUserErrors: Array<USER_ERROR_TYPE>;
+    customerUserErrors: Array<UserErrorType>;
   }> => {
     const response = (await this.call(customerQueries.customerRecover, variables)) as {
       customerRecover: {
-        customerUserErrors: Array<USER_ERROR_TYPE>;
+        customerUserErrors: Array<UserErrorType>;
       };
     };
     if (!response?.customerRecover) {
@@ -309,21 +296,21 @@ class Customer extends ShopifyStorefrontApi {
     input: { password: string; resetToken: string };
     language?: string;
   }): Promise<{
-    customer: CUSTOMER_TYPE | null;
+    customer: CustomerType | null;
     customerAccessToken: {
       accessToken: string;
       expiresAt: string;
     } | null;
-    customerUserErrors: Array<USER_ERROR_TYPE>;
+    customerUserErrors: Array<UserErrorType>;
   }> => {
     const response = (await this.call(customerQueries.customerReset, variables)) as {
       customerReset: {
-        customer: CUSTOMER_TYPE;
+        customer: CustomerType;
         customerAccessToken: {
           accessToken: string;
           expiresAt: string;
         };
-        customerUserErrors: Array<USER_ERROR_TYPE>;
+        customerUserErrors: Array<UserErrorType>;
       };
     };
 
@@ -339,21 +326,21 @@ class Customer extends ShopifyStorefrontApi {
     resetUrl: string;
     language?: string;
   }): Promise<{
-    customer: CUSTOMER_TYPE | null;
+    customer: CustomerType | null;
     customerAccessToken: {
       accessToken: string;
       expiresAt: string;
     } | null;
-    customerUserErrors: Array<USER_ERROR_TYPE>;
+    customerUserErrors: Array<UserErrorType>;
   }> => {
     const response = (await this.call(customerQueries.customerResetByUrl, variables)) as {
       customerResetByUrl: {
-        customer: CUSTOMER_TYPE;
+        customer: CustomerType;
         customerAccessToken: {
           accessToken: string;
           expiresAt: string;
         };
-        customerUserErrors: Array<USER_ERROR_TYPE>;
+        customerUserErrors: Array<UserErrorType>;
       };
     };
 
@@ -366,16 +353,16 @@ class Customer extends ShopifyStorefrontApi {
 
   customerUpdate = async (variables: {
     customerAccessToken: string;
-    customer: CUSTOMER_CREATE_INPUT_TYPE;
+    customer: CustomerCreateInputType;
     language?: string;
   }): Promise<{
-    customer: CUSTOMER_TYPE | null;
-    customerUserErrors: Array<USER_ERROR_TYPE>;
+    customer: CustomerType | null;
+    customerUserErrors: Array<UserErrorType>;
   }> => {
     const response = (await this.call(customerQueries.customerUpdate, variables)) as {
       customerUpdate: {
-        customer: CUSTOMER_TYPE;
-        customerUserErrors: Array<USER_ERROR_TYPE>;
+        customer: CustomerType;
+        customerUserErrors: Array<UserErrorType>;
       };
     };
     if (!response?.customerUpdate) {
@@ -388,9 +375,9 @@ class Customer extends ShopifyStorefrontApi {
   queryCustomer = async (variables: {
     customerAccessToken: string;
     language?: string;
-  }): Promise<CUSTOMER_TYPE> => {
+  }): Promise<CustomerType> => {
     const response = (await this.call(customerQueries.queryCustomer, variables)) as {
-      customer: CUSTOMER_TYPE;
+      customer: CustomerType;
     };
 
     return response?.customer;
@@ -398,13 +385,13 @@ class Customer extends ShopifyStorefrontApi {
 
   queryCustomerMetafields = async (variables: {
     customerAccessToken: string;
-    metafields?: METAFIELD_TYPE[];
+    metafields?: MetafieldType[];
     language?: string;
-  }): Promise<Array<METAFIELD_TYPE>> => {
+  }): Promise<Array<MetafieldType>> => {
     const response = (await this.call(customerQueries.queryCustomerMetafields, variables)) as {
       customer: {
-        metafields: Array<METAFIELD_TYPE>;
-        customerUserErrors: Array<USER_ERROR_TYPE>;
+        metafields: Array<MetafieldType>;
+        customerUserErrors: Array<UserErrorType>;
       };
     };
 
@@ -423,8 +410,8 @@ class Customer extends ShopifyStorefrontApi {
     after?: string;
     language?: string;
   }): Promise<{
-    addresses: Array<CUSTOMER_ADDRESS_TYPE>;
-    pageInfo: PAGE_INFO_TYPE | null;
+    addresses: Array<MailingAddressType>;
+    pageInfo: PageInfoType | null;
     totalCount: number;
   }> => {
     const response = (await this.call(
@@ -433,11 +420,11 @@ class Customer extends ShopifyStorefrontApi {
     )) as {
       customer: {
         addresses: {
-          edges: Array<{ cursor: string; node: CUSTOMER_ADDRESS_TYPE }>;
-          pageInfo: PAGE_INFO_TYPE;
+          edges: Array<{ cursor: string; node: MailingAddressType }>;
+          pageInfo: PageInfoType;
           totalCount: number;
         };
-        customerUserErrors: Array<USER_ERROR_TYPE>;
+        customerUserErrors: Array<UserErrorType>;
       };
     };
 
@@ -458,9 +445,9 @@ class Customer extends ShopifyStorefrontApi {
     reverse?: boolean;
     language: string;
   }): Promise<{
-    orders: Array<CUSTOMER_ORDER_TYPE>;
-    customerUserErrors: Array<USER_ERROR_TYPE>;
-    pageInfo: PAGE_INFO_TYPE | null;
+    orders: Array<CustomerOrderType>;
+    customerUserErrors: Array<UserErrorType>;
+    pageInfo: PageInfoType | null;
   }> => {
     const response = (await this.call(
       customerQueries.queryCustomerOrders,
@@ -468,11 +455,11 @@ class Customer extends ShopifyStorefrontApi {
     )) as {
       customer: {
         orders: {
-          edges: Array<{ cursor: string; node: CUSTOMER_ORDER_TYPE }>;
-          pageInfo: PAGE_INFO_TYPE;
+          edges: Array<{ cursor: string; node: CustomerOrderType }>;
+          pageInfo: PageInfoType;
           totalCount: number;
         };
-        customerUserErrors: Array<USER_ERROR_TYPE>;
+        customerUserErrors: Array<UserErrorType>;
       };
     };
     if (!response?.customer?.orders) {
